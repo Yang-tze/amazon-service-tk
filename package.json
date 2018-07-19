@@ -11,7 +11,8 @@
     "db": "mysql -u root < schema.sql",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --open",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ./client/index.jsx ./client/components/**"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
