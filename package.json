@@ -8,15 +8,28 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "db": "mysql -u root < schema.sql"
+    "db": "mysql -u root < schema.sql",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open"
   },
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.1.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "jest": "^23.4.1",
     "webpack": "^4.16.1",
+    "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.4"
   }
 }
