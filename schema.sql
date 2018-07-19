@@ -1,6 +1,6 @@
-CREATE DATABASE amzn_products;
+CREATE DATABASE product_db;
 
-USE amzn_products;
+USE product_db;
 
 CREATE TABLE products (
 id INTEGER PRIMARY KEY,
@@ -27,3 +27,6 @@ PRIMARY KEY (id),
 FOREIGN KEY (product_id) REFERENCES products(id),
 FOREIGN KEY (related_product_id) REFERENCES products(id)
 );
+
+INSERT INTO products (id, brand, product_name, product_color, product_size, price_msrp, price_list, price_sale, is_prime, stock_count, about_product, reviews, stars, questions) VALUES();
+
