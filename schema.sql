@@ -4,20 +4,23 @@ USE product_db;
 
 CREATE TABLE products (
 id INTEGER PRIMARY KEY,
-brand VARCHAR(50) NOT NULL,
-product_name VARCHAR(150) NOT NULL,
-product_color VARCHAR(50) NOT NULL,
-product_size VARCHAR(50) NOT NULL,
-price_msrp INTEGER NOT NULL,
-price_list INTEGER NOT NULL,
-price_sale INTEGER NOT NULL,
+brand VARCHAR(100) NOT NULL,
+name VARCHAR(200) NOT NULL,
+product_options JSON NOT NULL,
+price JSON NOT NULL,
+about_product JSON NOT NULL,
 is_prime BOOLEAN NOT NULL,
 stock_count INTEGER NOT NULL,
-about_product TEXT NOT NULL,
 reviews INTEGER NOT NULL,
 stars INTEGER NOT NULL,
-questions INTEGER NOT NULL
+questions INTEGER NOT NULL,
+seller VARCHAR(150) NOT NULL,
+thumbnail TEXT NOT NULL
 );
+
+-- product_options {"color", "size"}
+-- price {"msrp", "list", "sale"}
+-- about_product ["bullet point 1", "bullet point 2", "...", "bullet point n"]
 
 CREATE TABLE related_products (
 id INTEGER auto_increment,
@@ -28,5 +31,6 @@ FOREIGN KEY (product_id) REFERENCES products(id),
 FOREIGN KEY (related_product_id) REFERENCES products(id)
 );
 
-INSERT INTO products (id, brand, product_name, product_color, product_size, price_msrp, price_list, price_sale, is_prime, stock_count, about_product, reviews, stars, questions) VALUES();
+INSERT INTO products (id, brand, name, product_options, price, about_product, 
+  is_prime, stock_count, reviews, stars, questions, seller, thumbnail) VALUES();
 
