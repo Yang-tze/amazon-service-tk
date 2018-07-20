@@ -12,7 +12,8 @@
     "watch": "webpack --watch",
     "start": "webpack-dev-server --open",
     "test": "jest",
-    "lint": "eslint ./client/index.jsx ./client/components/**"
+    "lint": "eslint ./client/index.jsx ./client/components/**",
+    "start": "node server/index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
