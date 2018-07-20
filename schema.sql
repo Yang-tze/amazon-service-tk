@@ -6,6 +6,7 @@ CREATE TABLE products (
 id INTEGER PRIMARY KEY,
 brand VARCHAR(100) NOT NULL,
 name VARCHAR(200) NOT NULL,
+product_tier JSON NOT NULL,
 product_options JSON NOT NULL,
 price JSON NOT NULL,
 about_product JSON NOT NULL,
@@ -18,6 +19,7 @@ seller VARCHAR(150) NOT NULL,
 thumbnail TEXT NOT NULL
 );
 
+-- product_tier {"capacity"}
 -- product_options {"color", "size"}
 -- price {"msrp", "list", "sale"}
 -- about_product ["bullet point 1", "bullet point 2", "...", "bullet point n"]
