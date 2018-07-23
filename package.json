@@ -10,7 +10,7 @@
   "scripts": {
     "db": "mysql -u root < schema.sql",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
+    "start": "node ./server/index.js",
     "test": "jest",
     "lint": "eslint ./client/index.jsx ./client/components/**"
   },
