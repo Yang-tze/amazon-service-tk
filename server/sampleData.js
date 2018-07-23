@@ -208,5 +208,5 @@ const generator = () => {
 };
 
 const queryArray = generator().reduce((acc, obj) => {
-  return `${acc}INSERT INTO products (id, brand, name, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) VALUES(${obj.id}, '${obj.brand}', '${obj.name}', ${JSON.stringify(obj.product_options)}, ${JSON.stringify(obj.price)}, ${JSON.stringify(obj.about_product)}, ${obj.is_prime}, ${obj.stock_count}, ${obj.reviews}, ${obj.stars}, ${obj.questions}, '${obj.seller}', '${obj.tier}.jpg');\n`;
+  return `${acc}INSERT INTO products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) VALUES(${obj.id}, '${obj.brand}', '${obj.name}', '${obj.tier}', '${JSON.stringify(obj.product_options)}', '${JSON.stringify(obj.price)}', '${JSON.stringify(obj.about_product)}', ${obj.is_prime}, ${obj.stock_count}, ${obj.reviews}, ${obj.stars}, ${obj.questions}, '${obj.seller}', '${obj.tier}.jpg');\n`;
 }, '');
