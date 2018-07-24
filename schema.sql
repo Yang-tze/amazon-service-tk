@@ -1,8 +1,8 @@
+DROP DATABASE product_db IF EXISTS;
+
 CREATE DATABASE product_db;
 
 USE product_db;
-
--- DROP TABLE related_products, products;
 
 CREATE TABLE products (
 id INTEGER PRIMARY KEY,
