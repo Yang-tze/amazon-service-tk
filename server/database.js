@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
 });
 
 const getProduct = function getProductInformation(productId, callback) {
-  connection.query('select * from products', (err, results) => {
+  connection.query(`select * from products where id=${productId}`, (err, results) => {
     if (err) console.error(err);
     callback(results);
   });
