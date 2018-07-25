@@ -9,6 +9,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.11.3-browsers
       - image: circleci/mysql:5.7
+        environment:
+            MYSQL_HOST: localhost
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
+            MYSQL_ROOT_PASSWORD: ''
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
