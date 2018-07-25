@@ -46,7 +46,8 @@ jobs:
       - run: sudo apt install -y mysql-client
 
       - run: npm run db
-
-      - run: npm run start
+      - run:
+          command: npm run start
+          background: true
       # run tests!
       - run: npm run test
