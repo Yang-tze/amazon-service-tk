@@ -53,6 +53,24 @@ describe('getRelated returns related items', () => {
   });
 });
 
+describe('getAll should return all relevant information', () => {
+  test('first element in array should be requested item', () => {
+    return new Promise((resolve) => {
+      getAll(3225, (results) => {
+        resolve(expect(results[0].id).toBe(3225));
+      });
+    });
+  });
+
+  test('second element should have a different id', () => {
+    return new Promise((resolve) => {
+      getAll(3225, (results) => {
+        resolve(expect(results[1].id).not.toBe(3225));
+      });
+    });
+  });
+});
+
 afterAll(() => {
   return new Promise((resolve, reject) => {
     connection.query('delete from products where id = 3224 or id = 3225', (err) => {
