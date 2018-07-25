@@ -27,6 +27,32 @@ beforeAll(() => {
   });
 });
 
+test('getProduct should return one item when given a unique id', (done) => {
+  function cb(results) {
+    expect(results.length).toBe(1);
+    done();
+  }
+  getProduct(3224, cb);
+});
+
+describe('getRelated returns related items', () => {
+  test('should return one related item', () => {
+    return new Promise((resolve) => {
+      getRelated('valkerie', 3224, (results) => {
+        resolve(expect(results.length).toBe(1));
+      });
+    });
+  });
+
+  test('related item should be different', () => {
+    return new Promise((resolve) => {
+      getRelated('valkerie', 3224, (results) => {
+        resolve(expect(results[0].id).not.toBe(3224));
+      });
+    });
+  });
+});
+
 afterAll(() => {
   return new Promise((resolve, reject) => {
     connection.query('delete from products where id = 3224 or id = 3225', (err) => {
