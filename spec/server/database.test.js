@@ -9,10 +9,32 @@ const connection = mysql.createConnection({
   database: 'product_db',
 });
 
-// describe('');
-
-connection.query('select id, name from products', (err, results) => {
-  if (err) console.error(err);
-  console.log(results);
+beforeAll(() => {
+  return new Promise((resolve, reject) => {
+    connection.query(`insert into products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) values(3224, "nike", "valkerie", "gluten-free", '{"colors": ["black", "white"], "sizes": ["small", "large"]}', '{"sale": 39.98}', '["turbo charged marshmallows", "120 miles per gallon of orange juice", "40% more energy use"]', 1, 2, 30, 5, 45, "Amazon", "gluten-free.jpg")`, (err) => {
+      if (err) {
+        reject();
+      } else {
+        connection.query(`insert into products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) values(3225, "nike", "valkerie", "dairy-free", '{"colors": ["black", "white"], "sizes": ["small", "large"]}', '{"sale": 37.98}', '["turbo charged marshmallows", "120 miles per gallon of orange juice", "40% more energy use"]', 1, 2, 30, 5, 45, "Amazon", "dairy-free.jpg")`, (error) => {
+          if (error) {
+            reject();
+          } else {
+            resolve();
+          }
+        });
+      }
+    });
+  });
 });
-// connection.query('INSERT INTO products (id, na)')
+
+afterAll(() => {
+  return new Promise((resolve, reject) => {
+    connection.query('delete from products where id = 3224 or id = 3225', (err) => {
+      if (err) {
+        reject();
+      } else {
+        resolve();
+      }
+    });
+  });
+});
