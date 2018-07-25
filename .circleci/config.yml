@@ -34,6 +34,7 @@ jobs:
             - ./node_modules
           key: dependency-cache-{{ checksum "package.json" }}
 
+      - run: sudo npm install mysql
       - run: npm run db
       # run tests!
       - run: npm run test
