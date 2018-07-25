@@ -38,8 +38,8 @@ jobs:
             - ./node_modules
           key: dependency-cache-{{ checksum "package.json" }}
 
-      - run: sudo apt install mysql-server
-      - run: sudo service mysql start
+      - run: sudo apt install -y mysql-client
+      - run: mysql -h http://127.0.0.1:3306 version
       - run: npm run db
       # run tests!
       - run: npm run test
