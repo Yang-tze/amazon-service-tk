@@ -39,7 +39,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
 
       - run: sudo apt install -y mysql-client
-      - run: mysql -h http://127.0.0.1:3306 version
+      - run: mysql -h tcp://127.0.0.1:3306 version
       - run: npm run db
       # run tests!
       - run: npm run test
