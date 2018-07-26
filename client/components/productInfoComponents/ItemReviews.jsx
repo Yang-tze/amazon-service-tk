@@ -1,9 +1,13 @@
 import React from 'react';
 
 const ItemReviews = (props) => {
+  const { reviewInfo } = props;
+  const { reviews, stars, questions } = reviewInfo;
   return (
     <div>
-      This is the reviews
+      <span>Stars: {stars} </span>
+      <span>Reviews: {reviews} </span>
+      <span>Questions: {questions} </span>
     </div>
   );
 };
