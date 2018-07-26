@@ -37,7 +37,7 @@ class ProductInfo extends React.Component {
           title={{ brand, name, productTier }}
           reviewInfo={{ reviews, stars, questions }} />
         <ItemPricing price={price} isPrime={isPrime} />
-        <ItemOptions options={productOptions} related={relatedProducts} />
+        <ItemOptions options={productOptions} tier={productTier} related={relatedProducts} />
         <ItemDescription description={aboutProduct} />
       </div>
     );
