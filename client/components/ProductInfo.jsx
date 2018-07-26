@@ -10,8 +10,8 @@ class ProductInfo extends React.Component {
     super(props);
     this.state = {
       productId: 1,
-      product: productData.data[0],
-      relatedProducts: [],
+      product: productData.data,
+      relatedProducts: productData.related,
     };
   }
 

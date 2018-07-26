@@ -1,5 +1,5 @@
 module.exports = {
-  data: [{
+  data: {
     id: 1,
     brand: 'Jockey',
     name: 'Kyra',
@@ -26,7 +26,7 @@ module.exports = {
     seller: 'Aamazon',
     thumbnail: 'gluten-free.jpg',
   },
-  {
+  related: [{
     id: 4,
     price: {
       msrp: 119.98,
