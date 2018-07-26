@@ -1,11 +1,13 @@
 import React from 'react';
-import Data from './mockData.js';
+import productData from './mockData.js';
 
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productId: Data,
+      productId: 1,
+      product: productData,
+      relatedProducts: [],
     };
   }
 
@@ -17,9 +19,43 @@ class ProductInfo extends React.Component {
   }
 
   render() {
+    const { brand, name, productTier } = this.state.product;
+    const { reviews, stars, questions } = this.state.product;
+    const { price, isPrime } = this.state.product;
+
     return (
       <div>
-      Hello World
+        <div className="product-info">
+          <a href="">
+            { brand }
+          </a>
+          <h2>
+            { `${brand} ${productTier} ${name}` }
+          </h2>
+        </div>
+        <div>
+          <div>
+            {stars}
+            stars
+          </div>
+          <div>
+            {reviews}
+            reviews
+          </div>
+          <div>
+            {questions}
+            questions
+          </div>
+        </div>
+        <div>
+          <div>
+            $
+            { price.sale }
+          </div>
+          <div>
+            { isPrime ? 'Prime Shipping' : 'Standard Shipping' }
+          </div>
+        </div>
       </div>
     );
   }
