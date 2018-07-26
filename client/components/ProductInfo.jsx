@@ -4,6 +4,7 @@ import ItemOverview from './productInfoComponents/ItemOverview.jsx';
 import ItemPricing from './productInfoComponents/ItemPricing.jsx';
 import ItemOptions from './productInfoComponents/ItemOptions.jsx';
 import ItemDescription from './productInfoComponents/ItemDescription.jsx';
+import SizingTable from './productInfoComponents/SizingTable.jsx';
 
 class ProductInfo extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class ProductInfo extends React.Component {
         <ItemPricing price={price} isPrime={isPrime} />
         <ItemOptions options={productOptions} tier={productTier} related={relatedProducts} />
         <ItemDescription description={aboutProduct} />
+        <SizingTable />
       </div>
     );
   }
