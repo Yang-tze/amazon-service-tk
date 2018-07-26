@@ -1,6 +1,9 @@
 import React from 'react';
 import productData from './mockData.js';
-import ItemOptions from './ItemOptions.jsx';
+import ItemOverview from './productInfoComponents/ItemOverview.jsx';
+import ItemPricing from './productInfoComponents/ItemPricing.jsx';
+import ItemOptions from './productInfoComponents/ItemOptions.jsx';
+import ItemDescription from './productInfoComponents/ItemDescription.jsx';
 
 class ProductInfo extends React.Component {
   constructor(props) {
@@ -20,44 +23,22 @@ class ProductInfo extends React.Component {
   }
 
   render() {
-    const { brand, name, productTier } = this.state.product;
-    const { reviews, stars, questions } = this.state.product;
-    const { price, isPrime } = this.state.product;
+    const { product } = this.state;
+    const { brand, name, productTier } = product;
+    const { reviews, stars, questions } = product;
+    const { price, isPrime } = product;
+    const { productOptions } = product;
+    const { aboutProduct } = product;
+    const { relatedProducts } = this.state;
 
     return (
-      <div>
-        <div className="product-info">
-          <a href="">
-            { brand }
-          </a>
-          <h2>
-            { `${brand} ${productTier} ${name}` }
-          </h2>
-        </div>
-        <div>
-          <div>
-            {stars}
-            stars
-          </div>
-          <div>
-            {reviews}
-            reviews
-          </div>
-          <div>
-            {questions}
-            questions
-          </div>
-        </div>
-        <div>
-          <div>
-            $
-            { price.sale }
-          </div>
-          <div>
-            { isPrime ? 'Prime Shipping' : 'Standard Shipping' }
-          </div>
-        </div>
-        <ItemOptions />
+      <div className="product-info">
+        <ItemOverview
+          title={{ brand, name, productTier }}
+          reviews={{ reviews, stars, questions }} />
+        <ItemPricing price={price} isPrime={isPrime} />
+        <ItemOptions options={productOptions} related={relatedProducts} />
+        <ItemDescription description={aboutProduct} />
       </div>
     );
   }
