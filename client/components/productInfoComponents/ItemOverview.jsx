@@ -2,7 +2,7 @@ import React from 'react';
 import ItemReviews from './ItemReviews.jsx';
 
 const ItemOverview = (props) => {
-  const { reviews } = props;
+  const { reviewInfo } = props;
   const { title } = props;
   return (
     <div>
@@ -14,7 +14,7 @@ const ItemOverview = (props) => {
         <span>{title.productTier} </span>
         <span>{title.name}</span>
       </h3>
-      <ItemReviews reviews={reviews} />
+      <ItemReviews reviewInfo={reviewInfo} />
     </div>
   );
 };
