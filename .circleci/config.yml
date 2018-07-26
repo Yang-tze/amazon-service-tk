@@ -8,7 +8,16 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.11.3-browsers
+        environment:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_DB: product_db
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_PASSWORD:
       - image: circleci/mysql:5.7
+        environment:
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -33,6 +42,12 @@ jobs:
           paths:
             - ./node_modules
           key: dependency-cache-{{ checksum "package.json" }}
-        
+
+      - run: sudo apt install -y mysql-client
+
+      - run: npm run db
+      - run:
+          command: npm run start
+          background: true
       # run tests!
       - run: npm run test

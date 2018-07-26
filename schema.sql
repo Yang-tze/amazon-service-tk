@@ -1,4 +1,4 @@
-DROP DATABASE product_db IF EXISTS;
+DROP DATABASE IF EXISTS product_db;
 
 CREATE DATABASE product_db;
 
