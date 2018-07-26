@@ -1,5 +1,6 @@
 import React from 'react';
 import productData from './mockData.js';
+import ItemOptions from './ItemOptions.jsx';
 
 class ProductInfo extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class ProductInfo extends React.Component {
             { isPrime ? 'Prime Shipping' : 'Standard Shipping' }
           </div>
         </div>
+        <ItemOptions />
       </div>
     );
   }
