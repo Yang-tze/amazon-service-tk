@@ -26,7 +26,7 @@ class ProductInfo extends React.Component {
   render() {
     const { product } = this.state;
     const { brand, name, productTier } = product;
-    const { reviews, stars, questions } = product;
+    const { reviews, questions } = product;
     const { price, isPrime } = product;
     const { productOptions } = product;
     const { aboutProduct } = product;
@@ -36,7 +36,7 @@ class ProductInfo extends React.Component {
       <div className="product-info">
         <ItemOverview
           title={{ brand, name, productTier }}
-          reviewInfo={{ reviews, stars, questions }} />
+          reviewInfo={{ reviews, questions }} />
         <ItemPricing price={price} isPrime={isPrime} />
         <ItemOptions options={productOptions} tier={productTier} related={relatedProducts} />
         <ItemDescription description={aboutProduct} />
