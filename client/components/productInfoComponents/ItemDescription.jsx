@@ -1,10 +1,11 @@
 import React from 'react';
 
 const ItemDescription = (props) => {
+  const { description } = props;
   return (
-    <div>
-      This is the item&#39s description
-    </div>
+    <ul>
+      {description.map((p, i) => <li key={i}>{p}</li>)}
+    </ul>
   );
 };
 
