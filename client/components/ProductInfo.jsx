@@ -18,7 +18,8 @@ class ProductInfo extends React.Component {
   }
 
   get() {
-    fetch('http://127.0.0.1:3003/products/1')
+    const { productId } = this.state;
+    fetch(`http://127.0.0.1:3003/products/${productId}`)
       .then(response => response.json())
       .then(obj => console.log(obj))
       .catch(err => console.error(err));
