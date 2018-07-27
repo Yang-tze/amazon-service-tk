@@ -1,27 +1,12 @@
 import React from 'react';
 
-const Score = (props) => {
-  const { stars } = props;
-  return (
-    <div className="star-modal-score">
-      <span>
-        {stars}
-        &nbsp;
-      </span>
-      <span>
-        out of 5 stars
-      </span>
-    </div>
-  );
-};
-
 const ReviewTable = (props) => {
   const { reviews, reviewCount } = props;
   const percent = num => Math.round(num / reviewCount * 100);
   const meter = num => new Array(Math.round(num / 10)).fill(String.fromCharCode(0x2588)).join('').padEnd(10, String.fromCharCode(0x2581));
 
   return (
-    <tbody className="review-breakdown">
+    <tbody className="reviews-modal-breakdown">
       {reviews.map((el, idx) => {
         return (
           <tr key={`${idx + 1}-star`}>
@@ -50,16 +35,20 @@ const ReviewsModal = (props) => {
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
 
   return (
-    <div className="star-modal-wrapper">
-      <Score stars={stars} />
-      <table className="review-table-modal">
-        <ReviewTable reviews={reviews} reviewCount={reviewCount} />
-      </table>
-      <div>
+    <div className="reviews-modal">
+      <div className="reviews-modal-star-score">
+        <span>
+          {`${stars} out of 5 stars`}
+        </span>
+      </div>
+      <div className="reviews-modal-table-wrapper">
+        <table className="reviews-table-modal">
+          <ReviewTable reviews={reviews} reviewCount={reviewCount} />
+        </table>
+      </div>
+      <div className="reviews-modal-review-count">
         <a href="">
-          See all&nbsp;
-          {reviewCount}
-          &nbsp;reviews
+          {`See all ${reviewCount} reviews`}
         </a>
       </div>
     </div>
