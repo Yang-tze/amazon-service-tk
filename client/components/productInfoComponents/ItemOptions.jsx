@@ -7,8 +7,8 @@ const ItemOptions = (props) => {
   const { related } = props;
   const { tier } = props;
   return (
-    <div>
-      <div>
+    <div className="item-options-module">
+      <div className="options-fit">
         <span>
           Fit:
         </span>
