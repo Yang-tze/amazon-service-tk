@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../../style/productInfoComponents/ItemReviews.css';
 
 const ItemReviews = (props) => {
   const { reviewInfo } = props;
@@ -6,10 +7,11 @@ const ItemReviews = (props) => {
   const reviewCount = reviews.reduce((acc, val) => acc + val, 0);
   const weighted = reviews.reduce((acc, val, idx) => acc + (val * parseInt(idx, 10)), 0);
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
+
   return (
     <div className="reviews-module">
       <span className="reviews-star-meter">
-        <div className="reviews-star-wrapper">
+        <div className={styles.stars}>
           {stars}
           &nbsp;
           <img src="" alt="stars" />

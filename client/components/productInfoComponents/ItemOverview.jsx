@@ -7,15 +7,15 @@ const ItemOverview = (props) => {
   const { title } = props;
   return (
     <div className={styles.overview}>
-      <div className="overview-brand">
+      <div className={styles.brand}>
         <a href="">
           {title.brand}
         </a>
       </div>
-      <div className="overview-heading">
-        <h3>
+      <div className={styles.heading}>
+        <span>
           {`${title.brand} ${title.productTier} ${title.name}`}
-        </h3>
+        </span>
       </div>
       <ItemReviews reviewInfo={reviewInfo} />
     </div>
