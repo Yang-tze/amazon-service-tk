@@ -5,15 +5,17 @@ const ItemOverview = (props) => {
   const { reviewInfo } = props;
   const { title } = props;
   return (
-    <div>
-      <div>
-        <a href="">{title.brand}</a>
+    <div className="item-overview-module">
+      <div className="overview-brand">
+        <a href="">
+          {title.brand}
+        </a>
       </div>
-      <h3>
-        <span>{title.brand} </span>
-        <span>{title.productTier} </span>
-        <span>{title.name}</span>
-      </h3>
+      <div className="overview-heading">
+        <h3>
+          {`${title.brand} ${title.productTier} ${title.name}`}
+        </h3>
+      </div>
       <ItemReviews reviewInfo={reviewInfo} />
     </div>
   );
