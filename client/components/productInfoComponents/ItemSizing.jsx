@@ -7,7 +7,7 @@ const ItemSizing = (props) => {
       <h4>
         Size:
       </h4>
-      <div className="options-size-dropdown">
+      <div className="">
         <select>
           <option />
           {sizing.size.map(el => <option key={el}>{el}</option>)}
