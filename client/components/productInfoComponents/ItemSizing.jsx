@@ -3,11 +3,11 @@ import React from 'react';
 const ItemSizing = (props) => {
   const { sizing } = props;
   return (
-    <div>
+    <div className="options-size">
       <h4>
-        Sizing:
+        Size:
       </h4>
-      <div>
+      <div className="options-size-dropdown">
         <select>
           <option />
           {sizing.size.map(el => <option key={el}>{el}</option>)}
