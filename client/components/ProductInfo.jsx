@@ -6,6 +6,7 @@ import ItemOptions from './productInfoComponents/ItemOptions.jsx';
 import ItemDescription from './productInfoComponents/ItemDescription.jsx';
 import SizingTable from './productInfoComponents/SizingTable.jsx';
 import ReviewsModal from './productInfoComponents/ReviewsModal.jsx';
+import styles from '../style/ProductInfo.css';
 
 class ProductInfo extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class ProductInfo extends React.Component {
     const { relatedProducts } = this.state;
 
     return (
-      <div className="product-info">
+      <div className={styles.info}>
         <ItemOverview
           title={{ brand, name, productTier }}
           reviewInfo={{ reviews, questions }} />
