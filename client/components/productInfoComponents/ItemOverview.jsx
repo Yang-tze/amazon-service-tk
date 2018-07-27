@@ -18,6 +18,7 @@ const ItemOverview = (props) => {
         </span>
       </div>
       <ItemReviews reviewInfo={reviewInfo} />
+      <div className={styles.divider} />
     </div>
   );
 };

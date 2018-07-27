@@ -1,5 +1,8 @@
 .info {
   max-width: 600px;
   min-width: 400px;
-  font: 0.8em "Arial";
+  font-size: 13px;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  line-height: 19px;
+  color: #111;
 }
