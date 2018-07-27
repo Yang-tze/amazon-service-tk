@@ -44,16 +44,16 @@ const ReviewTable = (props) => {
 };
 
 const ReviewsModal = (props) => {
-  const { reviewInfo } = props;
-  const reviewCount = reviewInfo.reduce((acc, val) => acc + val, 0);
-  const weighted = reviewInfo.reduce((acc, val, idx) => acc + (val * parseInt(idx, 10)), 0);
+  const { reviews } = props;
+  const reviewCount = reviews.reduce((acc, val) => acc + val, 0);
+  const weighted = reviews.reduce((acc, val, idx) => acc + (val * parseInt(idx, 10)), 0);
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
 
   return (
     <div className="star-modal-wrapper">
       <Score stars={stars} />
       <table className="review-table-modal">
-        <ReviewTable reviews={reviewInfo} reviewCount={reviewCount} />
+        <ReviewTable reviews={reviews} reviewCount={reviewCount} />
       </table>
     </div>
   );
