@@ -55,6 +55,13 @@ const ReviewsModal = (props) => {
       <table className="review-table-modal">
         <ReviewTable reviews={reviews} reviewCount={reviewCount} />
       </table>
+      <div>
+        <a href="">
+          See all&nbsp;
+          {reviewCount}
+          &nbsp;reviews
+        </a>
+      </div>
     </div>
   );
 };
