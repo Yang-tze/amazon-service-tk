@@ -17,16 +17,16 @@ const ItemReviews = (props) => {
           <img src="" alt="stars" />
         </div>
       </span>
-      <span className="reviews-review-count">
-        <a href="">
+      <span>
+        <a href="" className={styles.link}>
           {`${reviewCount} customer reviews`}
         </a>
       </span>
       <span>
         &nbsp;|&nbsp;
       </span>
-      <span className="reviews-question-count">
-        <a href="">
+      <span>
+        <a href="" className={styles.link}>
           {`${questions} answered questions`}
         </a>
       </span>

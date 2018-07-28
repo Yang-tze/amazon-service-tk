@@ -7,8 +7,8 @@ const ItemOverview = (props) => {
   const { title } = props;
   return (
     <div className={styles.overview}>
-      <div className={styles.brand}>
-        <a href="">
+      <div>
+        <a href="" className={styles.brand}>
           {title.brand}
         </a>
       </div>
