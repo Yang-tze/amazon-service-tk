@@ -5,6 +5,13 @@
 
 .brand {
   padding-bottom: 5px;
+  color: #0066c0;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.brand:hover {
+  text-decoration: underline;
 }
 
 .heading {

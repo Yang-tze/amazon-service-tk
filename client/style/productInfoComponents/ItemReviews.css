@@ -2,3 +2,13 @@
   width: 100px;
   display: inline-block;
 }
+
+.link {
+  color: #0066c0;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
