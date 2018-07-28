@@ -18,7 +18,7 @@ module.exports = {
       'Umami coloring book enim, post-ironic aliquip taxidermy neutra adipisicing mixtape cupidatat glossier',
       'Distillery pinterest butcher farm-to-table, iceland synth brunch la croix',
     ],
-    isPrime: 0,
+    isPrime: 1,
     stockCount: 72,
     reviews: [7, 5, 12, 85, 120],
     questions: 48,
