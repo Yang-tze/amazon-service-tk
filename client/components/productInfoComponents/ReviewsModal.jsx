@@ -16,7 +16,7 @@ const ReviewTable = (props) => {
             </td>
             <td className={styles.middleColumn}>
               <div className={styles.meter} value={meter(percent(el))}>
-                <div className={styles.progress}/>
+                <div className={styles.progress} style={{ width: `${percent(el)}%` }} />
               </div>
             </td>
             <td className={styles.rightColumn}>
@@ -39,7 +39,9 @@ const ReviewsModal = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.score}>
-        {`${stars} out of 5 stars`}
+        <a href="">
+          {`${stars} out of 5 stars`}
+        </a>
       </div>
       <div>
         <table className={styles.table}>
