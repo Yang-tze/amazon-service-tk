@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../../style/productInfoComponents/SizingTable.css';
 
 const CasualShirts = () => {
   return (
@@ -138,22 +139,34 @@ const PoloShirts = () => {
 
 const SizingTable = (props) => {
   return (
-    <div className="sizing-popup-window">
-      <div className="sizing-title-bar">
-        <h4>Size Chart</h4>
+    <div className={styles.modal}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <button className={styles.button}>
+            <div className={styles.x}>x</div>
+          </button>
+          <h4 className={styles.h4}>Size Chart</h4>
+        </div>
+        <div className={styles.body}>
+          <div className={styles.content}>
+            <div className="sizing-title-bar">
+              <h4>Men's Size Chart</h4>
+            </div>
+            <h3>Casual Shirts</h3>
+            <table>
+              <CasualShirts />
+            </table>
+            <h3>T-Shirts</h3>
+            <table>
+              <TShirts />
+            </table>
+            <h3>Polo</h3>
+            <table>
+              <PoloShirts />
+            </table>
+          </div>
+        </div>
       </div>
-      <h3>Casual Shirts</h3>
-      <table>
-        <CasualShirts />
-      </table>
-      <h3>T-Shirts</h3>
-      <table>
-        <TShirts />
-      </table>
-      <h3>Polo</h3>
-      <table>
-        <PoloShirts />
-      </table>
     </div>
   );
 };
