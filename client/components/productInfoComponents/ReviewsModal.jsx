@@ -1,23 +1,25 @@
 import React from 'react';
+import styles from '../../style/productInfoComponents/ReviewsModal.css';
 
 const ReviewTable = (props) => {
   const { reviews, reviewCount } = props;
   const percent = num => Math.round(num / reviewCount * 100);
-  const meter = num => new Array(Math.round(num / 10)).fill(String.fromCharCode(0x2588)).join('').padEnd(10, String.fromCharCode(0x2581));
+  const meter = num => new Array(Math.round(num / 10)).fill('–').join('').padEnd(10, '.');
 
   return (
     <tbody className="reviews-modal-breakdown">
       {reviews.map((el, idx) => {
         return (
-          <tr key={`${idx + 1}-star`}>
-            <td>
-              {idx + 1}
-              &nbsp;star
+          <tr className={styles.row} key={`${idx + 1}-star`}>
+            <td className={styles.leftColumn}>
+              {`${idx + 1} star`}
             </td>
-            <td>
-              {meter(percent(el))}
+            <td className={styles.middleColumn}>
+              <div className={styles.meter} value={meter(percent(el))}>
+                <div className={styles.progress}/>
+              </div>
             </td>
-            <td>
+            <td className={styles.rightColumn}>
               {percent(el)}
               %
             </td>
@@ -35,21 +37,17 @@ const ReviewsModal = (props) => {
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
 
   return (
-    <div className="reviews-modal">
-      <div className="reviews-modal-star-score">
-        <span>
-          {`${stars} out of 5 stars`}
-        </span>
+    <div className={styles.container}>
+      <div className={styles.score}>
+        {`${stars} out of 5 stars`}
       </div>
-      <div className="reviews-modal-table-wrapper">
-        <table className="reviews-table-modal">
+      <div>
+        <table className={styles.table}>
           <ReviewTable reviews={reviews} reviewCount={reviewCount} />
         </table>
       </div>
-      <div className="reviews-modal-review-count">
-        <a href="">
-          {`See all ${reviewCount} reviews`}
-        </a>
+      <div className={styles.reviewCount}>
+        {`See all ${reviewCount} reviews`}
       </div>
     </div>
   );
