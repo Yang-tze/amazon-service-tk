@@ -39,9 +39,7 @@ const ReviewsModal = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.score}>
-        <a href="">
-          {`${stars} out of 5 stars`}
-        </a>
+        {`${stars} out of 5 stars`}
       </div>
       <div>
         <table className={styles.table}>

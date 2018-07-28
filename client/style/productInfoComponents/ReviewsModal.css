@@ -32,10 +32,16 @@
   cursor: pointer;
   padding: 0px;
   text-align: right;
+  cursor: default;
 }
 
 .row {
   padding: 0px;
+}
+
+.row:hover .leftColumn {
+  text-decoration: underline;
+  color: #B12704!important;
 }
 
 .score {
@@ -51,6 +57,12 @@
   padding-top: 13px;
   text-align: center;
   color: #0066c0;
+}
+
+.reviewCount:hover {
+  text-decoration: underline;
+  color: #B12704!important;
+  cursor: pointer;
 }
 
 .meter {
