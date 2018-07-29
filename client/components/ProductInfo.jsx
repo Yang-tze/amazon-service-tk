@@ -13,9 +13,39 @@ class ProductInfo extends React.Component {
     super(props);
     this.state = {
       productId: 1,
+      sizingModalVisibility: false,
+      reviewsModalVisibility: false,
       product: productData.data,
       relatedProducts: productData.related,
     };
+  }
+
+  onClick(e) {
+    e.preventDefault();
+    const { sizingModalVisibility } = this.state;
+    this.setState({
+      sizingModalVisibility: !sizingModalVisibility,
+    });
+  }
+
+  onMouseHover(e) {
+    e.preventDefault();
+    const { reviewsModalVisibility } = this.state;
+    if (!reviewsModalVisibility) {
+      this.setState({
+        reviewsModalVisibility: true,
+      });
+    }
+  }
+
+  onMouseLeave(e) {
+    e.preventDefault();
+    const { reviewsModalVisibility } = this.state;
+    if (reviewsModalVisibility) {
+      this.setState({
+        reviewsModalVisibility: false,
+      });
+    }
   }
 
   get() {
@@ -27,24 +57,32 @@ class ProductInfo extends React.Component {
   }
 
   render() {
-    const { product } = this.state;
+    const { product, relatedProducts, sizingModalVisibility } = this.state;
     const { brand, name, productTier } = product;
     const { reviews, questions } = product;
     const { price, isPrime } = product;
     const { productOptions } = product;
     const { aboutProduct } = product;
-    const { relatedProducts } = this.state;
+    const { onMouseHover, onMouseLeave, onClick } = this;
 
     return (
       <div className={styles.info}>
         <ItemOverview
           title={{ brand, name, productTier }}
           reviewInfo={{ reviews, questions }} />
-        <ReviewsModal reviews={reviews} />
-        <ItemPricing price={price} isPrime={isPrime} />
-        <ItemOptions options={productOptions} tier={productTier} related={relatedProducts} />
+        <ItemPricing price={price}
+          isPrime={isPrime}
+          review={reviews}
+          onMouseLeave={onMouseLeave.bind(this)}
+          onMouseHover={onMouseHover.bind(this)} />
+        <ItemOptions
+          options={productOptions}
+          tier={productTier}
+          related={relatedProducts}
+          onClick={onClick.bind(this)}
+          visibility={sizingModalVisibility} />
         <ItemDescription description={aboutProduct} />
-        <SizingTable />
+        <SizingTable visibility={sizingModalVisibility} onClick={onClick.bind(this)} />
       </div>
     );
   }
