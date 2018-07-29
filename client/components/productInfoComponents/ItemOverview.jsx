@@ -1,10 +1,15 @@
 import React from 'react';
-import ItemReviews from './ItemReviews.jsx';
+import ItemReviews from './ItemReviews';
 import styles from '../../style/productInfoComponents/ItemOverview.css';
 
 const ItemOverview = (props) => {
-  const { reviewInfo } = props;
-  const { title } = props;
+  const {
+    reviewInfo,
+    title,
+    onMouseEnter,
+    onMouseLeave,
+  } = props;
+
   return (
     <div className={styles.overview}>
       <div>
@@ -17,7 +22,7 @@ const ItemOverview = (props) => {
           {`${title.brand} ${title.productTier} ${title.name}`}
         </span>
       </div>
-      <ItemReviews reviewInfo={reviewInfo} />
+      <ItemReviews reviewInfo={reviewInfo} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
       <div className={styles.divider} />
     </div>
   );

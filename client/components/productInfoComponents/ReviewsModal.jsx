@@ -31,13 +31,18 @@ const ReviewTable = (props) => {
 };
 
 const ReviewsModal = (props) => {
-  const { reviews } = props;
+  const { reviews, visibility } = props;
   const reviewCount = reviews.reduce((acc, val) => acc + val, 0);
   const weighted = reviews.reduce((acc, val, idx) => acc + (val * parseInt(idx, 10)), 0);
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
+  const style = {
+    visibility: visibility ? 'visible' : 'hidden',
+    opacity: visibility ? '1' : '0',
+    transition: visibility ? '0.4s opacity ease-in-out' : 'visibility 0s linear 0.4s, opacity 0.4s ease-in-out',
+  };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={style}>
       <div className={styles.score}>
         {`${stars} out of 5 stars`}
       </div>

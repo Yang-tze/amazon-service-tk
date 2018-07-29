@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../../style/productInfoComponents/ItemReviews.css';
 
 const ItemReviews = (props) => {
-  const { reviewInfo } = props;
+  const { reviewInfo, onMouseEnter, onMouseLeave } = props;
   const { reviews, questions } = reviewInfo;
   const reviewCount = reviews.reduce((acc, val) => acc + val, 0);
   const weighted = reviews.reduce((acc, val, idx) => acc + (val * parseInt(idx, 10)), 0);
@@ -10,7 +10,7 @@ const ItemReviews = (props) => {
 
   return (
     <div className="reviews-module">
-      <span className="reviews-star-meter">
+      <span className="reviews-star-meter" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <div className={styles.stars}>
           {stars}
           &nbsp;

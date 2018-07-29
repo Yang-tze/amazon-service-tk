@@ -1,3 +1,7 @@
+.container {
+  position: relative;
+}
+
 .returns {
   color: #0066c0;
   display: inline-block;

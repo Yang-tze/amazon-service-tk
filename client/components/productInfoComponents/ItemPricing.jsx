@@ -1,11 +1,23 @@
 import React from 'react';
 import styles from '../../style/productInfoComponents/ItemPricing.css';
+import ReviewsModal from './ReviewsModal';
 
 const ItemPricing = (props) => {
-  const { price } = props;
-  const { isPrime } = props;
+  const { onMouseHover, onMouseLeave } = props;
+  const {
+    price,
+    isPrime,
+    reviews,
+    visibility,
+  } = props;
+
   return (
-    <div>
+    <div className={styles.container}>
+      <ReviewsModal
+        reviews={reviews}
+        onMouseHover={onMouseHover}
+        onMouseLeave={onMouseLeave}
+        visibility={visibility} />
       <table>
         <tbody>
           <tr>

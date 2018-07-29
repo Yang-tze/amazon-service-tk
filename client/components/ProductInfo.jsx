@@ -27,20 +27,27 @@ class ProductInfo extends React.Component {
     });
   }
 
-  onMouseHover(e) {
+  onMouseEnter(e) {
     e.preventDefault();
-    const { reviewsModalVisibility } = this.state;
-    if (!reviewsModalVisibility) {
-      this.setState({
-        reviewsModalVisibility: true,
-      });
-    }
+    const { state } = this;
+    state.reviewsModalVisibility = true;
+    setTimeout(this.delayedVis.bind(this), 400);
   }
 
   onMouseLeave(e) {
     e.preventDefault();
-    const { reviewsModalVisibility } = this.state;
-    if (reviewsModalVisibility) {
+    const { state } = this;
+    state.reviewsModalVisibility = false;
+    this.delayedVis.call(this);
+  }
+
+  delayedVis() {
+    const { state } = this;
+    if (state.reviewsModalVisibility) {
+      this.setState({
+        reviewsModalVisibility: true,
+      });
+    } else {
       this.setState({
         reviewsModalVisibility: false,
       });
@@ -56,24 +63,29 @@ class ProductInfo extends React.Component {
   }
 
   render() {
-    const { product, relatedProducts, sizingModalVisibility } = this.state;
+    const {
+      product, relatedProducts, sizingModalVisibility, reviewsModalVisibility,
+    } = this.state;
     const { brand, name, productTier } = product;
     const { reviews, questions } = product;
     const { price, isPrime } = product;
     const { productOptions } = product;
     const { aboutProduct } = product;
-    const { onMouseHover, onMouseLeave, onClick } = this;
+    const { onMouseEnter, onMouseLeave, onClick } = this;
 
     return (
       <div className={styles.info}>
         <ItemOverview
           title={{ brand, name, productTier }}
-          reviewInfo={{ reviews, questions }} />
-        <ItemPricing price={price}
+          reviewInfo={{ reviews, questions }}
+          onMouseEnter={onMouseEnter.bind(this)}
+          onMouseLeave={onMouseLeave.bind(this)} />
+        <ItemPricing
+          price={price}
           isPrime={isPrime}
           reviews={reviews}
           onMouseLeave={onMouseLeave.bind(this)}
-          onMouseHover={onMouseHover.bind(this)} />
+          visibility={reviewsModalVisibility} />
         <ItemOptions
           options={productOptions}
           tier={productTier}

@@ -7,7 +7,7 @@
   width: 200px;
   box-shadow: 0 2px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(0,0,0,.1);
   background-color: #fff;
-  visibility: visible;
+  visibility: hidden;
   margin: 0px;
   position: absolute;
   top: 0px;
