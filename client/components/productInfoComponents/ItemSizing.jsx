@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ItemSizing = (props) => {
-  const { sizing } = props;
+  const { sizing, onClick } = props;
   return (
     <div className="options-size">
       <h4>
@@ -12,7 +12,7 @@ const ItemSizing = (props) => {
           <option />
           {sizing.size.map(el => <option key={el}>{el}</option>)}
         </select>
-        <a href="">
+        <a href="" onClick={onClick}>
           Size Chart
         </a>
       </div>
