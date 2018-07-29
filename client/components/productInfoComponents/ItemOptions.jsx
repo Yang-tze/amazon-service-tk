@@ -3,9 +3,13 @@ import ItemSizing from './ItemSizing.jsx';
 import ItemColors from './ItemColors.jsx';
 
 const ItemOptions = (props) => {
-  const { options } = props;
-  const { related } = props;
-  const { tier } = props;
+  const {
+    options,
+    related,
+    tier,
+    onClick,
+  } = props;
+
   return (
     <div className="item-options-module">
       <div className="options-fit">
@@ -16,7 +20,7 @@ const ItemOptions = (props) => {
           As expected (81%)
         </a>
       </div>
-      <ItemSizing sizing={options} />
+      <ItemSizing sizing={options} onClick={onClick} />
       <ItemColors tier={tier} related={related} />
     </div>
   );
