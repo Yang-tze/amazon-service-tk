@@ -7,8 +7,6 @@
   width: auto;
   height: auto;
   background-color: rgba(0,0,0,0.5);
-  visibility: hidden;
-  transition: 0.4s opacity ease-in-out;
 }
 
 .modal.modalOn {

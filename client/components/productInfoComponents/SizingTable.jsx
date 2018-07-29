@@ -138,11 +138,18 @@ const PoloShirts = () => {
 };
 
 const SizingTable = (props) => {
+  const { visibility, onClick } = props;
+  const style = {
+    visibility: visibility ? 'visible' : 'hidden',
+    opacity: visibility ? '1' : '0',
+    transition: visibility ? '0.4s opacity ease-in-out' : 'visibility 0s linear 0.4s, opacity 0.4s ease-in-out',
+  };
+
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} style={style}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <button className={styles.button}>
+          <button className={styles.button} type="button" onClick={onClick}>
             <div className={styles.x}>x</div>
           </button>
           <h4 className={styles.h4}>Size Chart</h4>
