@@ -1,11 +1,10 @@
 import React from 'react';
-import productData from './mockData.js';
-import ItemOverview from './productInfoComponents/ItemOverview.jsx';
-import ItemPricing from './productInfoComponents/ItemPricing.jsx';
-import ItemOptions from './productInfoComponents/ItemOptions.jsx';
-import ItemDescription from './productInfoComponents/ItemDescription.jsx';
-import SizingTable from './productInfoComponents/SizingTable.jsx';
-import ReviewsModal from './productInfoComponents/ReviewsModal.jsx';
+import productData from './mockData';
+import ItemOverview from './productInfoComponents/ItemOverview';
+import ItemPricing from './productInfoComponents/ItemPricing';
+import ItemOptions from './productInfoComponents/ItemOptions';
+import ItemDescription from './productInfoComponents/ItemDescription';
+import SizingTable from './productInfoComponents/SizingTable';
 import styles from '../style/ProductInfo.css';
 
 class ProductInfo extends React.Component {
@@ -72,7 +71,7 @@ class ProductInfo extends React.Component {
           reviewInfo={{ reviews, questions }} />
         <ItemPricing price={price}
           isPrime={isPrime}
-          review={reviews}
+          reviews={reviews}
           onMouseLeave={onMouseLeave.bind(this)}
           onMouseHover={onMouseHover.bind(this)} />
         <ItemOptions
