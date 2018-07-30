@@ -17,6 +17,7 @@ class ProductInfo extends React.Component {
       product: productData.data,
       relatedProducts: productData.related,
     };
+    this.get();
   }
 
   onClick(e) {
@@ -58,7 +59,13 @@ class ProductInfo extends React.Component {
     const { productId } = this.state;
     fetch(`http://127.0.0.1:3003/products/${productId}`)
       .then(response => response.json())
-      .then(obj => console.log(obj))
+      .then((obj) => {
+        const { data, related } = obj;
+        this.setState({
+          product: data,
+          relatedProducts: related,
+        });
+      })
       .catch(err => console.error(err));
   }
 
@@ -66,11 +73,14 @@ class ProductInfo extends React.Component {
     const {
       product, relatedProducts, sizingModalVisibility, reviewsModalVisibility,
     } = this.state;
-    const { brand, name, productTier } = product;
-    const { reviews, questions } = product;
-    const { price, isPrime } = product;
-    const { productOptions } = product;
-    const { aboutProduct } = product;
+
+    const productTier = product.product_tier;
+    const isPrime = product.is_prime;
+    const productOptions = product.product_options;
+    const aboutProduct = product.about_product;
+
+    const { brand, name } = product;
+    const { reviews, questions, price } = product;
     const { onMouseEnter, onMouseLeave, onClick } = this;
 
     return (
