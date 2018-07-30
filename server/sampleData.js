@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const brand = [
   'Nike',
   'Adidas',
@@ -148,20 +150,18 @@ const generator = () => {
   let gBrand;
   let gType;
   let gName;
-  let gReviews;
-  let gStars;
   let gQuestions;
   let len;
   let random;
   let holder;
   let spot;
 
+  const randomNum = () => Math.floor(Math.random() * 1000);
+
   while (i <= 100) {
     gBrand = brand[Math.floor(Math.random() * brand.length)];
     gType = type[Math.floor(Math.random() * type.length)];
     gName = name[Math.floor(Math.random() * name.length)];
-    gReviews = Math.floor(Math.random() * 1000);
-    gStars = Math.floor(Math.random() * 5) + 1;
     gQuestions = Math.floor(Math.random() * 50);
 
     len = tier.length;
@@ -173,7 +173,7 @@ const generator = () => {
 
       storage.push({
         id: i,
-        tier: tier[spot],
+        productTier: tier[spot],
         brand: gBrand,
         type: gType,
         name: gName,
@@ -181,8 +181,7 @@ const generator = () => {
         price: {
           msrp: Math.ceil(Math.random() * 400) - 0.02,
         },
-        reviews: gReviews,
-        stars: gStars,
+        reviews: [null, null, null, null, null].map(() => randomNum()),
         questions: gQuestions,
         isPrime: Math.floor(Math.random() * 2),
         stockCount: Math.floor(Math.random() * 100),
@@ -207,6 +206,35 @@ const generator = () => {
   return storage;
 };
 
-const queryArray = generator().reduce((acc, obj) => {
-  return `${acc}INSERT INTO products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) VALUES(${obj.id}, '${obj.brand}', '${obj.name}', '${obj.tier}', '${JSON.stringify(obj.productOptions)}', '${JSON.stringify(obj.price)}', '${JSON.stringify(obj.aboutProduct)}', ${obj.isPrime}, ${obj.stockCount}, ${obj.reviews}, ${obj.stars}, ${obj.questions}, '${obj.seller}', '${obj.tier}.jpg');\n`;
+let queryStatements = `DROP DATABASE IF EXISTS product_db;
+
+CREATE DATABASE product_db;
+
+USE product_db;
+
+CREATE TABLE products (
+id INTEGER PRIMARY KEY,
+brand VARCHAR(100) NOT NULL,
+name VARCHAR(200) NOT NULL,
+product_tier VARCHAR(50) NOT NULL,
+product_options JSON NOT NULL,
+price JSON NOT NULL,
+about_product JSON NOT NULL,
+is_prime BOOLEAN NOT NULL,
+stock_count INTEGER NOT NULL,
+reviews JSON NOT NULL,
+questions INTEGER NOT NULL,
+seller VARCHAR(150) NOT NULL,
+thumbnail TEXT NOT NULL
+);
+
+`;
+
+queryStatements += generator().reduce((acc, obj) => {
+  return `${acc}INSERT INTO products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, questions, seller, thumbnail) VALUES(${obj.id}, '${obj.brand}', '${obj.name}', '${obj.productTier}', '${JSON.stringify(obj.productOptions)}', '${JSON.stringify(obj.price)}', '${JSON.stringify(obj.aboutProduct)}', ${obj.isPrime}, ${obj.stockCount}, '${JSON.stringify(obj.reviews)}', ${obj.questions}, '${obj.seller}', '${obj.productTier}.jpg');\n`;
 }, '');
+
+fs.writeFile('./schema.sql', queryStatements, 'utf8', (err) => {
+  if (err) throw err;
+  console.log('success!');
+});
