@@ -1,6 +1,7 @@
 .stars {
   width: 100px;
   display: inline-block;
+  cursor: pointer;
 }
 
 .link {
