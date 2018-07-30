@@ -11,8 +11,8 @@ const ItemOptions = (props) => {
   } = props;
 
   return (
-    <div className="item-options-module">
-      <div className="options-fit">
+    <div>
+      <div>
         <span>
           Fit:
         </span>

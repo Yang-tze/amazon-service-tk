@@ -3,26 +3,26 @@ import styles from '../../style/productInfoComponents/SizingTable.css';
 
 const CasualShirts = () => {
   return (
-    <tbody className="sizing-table">
+    <tbody>
       <tr>
         <th>
           US
         </th>
         <th>
           Chest
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
         <th>
           Waist
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
         <th>
           Sleeve length
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
         <th>
           Neck
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
       </tr>
       <tr>
@@ -59,18 +59,18 @@ const CasualShirts = () => {
 
 const TShirts = () => {
   return (
-    <tbody className="sizing-table">
+    <tbody>
       <tr>
         <th>
           US
         </th>
         <th>
           Chest
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
         <th>
           Waist
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
       </tr>
       <tr>
@@ -99,18 +99,18 @@ const TShirts = () => {
 
 const PoloShirts = () => {
   return (
-    <tbody className="sizing-table">
+    <tbody>
       <tr>
         <th>
           US
         </th>
         <th>
           Chest
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
         <th>
           Waist
-          <span className="units">(in inches)</span>
+          <span>(in inches)</span>
         </th>
       </tr>
       <tr>
@@ -156,7 +156,7 @@ const SizingTable = (props) => {
         </div>
         <div className={styles.body}>
           <div className={styles.content}>
-            <div className="sizing-title-bar">
+            <div>
               <h4>Men's Size Chart</h4>
             </div>
             <h3>Casual Shirts</h3>

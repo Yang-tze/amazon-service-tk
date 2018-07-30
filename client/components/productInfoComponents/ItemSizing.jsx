@@ -3,7 +3,7 @@ import React from 'react';
 const ItemSizing = (props) => {
   const { sizing, onClick } = props;
   return (
-    <div className="options-size">
+    <div>
       <h4>
         Size:
       </h4>

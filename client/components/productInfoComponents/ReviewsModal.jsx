@@ -7,7 +7,7 @@ const ReviewTable = (props) => {
   const meter = num => new Array(Math.round(num / 10)).fill('–').join('').padEnd(10, '.');
 
   return (
-    <tbody className="reviews-modal-breakdown">
+    <tbody>
       {reviews.map((el, idx) => {
         return (
           <tr className={styles.row} key={`${idx + 1}-star`}>

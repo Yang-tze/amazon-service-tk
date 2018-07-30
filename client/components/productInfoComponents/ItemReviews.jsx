@@ -9,8 +9,8 @@ const ItemReviews = (props) => {
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
 
   return (
-    <div className="reviews-module">
-      <span className="reviews-star-meter" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div>
+      <span onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <div className={styles.stars}>
           {stars}
           &nbsp;
