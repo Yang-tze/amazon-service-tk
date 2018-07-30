@@ -3,8 +3,8 @@ module.exports = {
     id: 1,
     brand: 'Jockey',
     name: 'Kyra',
-    productTier: 'Gluten-Free',
-    productOptions: {
+    product_tier: 'Nano',
+    product_options: {
       color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
       size: ['S', 'M', 'L', 'XL'],
     },
@@ -13,17 +13,17 @@ module.exports = {
       list: 99.88,
       sale: 99.88,
     },
-    aboutProduct: [
+    about_product: [
       'Four dollar toast velit anim, ex cronut quis brooklyn hot chicken',
       'Umami coloring book enim, post-ironic aliquip taxidermy neutra adipisicing mixtape cupidatat glossier',
       'Distillery pinterest butcher farm-to-table, iceland synth brunch la croix',
     ],
-    isPrime: 1,
+    is_prime: 1,
     stockCount: 72,
     reviews: [7, 5, 12, 85, 120],
     questions: 48,
     seller: 'Aamazon',
-    thumbnail: 'gluten-free.jpg',
+    thumbnail: 'Nano.jpg',
   },
   related: [{
     id: 4,
@@ -32,7 +32,7 @@ module.exports = {
       list: 89.98,
       sale: 89.98,
     },
-    productTier: 'Turbo',
+    product_tier: 'Turbo',
     thumbnail: 'Turbo.jpg',
   }],
 };
