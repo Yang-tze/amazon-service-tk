@@ -1,13 +1,14 @@
 import React from 'react';
+import styles from '../../style/productInfoComponents/ItemColors.css';
 
 const ItemColors = (props) => {
   const { tier } = props;
   const { related } = props;
   return (
-    <div className="colors">
-      { related.length > 0 ? <img src={`${tier}.jpg`} alt="product" /> : <span></span> }
-      { related.map(el => <img src={el.thumbnail} alt="related product" key={el.id} />) }
-    </div>
+    <ul className="item-colors">
+      { related.length > 0 ? <li className={styles.colors}><img src={`${tier}.jpg`} alt="product" /></li> : <span></span> }
+      { related.map(el => <li className={styles.colors}><img src={el.thumbnail} alt="related product" key={el.id} /></li>) }
+    </ul>
   );
 };
 
