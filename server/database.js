@@ -6,6 +6,16 @@ const connection = mysql.createConnection({
   database: 'product_db',
 });
 
+const parseData = function parseStringifiedObjectsFromDataQuery(object) {
+  const keys = ['about_product', 'price', 'reviews', 'product_options'];
+  keys.forEach((key) => {
+    if (object[key]) {
+      object[key] = JSON.parse(object[key]);
+    }
+  });
+  return object;
+};
+
 const getProduct = function getProductInformation(productId, callback) {
   connection.query(`select * from products where id=${productId}`, (err, results) => {
     if (err) console.error(err);
@@ -21,12 +31,12 @@ const getRelated = function getRelatedProducts(productName, productId, callback)
 };
 
 const getAll = function getProductAndRelatedProducts(productId, callback) {
-  let storage;
+  const storage = {};
   getProduct(productId, (results) => {
-    storage = results;
-    const productName = storage[0].name;
+    storage.data = parseData(results[0]);
+    const productName = results[0].name;
     getRelated(productName, productId, (relatedResults) => {
-      storage = storage.concat(relatedResults);
+      storage.related = relatedResults.map(object => parseData(object));
       callback(storage);
     });
   });
