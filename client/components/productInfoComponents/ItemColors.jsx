@@ -6,8 +6,8 @@ const ItemColors = (props) => {
   const { related } = props;
   return (
     <ul>
-      { related.length > 0 ? <li className={styles.colors}><img src={`${tier}.jpg`} alt="product" /></li> : <span></span> }
-      { related.map(el => <li className={styles.colors}><img src={el.thumbnail} alt="related product" key={el.id} /></li>) }
+      { related.length > 0 ? <li className={styles.colors}><img src={`https://s3-us-west-1.amazonaws.com/viamis/${tier}.jpg`} alt={tier} /></li> : <span></span> }
+      { related.map(el => <li className={styles.colors}><img src={`https://s3-us-west-1.amazonaws.com/viamis/${el.thumbnail}`} alt={el.thumbnail} key={el.id} /></li>) }
     </ul>
   );
 };
