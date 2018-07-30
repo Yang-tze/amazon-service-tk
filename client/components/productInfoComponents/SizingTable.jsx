@@ -4,7 +4,7 @@ import styles from '../../style/productInfoComponents/SizingTable.css';
 const CasualShirts = () => {
   return (
     <tbody>
-      <tr>
+      <tr className={styles.trh}>
         <th>
           US
         </th>
@@ -160,15 +160,15 @@ const SizingTable = (props) => {
               <h4>Men's Size Chart</h4>
             </div>
             <h3>Casual Shirts</h3>
-            <table>
+            <table className={styles.table}>
               <CasualShirts />
             </table>
             <h3>T-Shirts</h3>
-            <table>
+            <table className={styles.table}>
               <TShirts />
             </table>
             <h3>Polo</h3>
-            <table>
+            <table className={styles.table}>
               <PoloShirts />
             </table>
           </div>
