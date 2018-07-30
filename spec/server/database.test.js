@@ -11,11 +11,11 @@ const connection = mysql.createConnection({
 
 beforeAll(() => {
   return new Promise((resolve, reject) => {
-    connection.query(`insert into products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) values(3224, "nike", "valkerie", "gluten-free", '{"colors": ["black", "white"], "sizes": ["small", "large"]}', '{"sale": 39.98}', '["turbo charged marshmallows", "120 miles per gallon of orange juice", "40% more energy use"]', 1, 2, 30, 5, 45, "Amazon", "gluten-free.jpg")`, (err) => {
+    connection.query(`insert into products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, questions, seller, thumbnail) values(3224, "nike", "valkerie", "gluten-free", '{"colors": ["black", "white"], "sizes": ["small", "large"]}', '{"sale": 39.98}', '["turbo charged marshmallows", "120 miles per gallon of orange juice", "40% more energy use"]', 1, 30, '[102, 85, 15, 3, 26]', 45, "Amazon", "gluten-free.jpg")`, (err) => {
       if (err) {
         reject();
       } else {
-        connection.query(`insert into products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, stars, questions, seller, thumbnail) values(3225, "nike", "valkerie", "dairy-free", '{"colors": ["black", "white"], "sizes": ["small", "large"]}', '{"sale": 37.98}', '["turbo charged marshmallows", "120 miles per gallon of orange juice", "40% more energy use"]', 1, 2, 30, 5, 45, "Amazon", "dairy-free.jpg")`, (error) => {
+        connection.query(`insert into products (id, brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, questions, seller, thumbnail) values(3225, "nike", "valkerie", "dairy-free", '{"colors": ["black", "white"], "sizes": ["small", "large"]}', '{"sale": 37.98}', '["turbo charged marshmallows", "120 miles per gallon of orange juice", "40% more energy use"]', 1, 30, '[102, 85, 15, 3, 26]', 45, "Amazon", "dairy-free.jpg")`, (error) => {
           if (error) {
             reject();
           } else {
