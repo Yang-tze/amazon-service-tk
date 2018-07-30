@@ -1,0 +1,39 @@
+.container {
+  position: relative;
+}
+
+.returns {
+  color: #0066c0;
+  display: inline-block;
+  padding: 5px;
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+}
+
+.returns:hover {
+  text-decoration: underline;
+}
+
+.leftColumn {
+  color: #555;
+  text-align: right;
+  vertical-align: top;
+  padding: 0px 0px;
+}
+
+.rightColumn {
+  vertical-align: top;
+  padding: 0px 3px;
+}
+
+.price {
+  font-size: 17px!important;
+  line-height: 1.255!important;
+  color: #B12704!important;
+  padding-right: 4px;
+}
+
+.prime {
+  vertical-align: top;
+}
