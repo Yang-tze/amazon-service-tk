@@ -28,6 +28,15 @@ class ProductInfo extends React.Component {
     });
   }
 
+  onProductTierClick(e) {
+    e.preventDefault();
+    const id = e.target.getAttribute('data-id');
+    this.setState({
+      productId: id,
+    });
+    this.get();
+  }
+
   onMouseEnter(e) {
     e.preventDefault();
     const { state } = this;
