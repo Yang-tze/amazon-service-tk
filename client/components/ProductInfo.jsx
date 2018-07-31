@@ -11,21 +11,36 @@ class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productId: 1,
+      productId: window.location.pathname,
       sizingModalVisibility: false,
       reviewsModalVisibility: false,
       product: productData.data,
       relatedProducts: productData.related,
+      currentTier: '',
     };
     this.get();
   }
 
-  onClick(e) {
+  onClickSizeChart(e) {
     e.preventDefault();
     const { sizingModalVisibility } = this.state;
     this.setState({
       sizingModalVisibility: !sizingModalVisibility,
     });
+  }
+
+  onMouseEnterStars(e) {
+    e.preventDefault();
+    const { state } = this;
+    state.reviewsModalVisibility = true;
+    setTimeout(this.delayedVis.bind(this), 400);
+  }
+
+  onMouseLeaveStars(e) {
+    e.preventDefault();
+    const { state } = this;
+    state.reviewsModalVisibility = false;
+    this.delayedVis.call(this);
   }
 
   onProductTierClick(e) {
@@ -37,18 +52,20 @@ class ProductInfo extends React.Component {
     this.get();
   }
 
-  onMouseEnter(e) {
+  onMouseEnterImageOption(e) {
     e.preventDefault();
-    const { state } = this;
-    state.reviewsModalVisibility = true;
-    setTimeout(this.delayedVis.bind(this), 400);
+    const tier = e.target.getAttribute('data-tier');
+    this.setState({
+      currentTier: tier,
+    });
   }
 
-  onMouseLeave(e) {
+  onMouseLeaveImageOption(e) {
     e.preventDefault();
-    const { state } = this;
-    state.reviewsModalVisibility = false;
-    this.delayedVis.call(this);
+    const { product } = this.state;
+    this.setState({
+      currentTier: product.product_tier,
+    });
   }
 
   delayedVis() {
@@ -66,13 +83,14 @@ class ProductInfo extends React.Component {
 
   get() {
     const { productId } = this.state;
-    fetch(`http://127.0.0.1:3003/products/${productId}`)
+    fetch(`http://127.0.0.1:3003/products${productId}`)
       .then(response => response.json())
       .then((obj) => {
         const { data, related } = obj;
         this.setState({
           product: data,
           relatedProducts: related,
+          currentTier: data.product_tier,
         });
       })
       .catch(err => console.error(err));
@@ -90,29 +108,33 @@ class ProductInfo extends React.Component {
 
     const { brand, name } = product;
     const { reviews, questions, price } = product;
-    const { onMouseEnter, onMouseLeave, onClick } = this;
+    const { onMouseEnterStars, onMouseLeaveStars, onClickSizeChart } = this;
+    const { onMouseEnterImageOption, onMouseLeaveImageOption, onProductTierClick } = this;
 
     return (
       <div className={styles.info}>
         <ItemOverview
           title={{ brand, name, productTier }}
           reviewInfo={{ reviews, questions }}
-          onMouseEnter={onMouseEnter.bind(this)}
-          onMouseLeave={onMouseLeave.bind(this)} />
+          onMouseEnter={onMouseEnterStars.bind(this)}
+          onMouseLeave={onMouseLeaveStars.bind(this)} />
         <ItemPricing
           price={price}
           isPrime={isPrime}
           reviews={reviews}
-          onMouseLeave={onMouseLeave.bind(this)}
+          onMouseLeave={onMouseLeaveStars.bind(this)}
           visibility={reviewsModalVisibility} />
         <ItemOptions
           options={productOptions}
           tier={productTier}
           related={relatedProducts}
-          onClick={onClick.bind(this)}
-          visibility={sizingModalVisibility} />
+          onClick={onClickSizeChart.bind(this)}
+          visibility={sizingModalVisibility}
+          onMouseEnter={onMouseEnterImageOption.bind(this)}
+          onMouseLeave={onMouseLeaveImageOption.bind(this)}
+          onSelect={onProductTierClick.bind(this)} />
         <ItemDescription description={aboutProduct} />
-        <SizingTable visibility={sizingModalVisibility} onClick={onClick.bind(this)} />
+        <SizingTable visibility={sizingModalVisibility} onClick={onClickSizeChart.bind(this)} />
       </div>
     );
   }
