@@ -8,6 +8,10 @@ const ItemOptions = (props) => {
     related,
     tier,
     onClick,
+    onMouseEnter,
+    onMouseLeave,
+    onSelect,
+    thumbnail,
   } = props;
 
   return (
@@ -21,7 +25,11 @@ const ItemOptions = (props) => {
         </a>
       </div>
       <ItemSizing sizing={options} onClick={onClick} />
-      <ItemColors tier={tier} related={related} />
+      <ItemColors
+        tier={tier}
+        related={related}
+        thumbnail={thumbnail}
+        handlers={{ onMouseEnter, onMouseLeave, onSelect }} />
     </div>
   );
 };
