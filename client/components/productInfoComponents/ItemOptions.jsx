@@ -14,7 +14,7 @@ const ItemOptions = (props) => {
     <div>
       <div>
         <span>
-          Fit:
+          Fit:&nbsp;
         </span>
         <a href="">
           As expected (81%)

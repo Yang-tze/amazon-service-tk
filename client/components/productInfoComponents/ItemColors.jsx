@@ -5,10 +5,20 @@ const ItemColors = (props) => {
   const { tier } = props;
   const { related } = props;
   return (
-    <ul>
-      { related.length > 0 ? <li className={styles.colors}><img src={`https://s3-us-west-1.amazonaws.com/viamis/${tier}.jpg`} alt={tier} /></li> : <span></span> }
-      { related.map(el => <li className={styles.colors}><img src={`https://s3-us-west-1.amazonaws.com/viamis/${el.thumbnail}`} alt={el.thumbnail} key={el.id} /></li>) }
-    </ul>
+    <div>
+      <div>
+        <h4 className={styles.colorName}>
+          Tier:&nbsp;
+        </h4>
+        <span>
+          {tier}
+        </span>
+      </div>
+      <ul className={styles.list}>
+        { related.length > 0 ? <li><div><img src={`https://s3-us-west-1.amazonaws.com/viamis/${tier}.jpg`} alt={tier} /></div></li> : <span /> }
+        { related.map(el => <li><div><img src={`https://s3-us-west-1.amazonaws.com/viamis/${el.thumbnail}`} alt={el.thumbnail} key={el.id} /></div></li>) }
+      </ul>
+    </div>
   );
 };
 
