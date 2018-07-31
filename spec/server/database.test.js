@@ -57,7 +57,7 @@ describe('getAll should return all relevant information', () => {
   test('first element in array should be requested item', () => {
     return new Promise((resolve) => {
       getAll(3225, (results) => {
-        resolve(expect(results[0].id).toBe(3225));
+        resolve(expect(results.data.id).toBe(3225));
       });
     });
   });
@@ -65,7 +65,7 @@ describe('getAll should return all relevant information', () => {
   test('second element should have a different id', () => {
     return new Promise((resolve) => {
       getAll(3225, (results) => {
-        resolve(expect(results[1].id).not.toBe(3225));
+        resolve(expect(results.related[0].id).not.toBe(3225));
       });
     });
   });

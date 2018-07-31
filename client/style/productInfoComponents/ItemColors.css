@@ -1,4 +1,27 @@
-.colors {
-  width: 38px;
-  depth: 50px;
+.list {
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
+.list > li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.list > li > div {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  height: 60px;
+  width: 50px;
+  border: 1px solid #e0e0e0;
+}
+
+.list > li > div:hover {
+  border: 1px solid #000;
+}
+
+.colorName {
+  display: inline-block;
 }

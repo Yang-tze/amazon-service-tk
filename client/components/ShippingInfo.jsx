@@ -9,9 +9,7 @@ class ShippingInfo extends React.Component {
 
   render() {
     return (
-      <div>
-      Hello World x2
-      </div>
+      <div />
     );
   }
 }

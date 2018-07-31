@@ -11,15 +11,17 @@ class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productId: 1,
+      productId: window.location.pathname,
       sizingModalVisibility: false,
       reviewsModalVisibility: false,
       product: productData.data,
       relatedProducts: productData.related,
+      productTier: 'Elite',
     };
+    this.get();
   }
 
-  onClick(e) {
+  onClickSizeChart(e) {
     e.preventDefault();
     const { sizingModalVisibility } = this.state;
     this.setState({
@@ -27,18 +29,43 @@ class ProductInfo extends React.Component {
     });
   }
 
-  onMouseEnter(e) {
+  onMouseEnterStars(e) {
     e.preventDefault();
     const { state } = this;
     state.reviewsModalVisibility = true;
     setTimeout(this.delayedVis.bind(this), 400);
   }
 
-  onMouseLeave(e) {
+  onMouseLeaveStars(e) {
     e.preventDefault();
     const { state } = this;
     state.reviewsModalVisibility = false;
     this.delayedVis.call(this);
+  }
+
+  onProductTierClick(e) {
+    e.preventDefault();
+    const id = e.target.parentNode.getAttribute('data-id');
+    this.setState({
+      productId: id,
+    });
+    this.get(id);
+  }
+
+  onMouseEnterImageOption(e) {
+    e.preventDefault();
+    const tier = e.target.getAttribute('data-tier');
+    this.setState({
+      productTier: tier,
+    });
+  }
+
+  onMouseLeaveImageOption(e) {
+    e.preventDefault();
+    const { product } = this.state;
+    this.setState({
+      productTier: product.product_tier,
+    });
   }
 
   delayedVis() {
@@ -54,11 +81,18 @@ class ProductInfo extends React.Component {
     }
   }
 
-  get() {
+  get(id) {
     const { productId } = this.state;
-    fetch(`http://127.0.0.1:3003/products/${productId}`)
+    fetch(`http://127.0.0.1:3003/products${id || productId}`)
       .then(response => response.json())
-      .then(obj => console.log(obj))
+      .then((obj) => {
+        const { data, related } = obj;
+        this.setState({
+          product: data,
+          relatedProducts: related,
+          productTier: data.product_tier,
+        });
+      })
       .catch(err => console.error(err));
   }
 
@@ -66,34 +100,42 @@ class ProductInfo extends React.Component {
     const {
       product, relatedProducts, sizingModalVisibility, reviewsModalVisibility,
     } = this.state;
-    const { brand, name, productTier } = product;
-    const { reviews, questions } = product;
-    const { price, isPrime } = product;
-    const { productOptions } = product;
-    const { aboutProduct } = product;
-    const { onMouseEnter, onMouseLeave, onClick } = this;
+
+    const { productTier } = this.state;
+    const currentTier = product.product_tier;
+    const isPrime = product.is_prime;
+    const productOptions = product.product_options;
+    const aboutProduct = product.about_product;
+
+    const { brand, name, thumbnail } = product;
+    const { reviews, questions, price } = product;
+    const { onMouseEnterStars, onMouseLeaveStars, onClickSizeChart } = this;
+    const { onMouseEnterImageOption, onMouseLeaveImageOption, onProductTierClick } = this;
 
     return (
       <div className={styles.info}>
         <ItemOverview
-          title={{ brand, name, productTier }}
+          title={{ brand, name, currentTier }}
           reviewInfo={{ reviews, questions }}
-          onMouseEnter={onMouseEnter.bind(this)}
-          onMouseLeave={onMouseLeave.bind(this)} />
+          onMouseEnter={onMouseEnterStars.bind(this)}
+          onMouseLeave={onMouseLeaveStars.bind(this)} />
         <ItemPricing
           price={price}
           isPrime={isPrime}
           reviews={reviews}
-          onMouseLeave={onMouseLeave.bind(this)}
+          onMouseLeave={onMouseLeaveStars.bind(this)}
           visibility={reviewsModalVisibility} />
         <ItemOptions
           options={productOptions}
           tier={productTier}
+          thumbnail={thumbnail}
           related={relatedProducts}
-          onClick={onClick.bind(this)}
-          visibility={sizingModalVisibility} />
+          onClick={onClickSizeChart.bind(this)}
+          onMouseEnter={onMouseEnterImageOption.bind(this)}
+          onMouseLeave={onMouseLeaveImageOption.bind(this)}
+          onSelect={onProductTierClick.bind(this)} />
         <ItemDescription description={aboutProduct} />
-        <SizingTable visibility={sizingModalVisibility} onClick={onClick.bind(this)} />
+        <SizingTable visibility={sizingModalVisibility} onClick={onClickSizeChart.bind(this)} />
       </div>
     );
   }

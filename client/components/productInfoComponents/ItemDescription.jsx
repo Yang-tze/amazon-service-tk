@@ -1,10 +1,11 @@
 import React from 'react';
+import styles from '../../style/productInfoComponents/ItemDescription.css';
 
 const ItemDescription = (props) => {
   const { description } = props;
   return (
-    <ul>
-      {description.map((p, i) => <li key={i}>{p}</li>)}
+    <ul className={styles.description}>
+      {description.map((bulletPoint, i) => <li key={`item-${i + 1}`}>{bulletPoint}</li>)}
     </ul>
   );
 };
