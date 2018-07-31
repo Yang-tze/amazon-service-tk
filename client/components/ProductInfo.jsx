@@ -16,7 +16,7 @@ class ProductInfo extends React.Component {
       reviewsModalVisibility: false,
       product: productData.data,
       relatedProducts: productData.related,
-      currentTier: '',
+      productTier: 'Elite',
     };
     this.get();
   }
@@ -45,18 +45,18 @@ class ProductInfo extends React.Component {
 
   onProductTierClick(e) {
     e.preventDefault();
-    const id = e.target.getAttribute('data-id');
+    const id = e.target.parentNode.getAttribute('data-id');
     this.setState({
       productId: id,
     });
-    this.get();
+    this.get(id);
   }
 
   onMouseEnterImageOption(e) {
     e.preventDefault();
     const tier = e.target.getAttribute('data-tier');
     this.setState({
-      currentTier: tier,
+      productTier: tier,
     });
   }
 
@@ -64,7 +64,7 @@ class ProductInfo extends React.Component {
     e.preventDefault();
     const { product } = this.state;
     this.setState({
-      currentTier: product.product_tier,
+      productTier: product.product_tier,
     });
   }
 
@@ -81,16 +81,16 @@ class ProductInfo extends React.Component {
     }
   }
 
-  get() {
+  get(id) {
     const { productId } = this.state;
-    fetch(`http://127.0.0.1:3003/products${productId}`)
+    fetch(`http://127.0.0.1:3003/products${id || productId}`)
       .then(response => response.json())
       .then((obj) => {
         const { data, related } = obj;
         this.setState({
           product: data,
           relatedProducts: related,
-          currentTier: data.product_tier,
+          productTier: data.product_tier,
         });
       })
       .catch(err => console.error(err));
@@ -101,12 +101,13 @@ class ProductInfo extends React.Component {
       product, relatedProducts, sizingModalVisibility, reviewsModalVisibility,
     } = this.state;
 
-    const productTier = product.product_tier;
+    const { productTier } = this.state;
+    const currentTier = product.product_tier;
     const isPrime = product.is_prime;
     const productOptions = product.product_options;
     const aboutProduct = product.about_product;
 
-    const { brand, name } = product;
+    const { brand, name, thumbnail } = product;
     const { reviews, questions, price } = product;
     const { onMouseEnterStars, onMouseLeaveStars, onClickSizeChart } = this;
     const { onMouseEnterImageOption, onMouseLeaveImageOption, onProductTierClick } = this;
@@ -114,7 +115,7 @@ class ProductInfo extends React.Component {
     return (
       <div className={styles.info}>
         <ItemOverview
-          title={{ brand, name, productTier }}
+          title={{ brand, name, currentTier }}
           reviewInfo={{ reviews, questions }}
           onMouseEnter={onMouseEnterStars.bind(this)}
           onMouseLeave={onMouseLeaveStars.bind(this)} />
@@ -127,9 +128,9 @@ class ProductInfo extends React.Component {
         <ItemOptions
           options={productOptions}
           tier={productTier}
+          thumbnail={thumbnail}
           related={relatedProducts}
           onClick={onClickSizeChart.bind(this)}
-          visibility={sizingModalVisibility}
           onMouseEnter={onMouseEnterImageOption.bind(this)}
           onMouseLeave={onMouseLeaveImageOption.bind(this)}
           onSelect={onProductTierClick.bind(this)} />
