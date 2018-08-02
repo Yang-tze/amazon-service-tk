@@ -49,7 +49,7 @@ class ProductInfo extends React.Component {
     this.setState({
       productId: id,
     });
-    this.get(id);
+    window.location.assign(`http://127.0.0.1:3000${id}`);
   }
 
   onMouseEnterImageOption(e) {
@@ -81,9 +81,9 @@ class ProductInfo extends React.Component {
     }
   }
 
-  get(id) {
+  get() {
     const { productId } = this.state;
-    fetch(`http://127.0.0.1:3003/products${id || productId}`)
+    fetch(`http://127.0.0.1:3003/products${productId}`)
       .then(response => response.json())
       .then((obj) => {
         const { data, related } = obj;
