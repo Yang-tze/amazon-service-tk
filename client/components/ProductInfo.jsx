@@ -46,10 +46,12 @@ class ProductInfo extends React.Component {
   onProductTierClick(e) {
     e.preventDefault();
     const id = e.target.parentNode.getAttribute('data-id');
-    this.setState({
-      productId: id,
-    });
-    window.location.assign(`http://${window.location.hostname}${id}`);
+    if (id) {
+      this.setState({
+        productId: id,
+      });
+      window.location.assign(`http://${window.location.host}${id}`);
+    }
   }
 
   onMouseEnterImageOption(e) {
@@ -83,7 +85,7 @@ class ProductInfo extends React.Component {
 
   get() {
     const { productId } = this.state;
-    fetch(`http://ec2-52-90-5-254.compute-1.amazonaws.com/products${productId}`)
+    fetch(`/products${productId}`)
       .then(response => response.json())
       .then((obj) => {
         const { data, related } = obj;
