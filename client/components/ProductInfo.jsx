@@ -28,9 +28,11 @@ class ProductInfo extends React.Component {
   onClickSizeChart(e) {
     e.preventDefault();
     const { sizingModalVisibility } = this.state;
-    this.setState({
-      sizingModalVisibility: !sizingModalVisibility,
-    });
+    if (e.target.getAttribute('data-target')) {
+      this.setState({
+        sizingModalVisibility: !sizingModalVisibility,
+      });
+    }
   }
 
   onMouseEnterStars(e) {
