@@ -36,4 +36,10 @@
 
 .prime {
   vertical-align: top;
+  font-weight: 700;
+  color: rgb(57,154,195);
+}
+
+.check {
+  color: rgb(246,156,61);
 }

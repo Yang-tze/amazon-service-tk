@@ -5,49 +5,53 @@ const CasualShirts = () => {
   return (
     <tbody>
       <tr className={styles.trh}>
-        <th>
+        <th className={styles.th}>
           US
         </th>
         <th>
           Chest
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
         <th>
           Waist
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
         <th>
           Sleeve length
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
         <th>
           Neck
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
       </tr>
-      <tr>
-        <td>S</td>
+      <tr className={styles.tableEvenRow}>
+        <td className={styles.td}>S</td>
         <td>35 - 37</td>
         <td>29 - 31</td>
         <td>33 1/2 - 34</td>
         <td>14 - 14 1/2</td>
       </tr>
-      <tr>
-        <td>M</td>
+      <tr className={styles.tableOddRow}>
+        <td className={styles.td}>M</td>
         <td>38 - 40</td>
         <td>32 - 34</td>
         <td>34 1/2 - 35</td>
         <td>15 - 15 1/2</td>
       </tr>
-      <tr>
-        <td>L</td>
+      <tr className={styles.tableEvenRow}>
+        <td className={styles.td}>L</td>
         <td>41 - 43</td>
         <td>35 - 37</td>
         <td>35 1/2 - 36</td>
         <td>16 - 16 1/2</td>
       </tr>
-      <tr>
-        <td>XL</td>
+      <tr className={styles.tableOddRow}>
+        <td className={styles.td}>XL</td>
         <td>44 - 47</td>
         <td>38 - 41</td>
         <td>36 1/2 - 37</td>
@@ -60,36 +64,38 @@ const CasualShirts = () => {
 const TShirts = () => {
   return (
     <tbody>
-      <tr>
-        <th>
+      <tr className={styles.trh}>
+        <th className={styles.th}>
           US
         </th>
         <th>
           Chest
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
         <th>
           Waist
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
       </tr>
-      <tr>
-        <td>S</td>
+      <tr className={styles.tableEvenRow}>
+        <td className={styles.td}>S</td>
         <td>35 - 37</td>
         <td>29 - 31</td>
       </tr>
-      <tr>
-        <td>M</td>
+      <tr className={styles.tableOddRow}>
+        <td className={styles.td}>M</td>
         <td>38 - 40</td>
         <td>32 - 34</td>
       </tr>
-      <tr>
-        <td>L</td>
+      <tr className={styles.tableEvenRow}>
+        <td className={styles.td}>L</td>
         <td>41 - 43</td>
         <td>35 - 37</td>
       </tr>
-      <tr>
-        <td>XL</td>
+      <tr className={styles.tableOddRow}>
+        <td className={styles.td}>XL</td>
         <td>44 - 47</td>
         <td>38 - 41</td>
       </tr>
@@ -100,36 +106,38 @@ const TShirts = () => {
 const PoloShirts = () => {
   return (
     <tbody>
-      <tr>
-        <th>
+      <tr className={styles.trh}>
+        <th className={styles.th}>
           US
         </th>
         <th>
           Chest
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
         <th>
           Waist
-          <span>(in inches)</span>
+          <br />
+          <span className={styles.units}>(in inches)</span>
         </th>
       </tr>
-      <tr>
-        <td>S</td>
+      <tr className={styles.tableEvenRow}>
+        <td className={styles.td}>S</td>
         <td>35 - 37</td>
         <td>29 - 31</td>
       </tr>
-      <tr>
-        <td>M</td>
+      <tr className={styles.tableOddRow}>
+        <td className={styles.td}>M</td>
         <td>38 - 40</td>
         <td>32 - 34</td>
       </tr>
-      <tr>
-        <td>L</td>
+      <tr className={styles.tableEvenRow}>
+        <td className={styles.td}>L</td>
         <td>41 - 43</td>
         <td>35 - 37</td>
       </tr>
-      <tr>
-        <td>XL</td>
+      <tr className={styles.tableOddRow}>
+        <td className={styles.td}>XL</td>
         <td>44 - 47</td>
         <td>38 - 41</td>
       </tr>
@@ -146,18 +154,20 @@ const SizingTable = (props) => {
   };
 
   return (
-    <div className={styles.modal} style={style}>
+    <div className={styles.modal} style={style} onClick={onClick} data-target="sizing-modal">
       <div className={styles.container}>
         <div className={styles.header}>
-          <button className={styles.button} type="button" onClick={onClick}>
-            <div className={styles.x}>x</div>
-          </button>
           <h4 className={styles.h4}>Size Chart</h4>
+          <button className={styles.button} type="button" data-target="sizing-modal">
+            <div className={styles.x}>
+              &#x2716;
+            </div>
+          </button>
         </div>
         <div className={styles.body}>
           <div className={styles.content}>
             <div>
-              <h4>Men's Size Chart</h4>
+              <h4 className={styles.bodyTitle}>Men's Size Chart</h4>
             </div>
             <h3>Casual Shirts</h3>
             <table className={styles.table}>

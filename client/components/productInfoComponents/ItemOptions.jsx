@@ -1,6 +1,7 @@
 import React from 'react';
-import ItemSizing from './ItemSizing.jsx';
-import ItemColors from './ItemColors.jsx';
+import ItemSizing from './ItemSizing';
+import ItemColors from './ItemColors';
+import styles from '../../style/productInfoComponents/ItemOptions.css';
 
 const ItemOptions = (props) => {
   const {
@@ -16,11 +17,11 @@ const ItemOptions = (props) => {
 
   return (
     <div>
-      <div>
-        <span>
+      <div className={styles.container}>
+        <span className={styles.title}>
           Fit:&nbsp;
         </span>
-        <a href="">
+        <a className={styles.link} href="">
           As expected (81%)
         </a>
       </div>

@@ -5,8 +5,10 @@
   bottom: 0px;
   right: 0px;
   width: auto;
-  height: auto;
+  height: 100%;
   background-color: rgba(0,0,0,0.5);
+  z-index: 1001;
+  overflow: hidden;
 }
 
 .modal.modalOn {
@@ -15,6 +17,9 @@
 }
 
 .container {
+  position: relative;
+  top: calc(50% - 250px);
+  margin: auto;
   width: 800px;
   height: 500px;
   border: 1px solid;
@@ -22,10 +27,6 @@
   box-shadow: 0 4px 6px rgba(0,0,0,.25);
   border-radius: 4px;
   background-color: #fff;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   box-sizing: border-box;
 }
 
@@ -51,19 +52,16 @@
 }
 
 .button {
-  box-sizing: border-box;
-  display: block;
-  zoom: 1;
+  position: absolute;
+  cursor: pointer;
+  top: 4px;
+  right: 4px;
   background-color: transparent;
   border-radius: 3px;
   border: 1px solid;
   border-color: transparent;
-  float: right;
-  padding: 8px;
-  position: relative;
-  top: 50%;
-  right: 5px;
-  margin: -13px 0 0;
+  height:30px;
+  width: 30px;
   line-height: 0;
   font-size: 100%;
   vertical-align: middle;
@@ -72,18 +70,31 @@
 }
 
 .x {
+  position: absolute;
+  margin: auto;
+  padding-left: 2px;
+  pointer-events: none;
   width: 10px;
   height: 10px;
-  vertical-align: -10%;
+  color: #555;
 }
 
 .body {
+  position: relative;
   background-color: #fff;
-  padding: 14px 18px;
+  margin: 14px 18px;
+  padding: 14px 30px;
   text-align: left;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 427px;
+  height: 432px;
+  box-sizing: border-box;
+}
+
+.bodyTitle {
+  margin-top: 0px;
+  padding-top: 0px;
+  border-top: 0px;
 }
 
 .content {
@@ -98,34 +109,42 @@
 }
 
 .table {
-  margin-bottom: 22px;
+  text-align: center;
+  margin-bottom: 18px;
+  width: 100%;
   border: 1px solid #e7e7e7;
   border-top-color: #eaeaea;
   border-bottom: none;
   border-spacing: 0;
   border-collapse: collapse;
-  border-spacing: 0px;
 }
 
 .trh {
   background: linear-gradient(to bottom,#f8f8f8,#eee);
   box-shadow: 0 1px 0 rgba(255,255,255,.5) inset;
+  border-bottom-color: #ddd;
   border-color: #e7e7e7;
-  border-bottom: 1px solid #ddd;
+  font-weight: 700;
 }
 
-.trDark {
+.tableEvenRow {
   background-color: #f6f6f6;
   border: 1px solid #e7e7e7;
-  border-top-color: #eaeaea;
-  border-bottom: none;
-  border-spacing: 0;
-
 }
 
-.trLight {
+.tableOddRow {
   border: 1px solid #e7e7e7;
-  border-top-color: #eaeaea;
-  border-bottom: none;
-  border-spacing: 0;
+}
+
+.td {
+  line-height: 32px;
+}
+
+.th {
+  line-height: 50px;
+}
+
+.units {
+  font-size: 11px;
+  font-weight: 400;
 }

@@ -10,6 +10,10 @@ import styles from '../style/ProductInfo.css';
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
+
+    // variable tracking whether mouse is over star meter or reviews modal
+    this.reviewsModalVisibility = false;
+
     this.state = {
       productId: window.location.pathname,
       sizingModalVisibility: false,
@@ -24,23 +28,23 @@ class ProductInfo extends React.Component {
   onClickSizeChart(e) {
     e.preventDefault();
     const { sizingModalVisibility } = this.state;
-    this.setState({
-      sizingModalVisibility: !sizingModalVisibility,
-    });
+    if (e.target.getAttribute('data-target')) {
+      this.setState({
+        sizingModalVisibility: !sizingModalVisibility,
+      });
+    }
   }
 
   onMouseEnterStars(e) {
     e.preventDefault();
-    const { state } = this;
-    state.reviewsModalVisibility = true;
+    this.reviewsModalVisibility = true;
     setTimeout(this.delayedVis.bind(this), 400);
   }
 
   onMouseLeaveStars(e) {
     e.preventDefault();
-    const { state } = this;
-    state.reviewsModalVisibility = false;
-    this.delayedVis.call(this);
+    this.reviewsModalVisibility = false;
+    setTimeout(this.delayedVis.bind(this), 400);
   }
 
   onProductTierClick(e) {
@@ -70,9 +74,9 @@ class ProductInfo extends React.Component {
     });
   }
 
+  // after delay, check to see if mouse is hovering over revieiws modal or star meter
   delayedVis() {
-    const { state } = this;
-    if (state.reviewsModalVisibility) {
+    if (this.reviewsModalVisibility) {
       this.setState({
         reviewsModalVisibility: true,
       });
@@ -125,6 +129,7 @@ class ProductInfo extends React.Component {
           price={price}
           isPrime={isPrime}
           reviews={reviews}
+          onMouseEnter={onMouseEnterStars.bind(this)}
           onMouseLeave={onMouseLeaveStars.bind(this)}
           visibility={reviewsModalVisibility} />
         <ItemOptions
