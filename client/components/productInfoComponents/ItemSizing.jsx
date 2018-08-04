@@ -9,9 +9,11 @@ const ItemSizing = (props) => {
         Size:
       </h4>
       <div className={styles.container}>
-        <span className={styles.label}>Select</span>
+        <div className={styles.dropdown} />
         <select className={styles.select}>
-          <option className={styles.option} value="" disabled selected />
+          <option className={styles.first}>
+            Select
+          </option>
           {sizing.size.map(el => <option className={styles.option} key={el}>{el}</option>)}
         </select>
         <a className={styles.link} href="" onClick={onClick}>
