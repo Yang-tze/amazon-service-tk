@@ -1,7 +1,11 @@
 .stars {
-  width: 100px;
+  width: 125px;
   display: inline-block;
   cursor: pointer;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  vertical-align: bottom;
 }
 
 .link {
@@ -12,4 +16,43 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+.dropdown {
+  vertical-align: bottom;
+  display: inline-block;
+  background-color: #555;
+  width: 8px;
+  height: 8px;
+  margin-left: 8px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  clip-path: polygon(0 0, 100% 0, 50% 50%);
+}
+
+.border {
+  vertical-align: bottom;
+  display: inline-block;
+  background-color: #555;
+  padding: 3px;
+  width: 13px;
+  height: 13px;
+  clip-path: polygon(50% 0, 61.23% 34.55%, 97.55% 34.55%, 68.16% 55.9%, 79.39% 90.45%, 50% 69.1%, 20.61% 90.45%, 31.84% 55.9%, 2.45% 34.55%, 38.77% 34.55%);
+}
+
+.clip {
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 0, 61.23% 34.55%, 97.55% 34.55%, 68.16% 55.9%, 79.39% 90.45%, 50% 69.1%, 20.61% 90.45%, 31.84% 55.9%, 2.45% 34.55%, 38.77% 34.55%);
+}
+
+.fill {
+  width:100%;
+  height:100%;
+  background-color: #fff;
+}
+
+.star {
+  background: linear-gradient(to bottom,#ffce00,#ffa700);
+  height: 100%;
 }
