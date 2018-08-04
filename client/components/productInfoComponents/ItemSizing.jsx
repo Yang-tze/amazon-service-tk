@@ -16,7 +16,7 @@ const ItemSizing = (props) => {
           </option>
           {sizing.size.map(el => <option className={styles.option} key={el}>{el}</option>)}
         </select>
-        <a className={styles.link} href="" onClick={onClick}>
+        <a className={styles.link} href="" onClick={onClick} data-target="sizing-modal">
           Size Chart
         </a>
       </div>
