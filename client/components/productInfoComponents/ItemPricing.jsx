@@ -3,19 +3,14 @@ import styles from '../../style/productInfoComponents/ItemPricing.css';
 import ReviewsModal from './ReviewsModal';
 
 const ItemPricing = (props) => {
-  const { onMouseHover, onMouseLeave } = props;
-  const {
-    price,
-    isPrime,
-    reviews,
-    visibility,
-  } = props;
+  const { onMouseEnter, onMouseLeave, visibility } = props;
+  const { price, isPrime, reviews } = props;
 
   return (
     <div className={styles.container}>
       <ReviewsModal
         reviews={reviews}
-        onMouseHover={onMouseHover}
+        onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         visibility={visibility} />
       <table>

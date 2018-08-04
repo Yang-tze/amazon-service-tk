@@ -10,6 +10,7 @@ import styles from '../style/ProductInfo.css';
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
+    this.reviewsModalVisibility = false;
     this.state = {
       productId: window.location.pathname,
       sizingModalVisibility: false,
@@ -31,15 +32,14 @@ class ProductInfo extends React.Component {
 
   onMouseEnterStars(e) {
     e.preventDefault();
-    const { state } = this;
-    state.reviewsModalVisibility = true;
+    this.reviewsModalVisibility = true;
     setTimeout(this.delayedVis.bind(this), 400);
+    this.delayedVis.call(this);
   }
 
   onMouseLeaveStars(e) {
     e.preventDefault();
-    const { state } = this;
-    state.reviewsModalVisibility = false;
+    this.reviewsModalVisibility = false;
     this.delayedVis.call(this);
   }
 
@@ -71,8 +71,7 @@ class ProductInfo extends React.Component {
   }
 
   delayedVis() {
-    const { state } = this;
-    if (state.reviewsModalVisibility) {
+    if (this.reviewsModalVisibility) {
       this.setState({
         reviewsModalVisibility: true,
       });
@@ -125,6 +124,7 @@ class ProductInfo extends React.Component {
           price={price}
           isPrime={isPrime}
           reviews={reviews}
+          onMouseEnter={onMouseEnterStars.bind(this)}
           onMouseLeave={onMouseLeaveStars.bind(this)}
           visibility={reviewsModalVisibility} />
         <ItemOptions

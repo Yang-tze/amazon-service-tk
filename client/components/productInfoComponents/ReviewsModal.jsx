@@ -32,6 +32,7 @@ const ReviewTable = (props) => {
 
 const ReviewsModal = (props) => {
   const { reviews, visibility } = props;
+  const { onMouseEnter, onMouseLeave } = props;
   const reviewCount = reviews.reduce((acc, val) => acc + val, 0);
   const weighted = reviews.reduce((acc, val, idx) => acc + (val * parseInt(idx, 10)), 0);
   const stars = Math.round(weighted * 10 / reviewCount) / 10 + 1;
@@ -42,7 +43,7 @@ const ReviewsModal = (props) => {
   };
 
   return (
-    <div className={styles.container} style={style}>
+    <div className={styles.container} style={style} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className={styles.score}>
         {`${stars} out of 5 stars`}
       </div>
