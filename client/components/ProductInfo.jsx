@@ -10,7 +10,10 @@ import styles from '../style/ProductInfo.css';
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
+
+    // variable tracking whether mouse is over star meter or reviews modal
     this.reviewsModalVisibility = false;
+
     this.state = {
       productId: window.location.pathname,
       sizingModalVisibility: false,
@@ -34,13 +37,12 @@ class ProductInfo extends React.Component {
     e.preventDefault();
     this.reviewsModalVisibility = true;
     setTimeout(this.delayedVis.bind(this), 400);
-    this.delayedVis.call(this);
   }
 
   onMouseLeaveStars(e) {
     e.preventDefault();
     this.reviewsModalVisibility = false;
-    this.delayedVis.call(this);
+    setTimeout(this.delayedVis.bind(this), 400);
   }
 
   onProductTierClick(e) {
@@ -70,6 +72,7 @@ class ProductInfo extends React.Component {
     });
   }
 
+  // after delay, check to see if mouse is hovering over revieiws modal or star meter
   delayedVis() {
     if (this.reviewsModalVisibility) {
       this.setState({
