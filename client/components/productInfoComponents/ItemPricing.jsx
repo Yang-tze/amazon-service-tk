@@ -31,7 +31,7 @@ const ItemPricing = (props) => {
                 {`$${price.sale}`}
               </span>
               <span className={styles.prime}>
-                { isPrime ? 'Prime' : '' }
+                { isPrime ? 'prime' : '' }
               </span>
               <div>
                 <a href="" className={styles.returns}>
