@@ -2,13 +2,13 @@ const faker = require('faker');
 const zlib = require('zlib');
 const fs = require('fs');
 
-const { tab, randomInt, size, sentences, generateName } = require('./helpers.js');
-
-const orderOfMagnitude = 7;
-const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
+const { tab, randomInt, generateName, size, sentences } = require('./helpers.js');
 
 const thumbnailCount = 1000;
 const thumbnailEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
+
+const magnitude = 7;
+const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
 
 const generateOptions = () => `{"size":${size}}`;
 
@@ -36,7 +36,7 @@ const generateThumbnail = (id) => {
 
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
-  const name = tab(generateName(id - 1, orderOfMagnitude));
+  const name = tab(generateName(id - 1, magnitude));
   const brand = tab(faker.name.lastName());
   const options = tab(generateOptions());
   const price = tab(generatePrice());
@@ -89,4 +89,4 @@ const writeProducts = (productCount, batchSize = productCount / 10) => {
   }
 };
 
-writeProducts(10 ** orderOfMagnitude);
+writeProducts(10 ** magnitude);

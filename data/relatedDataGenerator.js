@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const { randomInt } = require('./helpers.js');
 
-const orderOfMagnitude = 7;
+const magnitude = 7;
 const relatedHeadings = 'id\tproduct_id\trelated_id\n';
 
 let indexId = 1;
@@ -45,4 +45,4 @@ const writeRelated = (productCount, batchSize = productCount / 10) => {
   }
 };
 
-writeRelated(10 ** orderOfMagnitude);
+writeRelated(10 ** magnitude);
