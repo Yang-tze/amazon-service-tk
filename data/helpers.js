@@ -1,10 +1,8 @@
 const tab = str => `${str}\t`;
 
-const randomInt = (min, max, roundUp = false) => (
+const randomInt = (min, max) => (
   min + Math.floor(Math.random() * (max - min))
 );
-
-// const randomNum = (min, max) => min + Math.random() * (max - min);
 
 const ltrs = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 
@@ -25,4 +23,4 @@ const text = 'Lorem ipsum dolor amet aliqua 8-bit cillum lumbersexual la croix, 
 
 const sentences = text.split('.');
 
-module.exports = { tab, randomInt, color, size, sentences, generateName };
+module.exports = { tab, randomInt, generateName, color, size, sentences };
