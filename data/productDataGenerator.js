@@ -10,7 +10,7 @@ const nameRoot = 'hamazon';
 const productCount = 10000000;
 const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail';
 
-const imageCount = 3;
+const imageCount = 1000;
 const imageEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
 const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
