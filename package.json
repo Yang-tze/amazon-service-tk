@@ -8,7 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "generate-data": "node --max-old-space-size=4096 data/dataGenerator.js",
+    "generate-data": "node --max-old-space-size=4096 data/productDataGenerator.js",
     "db": "mysql -u root < schema.sql",
     "watch": "webpack --watch",
     "start": "node server/index.js",

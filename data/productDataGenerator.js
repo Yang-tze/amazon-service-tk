@@ -15,7 +15,7 @@ const imageEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
 const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
 
-const randomNum = (min, max) => min + Math.random() * (max - min);
+// const randomNum = (min, max) => min + Math.random() * (max - min);
 
 const tab = str => `${str}\t`;
 
@@ -73,21 +73,22 @@ const generateProduct = (id) => {
 };
 
 const writeBatch = (batchId, start, end) => {
-  const out = fs.createWriteStream(`${__dirname}/products_${batchId}.tsv`);
+  const out = fs.createWriteStream(`${__dirname}/sampleData/products_${batchId}.tsv`);
   const stream = zlib.createGzip();
   stream.pipe(out);
   stream.write(productHeadings);
   for (let i = start; i <= end; i++) {
-    stream.write(`${generateProduct(i)}\n`);
+    generateProduct(i);
+    // stream.write(`${generateProduct(i)}\n`);
   }
   stream.end();
   console.log(new Date() - startTime);
 };
 
-const writeProducts = (productCount, batchSize = productCount / 10) => {
+const writeProducts = (productCount, batchSize) => {
   for (let i = 0; i < productCount; i += batchSize) {
     writeBatch(Math.floor(i / batchSize), i, i + batchSize);
   }
 };
 
-writeProducts(productCount);
+writeProducts(productCount, productCount / 10);
