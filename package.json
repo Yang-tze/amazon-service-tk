@@ -8,6 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "generate-data": "node --max-old-space-size=4096 data/dataGenerator.js",
     "db": "mysql -u root < schema.sql",
     "watch": "webpack --watch",
     "start": "node server/index.js",
@@ -23,7 +24,8 @@
     "node-fetch": "^2.2.0",
     "pg": "^7.4.3",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
