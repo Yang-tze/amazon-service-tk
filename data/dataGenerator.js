@@ -2,14 +2,12 @@ const faker = require('faker');
 const zlib = require('zlib');
 const fs = require('fs');
 
-const gzip = zlib.createGzip();
-
 const raw = require('./rawData.js');
 
 const startTime = new Date();
 
 const nameRoot = 'hamazon';
-const productCount = 1000000;
+const productCount = 10000000;
 const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail';
 
 const imageCount = 3;
@@ -27,7 +25,7 @@ const generatePrice = () => {
   const msrp = randomInt(10, 400) - 0.01;
   // const list = Math.floor(randomNum(0.8, 0.9) * msrp) - 0.01;
   // const sale = Math.floor(randomNum(0.8, 0.9) * list) - 0.01;
-  return `{"msrp":${msrp}}`; // , "list": ${list}, "sale": ${sale} }`;
+  return `{"msrp":${msrp}}`;
 };
 
 const generateAbout = () => {
@@ -74,20 +72,22 @@ const generateProduct = (id) => {
   );
 };
 
-const writeProducts = (productCount, stream) => {
+const writeBatch = (batchId, start, end) => {
+  const out = fs.createWriteStream(`${__dirname}/products_${batchId}.tsv`);
+  const stream = zlib.createGzip();
+  stream.pipe(out);
   stream.write(productHeadings);
-  for (let i = 1; i <= productCount; i++) {
+  for (let i = start; i <= end; i++) {
     stream.write(`${generateProduct(i)}\n`);
-    if (i % 100000 === 0) {
-      console.log(i, new Date() - startTime);
-    }
   }
-  console.log(new Date() - startTime);
   stream.end();
+  console.log(new Date() - startTime);
 };
 
-const out = fs.createWriteStream(`${__dirname}/products.tsv`, { highWaterMark: Math.pow(2, 32) });
+const writeProducts = (productCount, batchSize = productCount / 10) => {
+  for (let i = 0; i < productCount; i += batchSize) {
+    writeBatch(Math.floor(i / batchSize), i, i + batchSize);
+  }
+};
 
-gzip.pipe(out);
-
-writeProducts(productCount, out);
+writeProducts(productCount);
