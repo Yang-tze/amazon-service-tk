@@ -42,4 +42,27 @@ const getAll = function getProductAndRelatedProducts(productId, callback) {
   });
 };
 
-module.exports = { getProduct, getRelated, getAll };
+// NEW crud functions
+
+const addProduct = ({ brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, questions, seller, thumbnail }, callback) => {
+  connection.query(`delete from products where id=${productId}`, (err, results) => {
+    if (err) console.error(err);
+    callback(results);
+  });
+};
+
+const updateProduct = (brand, callback) => {
+  connection.query(`update products set brand=${brand} where id=${productId}`, (err, results) => {
+    if (err) console.error(err);
+    callback(results);
+  });
+};
+
+const deleteProduct = (productId, callback) => {
+  connection.query(`delete from products where id=${productId}`, (err, results) => {
+    if (err) console.error(err);
+    callback(results);
+  });
+};
+
+module.exports = { getProduct, getRelated, getAll, addProduct, updateProduct, deleteProduct };
