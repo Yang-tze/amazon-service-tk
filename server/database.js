@@ -64,10 +64,17 @@ const addProduct = (
   },
   callback,
 ) => {
-  connection.query(`delete from products where id=${productId}`, (err, results) => {
-    if (err) console.error(err);
-    callback(results);
-  });
+  connection.query(
+    `insert into products
+    (brand, name, product_tier, product_options, price, about_product,
+      is_prime, stock_count, reviews, questions, seller, thumbnail)
+      values ("${brand}", "${name}", "${product_tier}", "${product_options}", "${price}",
+      "${about_product}", ${is_prime}, ${stock_count}, "${reviews}", ${questions}, "${seller}", "${thumbnail}")`,
+    (err, results) => {
+      if (err) console.error(err);
+      callback(results);
+    },
+  );
 };
 
 const updateProduct = (productId, name, callback) => {

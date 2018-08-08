@@ -22,16 +22,15 @@ app.get('/products/:id', (req, res) => {
   }
 });
 
-app.post('/products/:id', (req, res) => {
-  // if (parseInt(req.params.id, 10)) {
-  //   database.getAll(req.params.id, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+app.post('/products', (req, res) => {
+  if (req.body) {
+    database.addProduct(req.body, results => res.send(results));
+  } else {
+    res.end();
+  }
 });
 
 app.put('/products/:id', (req, res) => {
-  console.log(req.body);
   if (parseInt(req.params.id, 10)) {
     database.updateProduct(req.params.id, req.body.name, results => res.send(results));
   } else {
