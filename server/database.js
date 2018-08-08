@@ -24,10 +24,13 @@ const getProduct = function getProductInformation(productId, callback) {
 };
 
 const getRelated = function getRelatedProducts(productName, productId, callback) {
-  connection.query(`select id, product_tier, price, stock_count, thumbnail from products where name='${productName}' and id <> ${productId}`, (err, results) => {
-    if (err) console.error(err);
-    callback(results);
-  });
+  connection.query(
+    `select id, product_tier, price, stock_count, thumbnail from products where name='${productName}' and id <> ${productId}`,
+    (err, results) => {
+      if (err) console.error(err);
+      callback(results);
+    },
+  );
 };
 
 const getAll = function getProductAndRelatedProducts(productId, callback) {
@@ -44,15 +47,31 @@ const getAll = function getProductAndRelatedProducts(productId, callback) {
 
 // NEW crud functions
 
-const addProduct = ({ brand, name, product_tier, product_options, price, about_product, is_prime, stock_count, reviews, questions, seller, thumbnail }, callback) => {
+const addProduct = (
+  {
+    brand,
+    name,
+    product_tier,
+    product_options,
+    price,
+    about_product,
+    is_prime,
+    stock_count,
+    reviews,
+    questions,
+    seller,
+    thumbnail,
+  },
+  callback,
+) => {
   connection.query(`delete from products where id=${productId}`, (err, results) => {
     if (err) console.error(err);
     callback(results);
   });
 };
 
-const updateProduct = (brand, callback) => {
-  connection.query(`update products set brand=${brand} where id=${productId}`, (err, results) => {
+const updateProduct = (productId, name, callback) => {
+  connection.query(`update products set name="${name}" where id=${productId}`, (err, results) => {
     if (err) console.error(err);
     callback(results);
   });
@@ -65,4 +84,11 @@ const deleteProduct = (productId, callback) => {
   });
 };
 
-module.exports = { getProduct, getRelated, getAll, addProduct, updateProduct, deleteProduct };
+module.exports = {
+  getProduct,
+  getRelated,
+  getAll,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+};

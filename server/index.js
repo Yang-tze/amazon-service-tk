@@ -8,6 +8,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('*/bundle.js', (req, res) => {
   res.sendFile(path.join(path.dirname(__dirname), 'public/bundle.js'));
@@ -30,11 +31,12 @@ app.post('/products/:id', (req, res) => {
 });
 
 app.put('/products/:id', (req, res) => {
-  // if (parseInt(req.params.id, 10)) {
-  //   database.updateProduct(req.params.id, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+  console.log(req.body);
+  if (parseInt(req.params.id, 10)) {
+    database.updateProduct(req.params.id, req.body.name, results => res.send(results));
+  } else {
+    res.end();
+  }
 });
 
 app.delete('/products/:id', (req, res) => {
