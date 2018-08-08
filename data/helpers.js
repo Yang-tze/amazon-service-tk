@@ -1,4 +1,6 @@
-const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
+const randomInt = (min, max, roundUp = false) => (
+  min + Math.floor(Math.random() * (max - min))
+);
 
 const color = ['green', 'white', 'blue', 'black', 'silver', 'purple'];
 

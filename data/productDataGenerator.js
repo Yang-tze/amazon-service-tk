@@ -66,24 +66,24 @@ const generateProduct = (id) => {
     + reviews
     + questions
     + seller
-    + thumbnail
+    + thumbnail + '\n'
   );
 };
 
-const writeBatch = (start, end, batchId = 1) => {
+const writeBatch = (start = 1, end, batchId = 1) => {
   const out = fs.createWriteStream(`${__dirname}/sampleData/products_${batchId}.tsv`);
   const stream = zlib.createGzip();
   stream.pipe(out);
   stream.write(productHeadings);
   for (let i = start; i < end; i++) {
     // generateProduct(i);
-    stream.write(`${generateProduct(i)}\n`);
+    stream.write(`${generateProduct(i)}`);
   }
   stream.end();
   console.log(new Date() - startTime);
 };
 
-const writeProducts = (productCount, batchSize) => {
+const writeProducts = (productCount, batchSize = productCount / 10) => {
   for (let i = 1; i < productCount; i += batchSize) {
     writeBatch(i, i + batchSize, Math.floor(i / batchSize));
   }
