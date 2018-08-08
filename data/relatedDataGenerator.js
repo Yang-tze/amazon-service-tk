@@ -22,7 +22,7 @@ const generateRelated = (productId, productCount) => {
 }
 
 const writeBatch = (start = 1, end, batchId = 1, productCount) => {
-  const startTime = new Date();
+  // const startTime = new Date();
 
   const out = fs.createWriteStream(`${__dirname}/sampleData/related_${batchId}.tsv`);
   const stream = zlib.createGzip();
@@ -33,7 +33,7 @@ const writeBatch = (start = 1, end, batchId = 1, productCount) => {
   }
   stream.end();
 
-  console.log(new Date() - startTime);
+  // console.log(new Date() - startTime);
 };
 
 const writeRelated = (productCount, batchSize = productCount / 10) => {
