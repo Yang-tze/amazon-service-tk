@@ -17,7 +17,7 @@ const generateRelated = (id) => {
   return `${id}\t${product}\t${related}`;
 }
 
-const generateRelateds = (start = 0, end, batchId = 1) => {
+const writeRelated = (start = 0, end, batchId = 1) => {
   const out = fs.createWriteStream(`${__dirname}/sampleData/related_${batchId}.tsv`);
   const stream = zlib.createGzip();
   stream.pipe(out);

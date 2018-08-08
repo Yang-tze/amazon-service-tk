@@ -2,24 +2,22 @@ const faker = require('faker');
 const zlib = require('zlib');
 const fs = require('fs');
 
-const raw = require('./rawData.js');
+const { randomInt, size, sentences } = require('./helpers.js');
 
 const startTime = new Date();
 
 const nameRoot = 'hamazon';
-const productCount = 10000000;
+const productCount = 100000;
 const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
 
 const imageCount = 1000;
 const imageEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
-const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
-
 // const randomNum = (min, max) => min + Math.random() * (max - min);
 
 const tab = str => `${str}\t`;
 
-const generateOptions = () => `{"size":${raw.size}}`;
+const generateOptions = () => `{"size":${size}}`;
 
 const generatePrice = () => {
   const msrp = randomInt(10, 400) - 0.01;
@@ -29,7 +27,7 @@ const generatePrice = () => {
 };
 
 const generateAbout = () => {
-  const about = `["${raw.sentences[randomInt(0, raw.sentences.length)].trim()}","${raw.sentences[randomInt(0, raw.sentences.length)].trim()}","${raw.sentences[randomInt(0, raw.sentences.length)].trim()}"]`;
+  const about = `["${sentences[randomInt(0, sentences.length)].trim()}","${sentences[randomInt(0, sentences.length)].trim()}","${sentences[randomInt(0, sentences.length)].trim()}"]`;
   return about;
 };
 

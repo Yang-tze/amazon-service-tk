@@ -1,3 +1,5 @@
+const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
+
 const color = ['green', 'white', 'blue', 'black', 'silver', 'purple'];
 
 const size = ['S', 'M', 'L', 'XL'];
@@ -6,4 +8,4 @@ const text = 'Lorem ipsum dolor amet aliqua 8-bit cillum lumbersexual la croix, 
 
 const sentences = text.split('.');
 
-module.exports = { color, size, sentences };
+module.exports = { randomInt, color, size, sentences };
