@@ -7,7 +7,7 @@ const bucket = 'sdc-yangtze-details';
 
 const imageCount = 1000;
 
-const uploadImage = (source, destination, callback) => {
+const uploadImage = (source, destination) => {
   fetch(source)
     .then((response) => {
       if (response.ok) {
@@ -16,14 +16,14 @@ const uploadImage = (source, destination, callback) => {
       return Promise.reject(new Error(`Failed to fetch ${response.url}: ${response.status} ${response.statusText}`));
     })
     .then(response => response.buffer())
-    .then(buffer => {
+    .then(buffer => (
       s3.putObject({
         Bucket: bucket,
         Key: destination,
         Body: buffer,
         ACL: 'public-read',
       }).promise()
-    })
+    ))
 };
 
 const uploadImages = (imageCount) => {

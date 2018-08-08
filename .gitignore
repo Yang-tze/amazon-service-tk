@@ -29,4 +29,4 @@ public/bundle.js
 images/
 
 # Data
-data/*.tsv
+data/sampleData/*.tsv

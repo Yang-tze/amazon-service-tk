@@ -8,7 +8,7 @@ const startTime = new Date();
 
 const nameRoot = 'hamazon';
 const productCount = 10000000;
-const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail';
+const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
 
 const imageCount = 1000;
 const imageEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
@@ -72,22 +72,22 @@ const generateProduct = (id) => {
   );
 };
 
-const writeBatch = (batchId, start, end) => {
+const writeBatch = (start, end, batchId = 1) => {
   const out = fs.createWriteStream(`${__dirname}/sampleData/products_${batchId}.tsv`);
   const stream = zlib.createGzip();
   stream.pipe(out);
   stream.write(productHeadings);
-  for (let i = start; i <= end; i++) {
-    generateProduct(i);
-    // stream.write(`${generateProduct(i)}\n`);
+  for (let i = start; i < end; i++) {
+    // generateProduct(i);
+    stream.write(`${generateProduct(i)}\n`);
   }
   stream.end();
   console.log(new Date() - startTime);
 };
 
 const writeProducts = (productCount, batchSize) => {
-  for (let i = 0; i < productCount; i += batchSize) {
-    writeBatch(Math.floor(i / batchSize), i, i + batchSize);
+  for (let i = 1; i < productCount; i += batchSize) {
+    writeBatch(i, i + batchSize, Math.floor(i / batchSize));
   }
 };
 
