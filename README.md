@@ -41,35 +41,35 @@ npm install
 
 Insert new product:
 ```sh
-/products
+POST /products
 ````
 
 Get product by id:
 ```sh
-/products/:id
+GET /products/:id
 ```
 
 Get product by name:
 ```sh
-/products/name/:name
+GET /products/name/:name
 ```
 
 Modify product price:
 ```sh
-/products/:id/price/:price
+PUT /products/:id/price/:price
 ```
 
 Modify product questions:
 ```sh
-/products/:id/questions/:count
+PUT /products/:id/questions/:count
 ```
 
 Modify product thumbnail:
 ```sh
-/products/:id/thumbnail/:thumbnail
+PUT /products/:id/thumbnail/:thumbnail
 ```
 
 Delete product by id:
 ```sh
-/products/:id/brand/:brand
+DELETE /products/:id/brand/:brand
 ```
