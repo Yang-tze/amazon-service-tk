@@ -1,8 +1,6 @@
 const fs = require('fs');
 
-const { randomInt } = require('./helpers.js');
-
-const magnitude = 7;
+const { randomInt } = require('./utils.js');
 
 let indexId = 1;
 
@@ -40,4 +38,4 @@ const writeRelated = (productCount, batchSize = productCount / 10) => {
   }
 };
 
-writeRelated(10 ** magnitude);
+module.exports = writeRelated;

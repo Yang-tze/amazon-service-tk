@@ -99,3 +99,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
 };
+
+// const color = ['green', 'white', 'blue', 'black', 'silver', 'purple'];
+
+// const size = ['S', 'M', 'L', 'XL'];

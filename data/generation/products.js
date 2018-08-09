@@ -1,36 +1,20 @@
 const faker = require('faker');
 const fs = require('fs');
 
-const {
-  tab, randomInt, generateName, size, sentences,
-} = require('./helpers.js');
+const { tab, randomInt, generateName } = require('./utils.js');
 
 const thumbnailCount = 1000;
 const thumbnailEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
-const magnitude = 6;
-// const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
-
-const generateOptions = () => `{"size":${size}}`;
-
 const generatePrice = () => randomInt(10, 400) - 0.01;
-
-const generateAbout = () => {
-  const about = `"["${sentences[randomInt(0, sentences.length)].trim()}","${sentences[
-    randomInt(0, sentences.length)
-  ].trim()}","${sentences[randomInt(0, sentences.length)].trim()}"]"`;
-  return about;
-};
 
 const generateThumbnail = id => `${thumbnailEndpoint}${id % thumbnailCount}.png`;
 
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
-  const name = tab(generateName(id - 1, magnitude));
+  const name = tab(generateName(id - 1, 7));
   const brand = tab(faker.name.lastName());
   const price = tab(generatePrice());
-  // const options = tab(generateOptions());
-  // const about = tab(generateAbout());
   const tier = tab(faker.company.catchPhraseAdjective());
   const prime = tab(faker.random.boolean());
   const stock = tab(randomInt(10, 200));
@@ -40,9 +24,7 @@ const generateProduct = (id) => {
   return `${productId
     + name
     + brand
-    // + options
     + price
-    // + about
     + tier
     + prime
     + stock
@@ -72,4 +54,4 @@ const writeProducts = (productCount, batchSize = productCount / 10) => {
   }
 };
 
-writeProducts(10 ** magnitude);
+module.exports = writeProducts;
