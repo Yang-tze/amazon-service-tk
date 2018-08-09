@@ -1,10 +1,8 @@
-const zlib = require('zlib');
 const fs = require('fs');
 
 const { randomInt } = require('./helpers.js');
 
 const magnitude = 7;
-const relatedHeadings = 'id\tproduct_id\trelated_id\n';
 
 let indexId = 1;
 
@@ -19,15 +17,12 @@ const generateRelated = (productId, productCount) => {
     lines += `${indexId++}\t${productId}\t${relatedId}\n`;
   }
   return lines;
-}
+};
 
 const writeBatch = (start = 1, end, batchId = 1, productCount) => {
   // const startTime = new Date();
 
-  const out = fs.createWriteStream(`${__dirname}/sampleData/related_${batchId}.tsv`);
-  const stream = zlib.createGzip();
-  stream.pipe(out);
-  stream.write(relatedHeadings);
+  const stream = fs.createWriteStream(`${__dirname}/sampleData/related_${batchId}.tsv`);
   for (let i = start; i < end; i++) {
     stream.write(`${generateRelated(i, productCount)}`);
   }
