@@ -54,22 +54,37 @@ Get product by name:
 GET /products/name/:name
 ```
 
-Modify product price:
+Update product info:
 ```sh
-PUT /products/:id/price/:price
-```
-
-Modify product questions:
-```sh
-PUT /products/:id/questions/:count
-```
-
-Modify product thumbnail:
-```sh
-PUT /products/:id/thumbnail/:thumbnail
+PATCH /products/:id
 ```
 
 Delete product by id:
 ```sh
 DELETE /products/:id/brand/:brand
+```
+
+Create about information:
+```sh
+POST /products/:id/about
+```
+
+Update about information:
+```sh
+PUT /products/:id/about
+```
+
+Add related product:
+```sh
+POST /products/:id/related/:id
+```
+
+Delete related product:
+```sh
+DELETE /products/:id/related/:id
+```
+
+Update product reviews:
+```sh
+POST /products/:id/reviews
 ```
