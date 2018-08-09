@@ -17,16 +17,12 @@ CREATE TABLE products (
   stock_count INTEGER NOT NULL,
   questions INTEGER NOT NULL,
   seller VARCHAR(50) NOT NULL,
-  thumbnail TEXT NOT NULL
-);
-
-CREATE TABLE product_reviews (
-  product_id INTEGER NOT NULL,
-  one_star INTEGER NOT NULL,
-  two_star INTEGER NOT NULL,
-  three_star INTEGER NOT NULL,
-  four_star INTEGER NOT NULL,
-  five_star INTEGER NOT NULL
+  thumbnail TEXT NOT NULL,
+  one_star_reviews INTEGER DEFAULT 0,
+  two_star_reviews INTEGER DEFAULT 0,
+  three_star_reviews INTEGER DEFAULT 0,
+  four_star_reviews INTEGER DEFAULT 0,
+  five_star_reviews INTEGER DEFAULT 0
 );
 
 CREATE TABLE about_product (
@@ -45,7 +41,6 @@ for (let i = 0; i < batchCount; i++) {
     COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_${i}.tsv' DELIMITER E'\\t';
     COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_${i}.tsv' DELIMITER E'\\t';
     COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_${i}.tsv' DELIMITER E'\\t';
-    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_${i}.tsv' DELIMITER E'\\t';
     `;
 }
 

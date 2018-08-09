@@ -12,6 +12,14 @@ const generatePrice = () => randomInt(10, 400) - 0.01;
 
 const generateThumbnail = id => `${thumbnailEndpoint}${id % thumbnailCount}.png`;
 
+const generateReviews = (rawScore) => {
+  const reviews = [null, null, null, null, null].map((item, index) => {
+    const weight = Math.abs(index / 5 - rawScore);
+    return randomInt(0, weight * 1000);
+  });
+  return `${reviews.join('\t')}`;
+};
+
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
   const name = tab(generateName(id - 1, 7));
@@ -22,7 +30,8 @@ const generateProduct = (id) => {
   const stock = tab(randomInt(10, 200));
   const questions = tab(randomInt(3, 50));
   const seller = tab(faker.name.firstName());
-  const thumbnail = generateThumbnail();
+  const thumbnail = tab(generateThumbnail());
+  const reviews = generateReviews(Math.random());
   return `${productId
     + name
     + brand
@@ -32,7 +41,8 @@ const generateProduct = (id) => {
     + stock
     + questions
     + seller
-    + thumbnail}\n`;
+    + thumbnail
+    + reviews}\n`;
 };
 
 const writeBatch = (start = 1, end, batchId = 1) => {
