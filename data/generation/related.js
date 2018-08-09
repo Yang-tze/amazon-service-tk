@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { productCount, randomInt } = require('./utils.js');
+const { productCount, batchCount, randomInt } = require('./utils.js');
 
 let indexId = 1;
 
@@ -29,7 +29,7 @@ const writeBatch = (start = 1, end, batchId = 1, productCount) => {
   console.log(new Date() - startTime);
 };
 
-const writeRelated = (productCount, batchSize = productCount / 20) => {
+const writeRelated = (productCount, batchSize = productCount / batchCount) => {
   for (let i = 1; i < productCount; i += batchSize) {
     const start = i;
     const end = i + batchSize;

@@ -1,4 +1,5 @@
-const productCount = 10000000;
+const productCount = 1000000;
+const batchCount = 20;
 
 const tab = str => `${str}\t`;
 
@@ -17,6 +18,7 @@ const generateName = (index, length) => {
 
 module.exports = {
   productCount,
+  batchCount,
   tab,
   randomInt,
   generateName,

@@ -1,12 +1,14 @@
 DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS about_product;
+DROP TABLE IF EXISTS product_reviews;
 DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(200) NOT NULL,
   brand VARCHAR(100) NOT NULL,
+  price DECIMAL NOT NULL,
   product_tier VARCHAR(50) NOT NULL,
-  price INTEGER NOT NULL,
   is_prime BOOLEAN NOT NULL,
   stock_count INTEGER NOT NULL,
   questions INTEGER NOT NULL,
@@ -14,8 +16,7 @@ CREATE TABLE products (
   thumbnail TEXT NOT NULL
 );
 
-CREATE TABLE reviews (
-  id SERIAL,
+CREATE TABLE product_reviews (
   product_id INTEGER NOT NULL,
   one_star INTEGER NOT NULL,
   two_star INTEGER NOT NULL,
@@ -24,10 +25,10 @@ CREATE TABLE reviews (
   five_star INTEGER NOT NULL
 );
 
-CREATE TABLE about (
+CREATE TABLE about_product (
   id SERIAL,
   product_id INTEGER NOT NULL,
-  info VARCHAR(150) NOT NULL,
+  info VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE related_products (
@@ -36,4 +37,103 @@ CREATE TABLE related_products (
   related_id INTEGER NOT NULL
 );
 
-COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_0.tsv' DELIMITER E'\t';
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_0.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_0.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_0.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_0.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_1.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_1.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_1.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_1.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_2.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_2.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_2.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_2.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_3.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_3.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_3.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_3.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_4.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_4.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_4.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_4.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_5.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_5.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_5.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_5.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_6.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_6.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_6.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_6.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_7.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_7.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_7.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_7.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_8.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_8.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_8.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_8.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_9.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_9.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_9.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_9.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_10.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_10.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_10.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_10.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_11.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_11.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_11.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_11.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_12.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_12.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_12.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_12.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_13.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_13.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_13.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_13.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_14.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_14.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_14.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_14.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_15.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_15.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_15.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_15.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_16.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_16.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_16.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_16.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_17.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_17.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_17.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_17.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_18.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_18.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_18.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_18.tsv' DELIMITER E'\t';
+    
+    COPY about_product FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/about_19.tsv' DELIMITER E'\t';
+    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_19.tsv' DELIMITER E'\t';
+    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_19.tsv' DELIMITER E'\t';
+    COPY product_reviews FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/reviews_19.tsv' DELIMITER E'\t';
+    

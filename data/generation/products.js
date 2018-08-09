@@ -2,7 +2,7 @@ const faker = require('faker');
 const fs = require('fs');
 
 const {
-  productCount, tab, randomInt, generateName,
+  productCount, batchCount, tab, randomInt, generateName,
 } = require('./utils.js');
 
 const thumbnailCount = 1000;
@@ -47,7 +47,7 @@ const writeBatch = (start = 1, end, batchId = 1) => {
   console.log(new Date() - startTime);
 };
 
-const writeProducts = (productCount, batchSize = productCount / 20) => {
+const writeProducts = (productCount, batchSize = productCount / batchCount) => {
   for (let i = 1; i < productCount; i += batchSize) {
     const start = i;
     const end = i + batchSize;

@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-const { productCount, tab, randomInt } = require('./utils.js');
+const {
+  productCount, batchCount, tab, randomInt,
+} = require('./utils.js');
 
 const generateReviews = (id, rawScore) => {
   const reviews = [null, null, null, null, null].map((item, index) => {
@@ -22,7 +24,7 @@ const writeBatch = (start = 1, end, batchId = 1) => {
   console.log(new Date() - startTime);
 };
 
-const writeReviews = (productCount, batchSize = productCount / 20) => {
+const writeReviews = (productCount, batchSize = productCount / batchCount) => {
   for (let i = 1; i < productCount; i += batchSize) {
     const start = i;
     const end = i + batchSize;
