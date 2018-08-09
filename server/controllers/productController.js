@@ -31,10 +31,12 @@ getProductByName = (req, res) => {
 };
 
 patchProduct = (req, res) => {
-  const { params } = req;
-  const fieldsToUpdate = Object.keys(params);
-  if (parseInt(req.params.id, 10)) {
-    model.updateProduct(req.params.id, req.body.name, results => res.send(results));
+  const {
+    params: { id },
+  } = req;
+  const { body } = req;
+  if (Object.keys(body).length) {
+    model.updateProduct(id, body, results => res.send(results));
   } else {
     res.end();
   }

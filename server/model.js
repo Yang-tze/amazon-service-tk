@@ -23,6 +23,17 @@ const execMultiple = (queryStrings, callback) => {
   next();
 };
 
+const generateUpdateString = (tableName, idName, idValue, data) => {
+  let queryString = `UPDATE ${tableName} SET`;
+  for (key in data) {
+    const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
+    queryString += ` ${key}=${value},`;
+  }
+  queryString = `${queryString.substring(0, queryString.length - 1)} WHERE ${idName}=${idValue}`;
+  console.log(queryString);
+  return queryString;
+};
+
 const getProductById = (productId, callback) => {
   const startTime = new Date();
   const queryString = `SELECT * FROM products WHERE id=${productId}`;
@@ -34,6 +45,14 @@ const getProductById = (productId, callback) => {
 const getProductByName = (productName, callback) => {
   const startTime = new Date();
   const queryString = `SELECT * FROM products WHERE product_name='${productName}'`;
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback, startTime);
+  });
+};
+
+const updateProduct = (productId, data, callback) => {
+  const startTime = new Date();
+  const queryString = generateUpdateString('products', 'id', productId, data);
   connection.query(queryString, (err, results) => {
     handleResults(err, results, callback, startTime);
   });
@@ -102,12 +121,12 @@ const addProduct = (
   );
 };
 
-const updateProduct = (productId, name, callback) => {
-  connection.query(`update products set name="${name}" where id=${productId}`, (err, results) => {
-    if (err) console.error(err);
-    callback(results);
-  });
-};
+// const updateProduct = (productId, name, callback) => {
+//   connection.query(`update products set name="${name}" where id=${productId}`, (err, results) => {
+//     if (err) console.error(err);
+//     callback(results);
+//   });
+// };
 
 module.exports = {
   getProductById,
