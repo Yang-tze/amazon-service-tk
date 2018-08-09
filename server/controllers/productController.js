@@ -1,8 +1,9 @@
 const model = require('../model.js');
 
 postProduct = (req, res) => {
-  if (req.body) {
-    model.addProduct(req.body, results => res.send(results));
+  const { body } = req;
+  if (Object.keys(body).length) {
+    model.addProduct(body, results => res.send(results));
   } else {
     res.end();
   }

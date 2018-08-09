@@ -23,6 +23,19 @@ const execMultiple = (queryStrings, callback) => {
   next();
 };
 
+const generateAddString = (tableName, data) => {
+  let queryString = `INSERT INTO ${tableName} `;
+  queryString += `(${Object.keys(data).join(',')}) `;
+  queryString += 'VALUES (';
+  for (key in data) {
+    const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
+    queryString += `${value},`;
+  }
+  queryString = `${queryString.substring(0, queryString.length - 1)})`;
+  console.log(queryString);
+  return queryString;
+};
+
 const generateUpdateString = (tableName, idName, idValue, data) => {
   let queryString = `UPDATE ${tableName} SET`;
   for (key in data) {
@@ -32,6 +45,14 @@ const generateUpdateString = (tableName, idName, idValue, data) => {
   queryString = `${queryString.substring(0, queryString.length - 1)} WHERE ${idName}=${idValue}`;
   console.log(queryString);
   return queryString;
+};
+
+const addProduct = (data, callback) => {
+  const startTime = new Date();
+  const queryString = generateAddString('products', data);
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback, startTime);
+  });
 };
 
 const getProductById = (productId, callback) => {
@@ -86,45 +107,6 @@ const deleteProduct = (productId, callback) => {
 //       storage.related = relatedResults.map(object => parseData(object));
 //       callback(storage);
 //     });
-//   });
-// };
-
-// NEW crud functions
-
-const addProduct = (
-  {
-    brand,
-    name,
-    product_tier,
-    product_options,
-    price,
-    about_product,
-    is_prime,
-    stock_count,
-    reviews,
-    questions,
-    seller,
-    thumbnail,
-  },
-  callback,
-) => {
-  connection.query(
-    `insert into products
-    (brand, name, product_tier, product_options, price, about_product,
-      is_prime, stock_count, reviews, questions, seller, thumbnail)
-      values ("${brand}", "${name}", "${product_tier}", "${product_options}", "${price}",
-      "${about_product}", ${is_prime}, ${stock_count}, "${reviews}", ${questions}, "${seller}", "${thumbnail}")`,
-    (err, results) => {
-      if (err) console.error(err);
-      callback(results);
-    },
-  );
-};
-
-// const updateProduct = (productId, name, callback) => {
-//   connection.query(`update products set name="${name}" where id=${productId}`, (err, results) => {
-//     if (err) console.error(err);
-//     callback(results);
 //   });
 // };
 
