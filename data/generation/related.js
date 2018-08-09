@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { randomInt } = require('./utils.js');
+const { productCount, randomInt } = require('./utils.js');
 
 let indexId = 1;
 
@@ -38,4 +38,4 @@ const writeRelated = (productCount, batchSize = productCount / 20) => {
   }
 };
 
-module.exports = writeRelated;
+writeRelated(productCount);

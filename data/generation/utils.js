@@ -1,3 +1,5 @@
+const productCount = 10000000;
+
 const tab = str => `${str}\t`;
 
 const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
@@ -14,6 +16,7 @@ const generateName = (index, length) => {
 };
 
 module.exports = {
+  productCount,
   tab,
   randomInt,
   generateName,

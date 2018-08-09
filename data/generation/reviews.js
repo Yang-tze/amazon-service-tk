@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { tab, randomInt } = require('./utils.js');
+const { productCount, tab, randomInt } = require('./utils.js');
 
 const generateReviews = (id, rawScore) => {
   const reviews = [null, null, null, null, null].map((item, index) => {
@@ -31,4 +31,4 @@ const writeReviews = (productCount, batchSize = productCount / 20) => {
   }
 };
 
-module.exports = writeReviews;
+writeReviews(productCount);

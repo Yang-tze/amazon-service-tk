@@ -1,7 +1,9 @@
 const faker = require('faker');
 const fs = require('fs');
 
-const { tab, randomInt, generateName } = require('./utils.js');
+const {
+  productCount, tab, randomInt, generateName,
+} = require('./utils.js');
 
 const thumbnailCount = 1000;
 const thumbnailEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
@@ -54,4 +56,4 @@ const writeProducts = (productCount, batchSize = productCount / 20) => {
   }
 };
 
-module.exports = writeProducts;
+writeProducts(productCount);

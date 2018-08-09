@@ -8,7 +8,11 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "generate-data": "node --max-old-space-size=12000 data/generation/allData.js",
+    "generate-data": "npm run generate-about && npm run generate-products && npm run generate-related && npm run generate-reviews",
+    "generate-about": "node --max-old-space-size=4096 data/generation/about.js",
+    "generate-products": "node --max-old-space-size=4096 data/generation/products.js",
+    "generate-related": "node --max-old-space-size=4096 data/generation/related.js",
+    "generate-reviews": "node --max-old-space-size=4096 data/generation/reviews.js",
     "init-postgres": "psql -f data/postgres-init.sql",
     "seed-postgres": "psql -f data/postgres-schema.sql product_db",
     "watch": "webpack --watch",
