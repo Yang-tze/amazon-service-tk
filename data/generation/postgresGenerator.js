@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(200) NOT NULL,
+  product_name VARCHAR(200) NOT NULL,
   brand VARCHAR(100) NOT NULL,
   price DECIMAL NOT NULL,
   product_tier VARCHAR(50) NOT NULL,
@@ -45,6 +45,9 @@ for (let i = 0; i < batchCount; i++) {
 }
 
 fs.writeFile(path.join(__dirname, '../postgres-schema.sql'), content, 'utf8', (err) => {
-  if (err) throw err;
-  console.log('File written!');
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('postgres-schema.sql written');
 });
