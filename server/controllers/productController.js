@@ -31,11 +31,13 @@ getProductByName = (req, res) => {
 };
 
 patchProduct = (req, res) => {
-  // if (parseInt(req.params.id, 10)) {
-  //   model.updateProduct(req.params.id, req.body.name, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+  const { params } = req;
+  const fieldsToUpdate = Object.keys(params);
+  if (parseInt(req.params.id, 10)) {
+    model.updateProduct(req.params.id, req.body.name, results => res.send(results));
+  } else {
+    res.end();
+  }
 };
 
 deleteProduct = (req, res) => {

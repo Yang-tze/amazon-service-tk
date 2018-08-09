@@ -1,6 +1,7 @@
 const connection = require('../data/postgres.js');
 
-const handleResults = (err, results, callback) => {
+const handleResults = (err, results, callback, startTime) => {
+  console.log('Query time:', new Date() - startTime);
   if (err) {
     console.error(err);
     return;
@@ -23,16 +24,18 @@ const execMultiple = (queryStrings, callback) => {
 };
 
 const getProductById = (productId, callback) => {
+  const startTime = new Date();
   const queryString = `SELECT * FROM products WHERE id=${productId}`;
   connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback);
+    handleResults(err, results, callback, startTime);
   });
 };
 
 const getProductByName = (productName, callback) => {
+  const startTime = new Date();
   const queryString = `SELECT * FROM products WHERE product_name='${productName}'`;
   connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback);
+    handleResults(err, results, callback, startTime);
   });
 };
 
