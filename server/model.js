@@ -1,4 +1,4 @@
-const connection = require('../data/postgres.js');
+const connection = require('../data/postgresConnection.js');
 
 const handleResults = (err, results, callback, startTime) => {
   console.log('Query time:', new Date() - startTime);
