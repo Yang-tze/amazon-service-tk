@@ -8,7 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "generate-data": "node --max-old-space-size=4096 data/generation/allData.js",
+    "generate-data": "node --max-old-space-size=12000 data/generation/allData.js",
     "init-postgres": "psql -f data/postgres-init.sql",
     "seed-postgres": "psql -f data/postgres-schema.sql product_db",
     "watch": "webpack --watch",
