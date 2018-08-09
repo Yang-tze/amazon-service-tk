@@ -83,8 +83,3 @@ Delete related product:
 ```sh
 DELETE /products/:id/related/:id
 ```
-
-Update product reviews:
-```sh
-POST /products/:id/reviews
-```
