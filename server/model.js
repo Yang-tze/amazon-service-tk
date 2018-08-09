@@ -22,6 +22,13 @@ const getProductByName = (productName, callback) => {
   });
 };
 
+const deleteProduct = (productId, callback) => {
+  const queryString = `DELETE FROM products WHERE id='${productId}'`;
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback);
+  });
+};
+
 // const getRelated = function getRelatedProducts(productName, productId, callback) {
 //   connection.query(
 //     `select id, product_tier, price, stock_count, thumbnail from products where name='${productName}' and id <> ${productId}`,
@@ -83,17 +90,10 @@ const updateProduct = (productId, name, callback) => {
   });
 };
 
-const deleteProduct = (productId, callback) => {
-  connection.query(`delete from products where id=${productId}`, (err, results) => {
-    if (err) console.error(err);
-    callback(results);
-  });
-};
-
 module.exports = {
   getProductById,
   getProductByName,
-  getAll,
+  // getAll,
   addProduct,
   updateProduct,
   deleteProduct,
