@@ -13,10 +13,7 @@ const magnitude = 6;
 
 const generateOptions = () => `{"size":${size}}`;
 
-const generatePrice = () => {
-  const msrp = randomInt(10, 400) - 0.01;
-  return `"{"msrp":${msrp}}"`;
-};
+const generatePrice = () => randomInt(10, 400) - 0.01;
 
 const generateAbout = () => {
   const about = `"["${sentences[randomInt(0, sentences.length)].trim()}","${sentences[
@@ -25,27 +22,18 @@ const generateAbout = () => {
   return about;
 };
 
-const generateReviews = (rawScore) => {
-  const reviews = [null, null, null, null, null].map((item, index) => {
-    const weight = Math.abs(index / 5 - rawScore);
-    return randomInt(0, 1000 * weight);
-  });
-  return `"[${reviews}]"`;
-};
-
 const generateThumbnail = id => `${thumbnailEndpoint}${id % thumbnailCount}.png`;
 
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
   const name = tab(generateName(id - 1, magnitude));
   const brand = tab(faker.name.lastName());
+  const price = tab(generatePrice());
   // const options = tab(generateOptions());
-  // const price = tab(generatePrice());
   // const about = tab(generateAbout());
   const tier = tab(faker.company.catchPhraseAdjective());
   const prime = tab(faker.random.boolean());
   const stock = tab(randomInt(10, 200));
-  // const reviews = tab(generateReviews(Math.random()));
   const questions = tab(randomInt(3, 50));
   const seller = tab(faker.name.firstName());
   const thumbnail = generateThumbnail();
@@ -53,12 +41,11 @@ const generateProduct = (id) => {
     + name
     + brand
     // + options
-    // + price
+    + price
     // + about
     + tier
     + prime
     + stock
-    // + reviews
     + questions
     + seller
     + thumbnail}\n`;
