@@ -28,7 +28,7 @@ const writeBatch = (start = 1, end, batchId = 1, productCount) => {
   console.log(new Date() - startTime);
 };
 
-const writeAbout = (productCount, batchSize = productCount / batchCount) => {
+const writeAbout = (productCount, batchSize) => {
   for (let i = 1; i < productCount; i += batchSize) {
     const start = i;
     const end = i + batchSize;
@@ -37,4 +37,4 @@ const writeAbout = (productCount, batchSize = productCount / batchCount) => {
   }
 };
 
-writeAbout(productCount);
+writeAbout(productCount, productCount / batchCount);
