@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const productController = require('./controller/product.js');
-const aboutController = require('./controller/about.js');
-const relatedController = require('./controller/related.js');
+const productController = require('./controllers/productController.js');
+const aboutController = require('./controllers/aboutController.js');
+const relatedController = require('./controllers/relatedController.js');
 
 router.post('/products', productController.postProduct);
 router.get('/products/:id', productController.getProductById);
@@ -15,4 +15,4 @@ router.put('products/:id/about', aboutController.putAbout);
 router.post('products/:id/related/:id', relatedController.postRelated);
 router.delete('products/:id/related/:id', relatedController.deleteRelated);
 
-router.module.exports = router;
+module.exports = router;
