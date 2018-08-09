@@ -8,6 +8,20 @@ const handleResults = (err, results, callback) => {
   callback(results);
 };
 
+const execMultiple = (queryStrings, callback) => {
+  const next = () => {
+    const queryString = queryStrings.pop();
+    if (queryString) {
+      connection.query(queryString, (err, results) => {
+        handleResults(err, results, next);
+      });
+    } else {
+      callback();
+    }
+  };
+  next();
+};
+
 const getProductById = (productId, callback) => {
   const queryString = `SELECT * FROM products WHERE id=${productId}`;
   connection.query(queryString, (err, results) => {
@@ -23,10 +37,12 @@ const getProductByName = (productName, callback) => {
 };
 
 const deleteProduct = (productId, callback) => {
-  const queryString = `DELETE FROM products WHERE id='${productId}'`;
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback);
-  });
+  const queryStrings = [
+    `DELETE FROM products WHERE id='${productId}'`,
+    `DELETE FROM about_product WHERE product_id='${productId}'`,
+    `DELETE FROM related_products WHERE product_id='${productId}'`,
+  ];
+  execMultiple(queryStrings, callback);
 };
 
 // const getRelated = function getRelatedProducts(productName, productId, callback) {
