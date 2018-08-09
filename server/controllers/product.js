@@ -1,4 +1,4 @@
-const model = require('./model.js');
+const model = require('../model.js');
 
 module.exports = {
   postProduct(req, res) {
@@ -22,21 +22,7 @@ module.exports = {
     //   res.end();
     // }
   },
-  putPrice(req, res) {
-    // if (parseInt(req.params.id, 10)) {
-    //   model.updateProduct(req.params.id, req.body.name, results => res.send(results));
-    // } else {
-    //   res.end();
-    // }
-  },
-  putQuestions(req, res) {
-    // if (parseInt(req.params.id, 10)) {
-    //   model.updateProduct(req.params.id, req.body.name, results => res.send(results));
-    // } else {
-    //   res.end();
-    // }
-  },
-  putThumbnail(req, res) {
+  patchProduct(req, res) {
     // if (parseInt(req.params.id, 10)) {
     //   model.updateProduct(req.params.id, req.body.name, results => res.send(results));
     // } else {

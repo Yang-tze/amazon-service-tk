@@ -1,17 +1,18 @@
 const router = require('express').Router();
-const controller = require('./controller.js');
+const productController = require('./controller/product.js');
+const aboutController = require('./controller/about.js');
+const relatedController = require('./controller/related.js');
 
-router.post('/products', controller.postProduct);
-router.get('/products/:id', controller.getById);
-router.get('/products/name/:name', controller.getByName);
-router.put('/products/:id/price/:price', controller.putPrice);
-router.put('/products/:id/questions/:count', controller.putQuestions);
-router.put('/products/:id/thumbnail/:thumbnail', controller.putThumbnail);
-router.delete('/products/:id', controller.deleteProduct);
+router.post('/products', productController.postProduct);
+router.get('/products/:id', productController.getProductById);
+router.get('/products/name/:name', productController.getProductByName);
+router.patch('/products/:id', productController.patchProduct);
+router.delete('/products/:id', productController.deleteProduct);
 
-// router.get('/about/:id/:index', controller.getAbout);
-// router.post('/about/');
+router.post('products/:id/about', aboutController.postAbout);
+router.put('products/:id/about', aboutController.putAbout);
 
-// router.post('/related/:id/:idRelated', controller.postRelated);
-// router.get('/related/:id', controller.getRelated);
+router.post('products/:id/related/:id', relatedController.postRelated);
+router.delete('products/:id/related/:id', relatedController.deleteRelated);
+
 router.module.exports = router;
