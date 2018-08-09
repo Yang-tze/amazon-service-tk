@@ -39,7 +39,7 @@ npm install
 
 ## CRUD API
 
-Insert new product:
+Add new product:
 ```sh
 POST /products
 ````
