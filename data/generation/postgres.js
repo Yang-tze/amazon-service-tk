@@ -30,13 +30,11 @@ CREATE TABLE product_reviews (
 );
 
 CREATE TABLE about_product (
-  id SERIAL,
   product_id INTEGER NOT NULL,
   info VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE related_products (
-  id SERIAL PRIMARY KEY,
   product_id INTEGER NOT NULL,
   related_id INTEGER NOT NULL
 );
