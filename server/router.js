@@ -1,9 +1,17 @@
 const router = require('express').Router();
 const controller = require('./controller.js');
 
-router.post('/products', controller.post);
-router.get('/products/:id', controller.get);
-router.put('/products/:id', controller.put);
-router.delete('/products/:id', controller.delete);
+router.post('/products', controller.postProduct);
+router.get('/products/:id', controller.getById);
+router.get('/products/name/:name', controller.getByName);
+router.put('/products/:id/price/:price', controller.putPrice);
+router.put('/products/:id/questions/:count', controller.putQuestions);
+router.put('/products/:id/thumbnail/:thumbnail', controller.putThumbnail);
+router.delete('/products/:id', controller.deleteProduct);
 
-module.exports = router;
+// router.get('/about/:id/:index', controller.getAbout);
+// router.post('/about/');
+
+// router.post('/related/:id/:idRelated', controller.postRelated);
+// router.get('/related/:id', controller.getRelated);
+router.module.exports = router;
