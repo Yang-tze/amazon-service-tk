@@ -1,4 +1,4 @@
-# Amazon Product Information & Pricing 
+# Amazon Product Details 
 
 > An app meant to mimic a typical Amazon product page
 
@@ -37,3 +37,39 @@ npm install -g webpack
 npm install
 ```
 
+## CRUD API
+
+Insert new product:
+```sh
+/products
+````
+
+Get product by id:
+```sh
+/products/:id
+```
+
+Get product by name:
+```sh
+/products/name/:name
+```
+
+Modify product price:
+```sh
+/products/:id/price/:price
+```
+
+Modify product questions:
+```sh
+/products/:id/questions/:count
+```
+
+Modify product thumbnail:
+```sh
+/products/:id/thumbnail/:thumbnail
+```
+
+Delete product by id:
+```sh
+/products/:id/brand/:brand
+```
