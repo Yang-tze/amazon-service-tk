@@ -2,13 +2,15 @@ const faker = require('faker');
 const zlib = require('zlib');
 const fs = require('fs');
 
-const { tab, randomInt, generateName, size, sentences } = require('./helpers.js');
+const {
+  tab, randomInt, generateName, size, sentences,
+} = require('./helpers.js');
 
 const thumbnailCount = 1000;
 const thumbnailEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
-const magnitude = 7;
-const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
+const magnitude = 3;
+// const productHeadings = 'id\tname\tbrand\tproduct_tier\tproduct_options\tprice\tabout_product\tis_prime\tstock_count\treviews\tquestions\tseller\tthumbnail\n';
 
 const generateOptions = () => `{"size":${size}}`;
 
@@ -18,21 +20,21 @@ const generatePrice = () => {
 };
 
 const generateAbout = () => {
-  const about = `["${sentences[randomInt(0, sentences.length)].trim()}","${sentences[randomInt(0, sentences.length)].trim()}","${sentences[randomInt(0, sentences.length)].trim()}"]`;
+  const about = `["${sentences[randomInt(0, sentences.length)].trim()}","${sentences[
+    randomInt(0, sentences.length)
+  ].trim()}","${sentences[randomInt(0, sentences.length)].trim()}"]`;
   return about;
 };
 
 const generateReviews = (rawScore) => {
   const reviews = [null, null, null, null, null].map((item, index) => {
     const weight = Math.abs(index / 5 - rawScore);
-    randomInt(0, 1000 * weight);
+    return randomInt(0, 1000 * weight);
   });
-  return `${reviews}`;
+  return `[${reviews}]`;
 };
 
-const generateThumbnail = (id) => {
-  return  tab(`${thumbnailEndpoint}${id % thumbnailCount}.png`);
-}
+const generateThumbnail = id => tab(`${thumbnailEndpoint}${id % thumbnailCount}.png`);
 
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
@@ -48,8 +50,7 @@ const generateProduct = (id) => {
   const questions = tab(randomInt(3, 50));
   const seller = tab(faker.name.firstName());
   const thumbnail = generateThumbnail();
-  return (
-    productId
+  return `${productId
     + name
     + brand
     + options
@@ -61,17 +62,16 @@ const generateProduct = (id) => {
     + reviews
     + questions
     + seller
-    + thumbnail + '\n'
-  );
+    + thumbnail}\n`;
 };
 
 const writeBatch = (start = 1, end, batchId = 1) => {
   // const startTime = new Date();
 
-  const out = fs.createWriteStream(`${__dirname}/sampleData/products_${batchId}.tsv`);
-  const stream = zlib.createGzip();
-  stream.pipe(out);
-  stream.write(productHeadings);
+  const stream = fs.createWriteStream(`${__dirname}/sampleData/products_${batchId}.tsv`);
+  // const stream = zlib.createGzip();
+  // stream.pipe(out);
+  // stream.write(productHeadings);
   for (let i = start; i < end; i++) {
     stream.write(`${generateProduct(i)}`);
   }

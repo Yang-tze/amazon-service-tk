@@ -1,5 +1,3 @@
--- Run as: psql -f schema.sql product_db
-
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS related_products;
 
@@ -24,3 +22,5 @@ CREATE TABLE related_products (
   product_id INTEGER NOT NULL,
   related_id INTEGER NOT NULL
 );
+
+COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_0.tsv' DELIMITER E'\t';
