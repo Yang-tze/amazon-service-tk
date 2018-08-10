@@ -45,6 +45,8 @@ for (let i = 0; i < batchCount; i++) {
     `;
 }
 
+content += 'SELECT setval(\'products_id_seq\', COALESCE((SELECT MAX(id)+1 FROM products), 1), false);';
+
 fs.writeFile(path.join(__dirname, '../postgres-schema.sql'), content, 'utf8', (err) => {
   if (err) {
     console.error(err);
