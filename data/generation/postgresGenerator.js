@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS product_reviews;
 DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
-  id SERIAL PRIMARY KEY,
+  id SERIAL,
   brand VARCHAR(100) NOT NULL,
   is_prime BOOLEAN NOT NULL,
   price DECIMAL NOT NULL,
@@ -26,13 +26,13 @@ CREATE TABLE products (
 );
 
 CREATE TABLE about_product (
-  id INTEGER NOT NULL,
+  id SERIAL NOT NULL,
   info TEXT NOT NULL,
   product_id INTEGER NOT NULL
 );
 
 CREATE TABLE related_products (
-  id INTEGER NOT NULL,
+  id SERIAL NOT NULL,
   product_id INTEGER NOT NULL,
   related_id INTEGER NOT NULL
 );

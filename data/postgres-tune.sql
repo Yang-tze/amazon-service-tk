@@ -1,4 +1,5 @@
 CREATE INDEX product_name ON products (product_name);
+ALTER TABLE products ADD PRIMARY KEY (id);
 
 CREATE INDEX product_id_about ON about_product (product_id);
 ALTER TABLE about_product ADD CONSTRAINT fk_about FOREIGN KEY (product_id) REFERENCES products(id);
