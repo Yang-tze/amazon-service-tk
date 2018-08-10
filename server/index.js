@@ -18,4 +18,4 @@ app.use(router);
 // });
 app.use('/:id', express.static(path.join(__dirname, '../public')));
 
-app.listen(3003, () => console.log('Listening on port 3003'));
+app.listen(port, () => console.log('Listening on port 3003'));

@@ -8,8 +8,13 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "generate-data": "node --max-old-space-size=4096 data/productDataGenerator.js && node --max-old-space-size=4096 data/relatedDataGenerator.js",
-    "db": "mysql -u root < schema.sql",
+    "generate-data": "npm run generate-about && npm run generate-products && npm run generate-related",
+    "generate-about": "node --max-old-space-size=4096 data/generation/aboutGenerator.js",
+    "generate-products": "node --max-old-space-size=4096 data/generation/productGenerator.js",
+    "generate-related": "node --max-old-space-size=4096 data/generation/relatedGenerator.js",
+    "postgres-init": "psql -f data/postgres-init.sql && node data/generation/postgresGenerator.js",
+    "postgres-seed": "psql -f data/postgres-schema.sql product_db",
+    "postgres-tune": "psql -f data/postgres-tune.sql product_db",
     "watch": "webpack --watch",
     "start": "nodemon server/index.js",
     "test": "jest --coverage",
@@ -22,10 +27,10 @@
     "faker": "^4.1.0",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.3",
+    "path": "^0.12.7",
     "pg": "^7.4.3",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "zlib": "^1.0.5"
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "aws-sdk": "^2.288.0",
