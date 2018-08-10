@@ -14,19 +14,20 @@ DROP TABLE IF EXISTS about_product;
 DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
-  id INT PRIMARY KEY,
+  id INT,
+  name VARCHAR,
   about list<TEXT>,
   brand VARCHAR,
   is_prime BOOLEAN,
+  num_questions INT,
   price DECIMAL,
-  product_name VARCHAR,
   product_tier VARCHAR,
-  questions INT,
-  related list<INT>,
-  reviews list<INT>,
-  seller VARCHAR,
+  related_products list<INT>,
+  review_totals list<INT>,
+  seller_name VARCHAR,
   stock_count INT,
-  thumbnail VARCHAR
+  thumbnail VARCHAR,
+  PRIMARY KEY (id, name)
 );
 `;
 
