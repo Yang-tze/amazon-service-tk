@@ -13,7 +13,7 @@ const generateAbout = (productId, productCount) => {
   let lines = '';
   for (let i = 0; i < 3; i++) {
     const sentence = sentences[randomInt(0, sentences.length)].trim();
-    lines += `${tab(id++)}${tab(productId)}${sentence}\n`;
+    lines += `${tab(id++)}${sentence}${tab(productId)}\n`;
   }
   return lines;
 };

@@ -15,26 +15,26 @@ DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
   id INT PRIMARY KEY,
-  product_name VARCHAR,
   brand VARCHAR,
-  price DECIMAL,
-  product_tier VARCHAR,
   is_prime BOOLEAN,
-  stock_count INT,
+  price DECIMAL,
+  product_name VARCHAR,
+  product_tier VARCHAR,
   questions INT,
+  review_1 INT,
+  review_2 INT,
+  review_3 INT,
+  review_4 INT,
+  review_5 INT,
   seller VARCHAR,
-  thumbnail VARCHAR,
-  one_star_reviews INT,
-  two_star_reviews INT,
-  three_star_reviews INT,
-  four_star_reviews INT,
-  five_star_reviews INT
+  stock_count INT,
+  thumbnail VARCHAR
 );
 
 CREATE TABLE about_product (
   id INT PRIMARY KEY,
-  product_id INT,
-  info VARCHAR
+  info TEXT,
+  product_id INT
 );
 
 CREATE TABLE related_products (
@@ -46,9 +46,9 @@ CREATE TABLE related_products (
 
 for (let i = 0; i < batchCount; i++) {
   content += `
-    COPY about_product FROM './generation/sampleData/about_${i}.tsv' DELIMITER E'\\t';
-    COPY products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/products_${i}.tsv' DELIMITER E'\\t';
-    COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_${i}.tsv' DELIMITER E'\\t';
+    COPY about_product FROM './data/generation/sampleData/about_${i}.tsv' WITH DELIMITER='\\t';
+    COPY products FROM './data/generation/sampleData/products_${i}.tsv' WITH DELIMITER='\\t';
+    COPY related_products FROM './data/generation/sampleData/related_${i}.tsv' WITH DELIMITER='\\t';
     `;
 }
 
