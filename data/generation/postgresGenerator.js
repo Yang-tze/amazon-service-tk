@@ -4,7 +4,6 @@ const { batchCount } = require('./utils.js');
 
 let content = `DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS about_product;
-DROP TABLE IF EXISTS product_reviews;
 DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
@@ -22,7 +21,7 @@ CREATE TABLE products (
   review_5 INTEGER DEFAULT 0,
   seller VARCHAR(50) NOT NULL,
   stock_count INTEGER NOT NULL,
-  thumbnail VARCHAR(50) NOT NULL
+  thumbnail VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE about_product (
