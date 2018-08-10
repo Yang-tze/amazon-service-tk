@@ -1,4 +1,4 @@
-const model = require('../model.js');
+const model = require('../postgresModel.js');
 
 postProduct = (req, res) => {
   const { body } = req;
