@@ -15,6 +15,7 @@
     "postgres-init": "psql -f data/postgres-init.sql && node data/generation/postgresGenerator.js",
     "postgres-seed": "psql -f data/postgres-schema.sql product_db",
     "postgres-tune": "psql -f data/postgres-tune.sql product_db",
+    "cassandra-seed": "csqlh < data/cassandra-schema.cql",
     "watch": "webpack --watch",
     "start": "nodemon server/index.js",
     "test": "jest --coverage",

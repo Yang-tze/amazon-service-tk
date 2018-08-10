@@ -31,7 +31,7 @@ const generateProduct = (id) => {
   const reviews = tab(generateReviews(Math.random()));
   const seller = tab(faker.name.firstName());
   const stockCount = tab(randomInt(10, 200));
-  const thumbnail = generateThumbnail();
+  const thumbnail = generateThumbnail(id);
   return `${productId
     + brand
     + isPrime
