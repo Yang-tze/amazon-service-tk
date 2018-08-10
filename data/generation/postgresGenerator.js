@@ -17,7 +17,7 @@ CREATE TABLE products (
   stock_count INTEGER NOT NULL,
   questions INTEGER NOT NULL,
   seller VARCHAR(50) NOT NULL,
-  thumbnail TEXT NOT NULL,
+  thumbnail VARCHAR(50) NOT NULL,
   one_star_reviews INTEGER DEFAULT 0,
   two_star_reviews INTEGER DEFAULT 0,
   three_star_reviews INTEGER DEFAULT 0,
@@ -26,11 +26,13 @@ CREATE TABLE products (
 );
 
 CREATE TABLE about_product (
+  id INTEGER NOT NULL,
   product_id INTEGER NOT NULL,
   info VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE related_products (
+  id INTEGER NOT NULL,
   product_id INTEGER NOT NULL,
   related_id INTEGER NOT NULL
 );
