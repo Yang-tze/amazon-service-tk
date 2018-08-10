@@ -1,4 +1,4 @@
-const productCount = 10000;
+const productCount = 10000000;
 const batchCount = 10;
 
 const tab = str => `${str}\t`;
