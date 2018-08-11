@@ -7,19 +7,19 @@ const handleResults = (err, results, callback, startTime) => {
   callback(results);
 };
 
-const execMultiple = (queryStrings, callback) => {
-  const next = () => {
-    const queryString = queryStrings.pop();
-    if (queryString) {
-      connection.query(queryString, (err, results) => {
-        handleResults(err, results, next);
-      });
-    } else {
-      callback();
-    }
-  };
-  next();
-};
+// const execMultiple = (queryStrings, callback) => {
+//   const next = () => {
+//     const queryString = queryStrings.pop();
+//     if (queryString) {
+//       connection.query(queryString, (err, results) => {
+//         handleResults(err, results, next);
+//       });
+//     } else {
+//       callback();
+//     }
+//   };
+//   next();
+// };
 
 const generateAddString = (tableName, data) => {
   let queryString = `INSERT INTO ${tableName} `;
@@ -44,9 +44,34 @@ const generateUpdateString = (tableName, idName, idValue, data) => {
   return queryString;
 };
 
+const getProduct = (identifierName, identifierValue, connection, callback) => {
+  const startTime = new Date();
+  let productIdSelection;
+  if (identifierName === 'id') {
+    productIdSelection = `product_id=${identifierValue}`;
+  } else if (identifierName === 'product_name') {
+    productIdSelection = `product_id IN (SELECT id FROM product_metadata WHERE product_name='${identifierValue}')`;
+  }
+  const selectMetadata = `SELECT * FROM product_metadata WHERE ${identifierName}='${identifierValue}'`;
+  const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE ${productIdSelection}`;
+  const selectRelated = `SELECT * FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE ${productIdSelection}`;
+  const metadataQuery = connection.query(selectMetadata);
+  const descriptionQuery = connection.query(selectDescriptions);
+  const relatedQuery = connection.query(selectRelated);
+  Promise.all([metadataQuery, descriptionQuery, relatedQuery]).then(
+    ([metadataResults, descriptionResults, relatedResults]) => {
+      const results = metadataResults.rows[0];
+      results.descriptions = descriptionResults.rows.map(entry => entry.descriptions);
+      results.related = relatedResults.rows;
+      handleResults(null, results, callback, startTime);
+    },
+  );
+};
+
 module.exports = {
   handleResults,
-  execMultiple,
+  // execMultiple,
   generateAddString,
   generateUpdateString,
+  getProduct,
 };

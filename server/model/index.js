@@ -1,7 +1,7 @@
 const connection = require('../../data/postgresConnection.js');
 const {
   handleResults,
-  execMultiple,
+  getProduct,
   generateAddString,
   generateUpdateString,
 } = require('./utils.js');
@@ -15,18 +15,24 @@ const addProduct = (data, callback) => {
 };
 
 const getProductById = (productId, callback) => {
-  const startTime = new Date();
-  const queryString = `SELECT * FROM product_metadata WHERE id=${productId}`;
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
-  });
+  getProduct('id', productId, connection, callback);
 };
 
 const getProductByName = (productName, callback) => {
+  getProduct('product_name', productName, connection, callback);
+};
+
+const deleteProduct = (productId, callback) => {
   const startTime = new Date();
-  const queryString = `SELECT * FROM product_metadata WHERE product_name='${productName}'`;
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
+  const deleteRelated = `DELETE FROM related_products WHERE product_id='${productId}'`;
+  const deleteDescriptions = `DELETE FROM product_descriptions WHERE product_id='${productId}'`;
+  const deleteMetadata = `DELETE FROM product_metadata WHERE id='${productId}'`;
+  const relatedQuery = connection.query(deleteRelated);
+  const descriptionQuery = connection.query(deleteDescriptions);
+  Promise.all([relatedQuery, descriptionQuery]).then(() => {
+    connection.query(deleteMetadata, (err, results) => {
+      handleResults(err, results, callback, startTime);
+    });
   });
 };
 
@@ -35,17 +41,6 @@ const updateProduct = (productId, data, callback) => {
   const queryString = generateUpdateString('product_metadata', 'id', productId, data);
   connection.query(queryString, (err, results) => {
     handleResults(err, results, callback, startTime);
-  });
-};
-
-const deleteProduct = (productId, callback) => {
-  const deleteRelated = `DELETE FROM related_products WHERE product_id='${productId}'`;
-  const deleteDescriptions = `DELETE FROM product_descriptions WHERE product_id='${productId}'`;
-  const deleteMetadata = `DELETE FROM product_metadata WHERE id='${productId}'`;
-  const relatedQuery = connection.query(deleteRelated);
-  const descriptionsQuery = connection.query(deleteDescriptions);
-  Promise.all([relatedQuery, descriptionsQuery]).then(() => {
-    connection.query(deleteMetadata).then(callback);
   });
 };
 
