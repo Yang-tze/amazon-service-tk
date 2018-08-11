@@ -13,9 +13,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
 
-// app.get('/:id', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../public/index.html'));
-// });
 app.use('/:id', express.static(path.join(__dirname, '../public')));
 
 app.listen(port, () => console.log('Listening on port 3003'));

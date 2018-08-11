@@ -81,7 +81,6 @@ const translateResponseForClient = (
   callback,
   startTime,
 ) => {
-  console.log(descriptionResults);
   const descriptions = descriptionResults.map(entry => entry.description);
   const related = relatedResults.map(related => ({
     price: { sale: related.product_price },
