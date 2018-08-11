@@ -1,9 +1,10 @@
 const connection = require('../../data/postgresConnection.js');
 const {
   handleResults,
-  getProductInfoFromQueries,
   generateAddString,
   generateUpdateString,
+  generateAddDescriptionsString,
+  getProductInfoFromQueries,
 } = require('./utils.js');
 
 const getProductById = (productId, callback) => {
@@ -58,12 +59,24 @@ const updateProduct = (productId, data, callback) => {
   });
 };
 
-const addProductDescriptions = (productId, data, callback) => {
+const addProductDescriptions = (productId, descriptions, callback) => {
   const startTime = new Date();
-  const queryString = 'INSERT INTO product_descriptions ';
+  const queryString = generateAddDescriptionsString(productId, descriptions);
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback, startTime);
+  });
 };
 
-const updateProductDescriptions = (productId, data, callback) => {};
+const updateProductDescriptions = (productId, descriptions, callback) => {
+  const startTime = new Date();
+  const deleteDescriptions = `DELETE FROM product_descriptions WHERE product_id=${product_id}`;
+  const insertDescriptions = generateAddDescriptionsString(productId, descriptions);
+  connection.query(deleteDescriptions).then(() => {
+    connection.query(insertDescriptions, (err, results) => {
+      handleResults(err, results, callback, startTime);
+    });
+  });
+};
 
 const addRelatedProduct = (productId, relatedId, callback) => {
   const startTime = new Date();
@@ -87,6 +100,8 @@ module.exports = {
   addProduct,
   updateProduct,
   deleteProduct,
+  addProductDescriptions,
+  updateProductDescriptions,
   addRelatedProduct,
   deleteRelatedProducts,
 };

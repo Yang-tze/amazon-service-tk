@@ -1,9 +1,12 @@
 const model = require('../model');
 
 const postDescriptions = (req, res) => {
-  const { body } = req;
-  if (Object.keys(body).length) {
-    model.addProductDescriptions(body, results => res.send(results));
+  const {
+    params: { id },
+    body: { descriptions },
+  } = req;
+  if (descriptions) {
+    model.addProductDescriptions(id, descriptions, results => res.send(results));
   } else {
     res.end();
   }
@@ -12,10 +15,10 @@ const postDescriptions = (req, res) => {
 const putDescriptions = (req, res) => {
   const {
     params: { id },
+    body: { descriptions },
   } = req;
-  const { body } = req;
-  if (Object.keys(body).length) {
-    model.updateProductDescriptions(id, body, results => res.send(results));
+  if (descriptions) {
+    model.updateProductDescriptions(id, descriptions, results => res.send(results));
   } else {
     res.end();
   }

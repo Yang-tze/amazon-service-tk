@@ -40,6 +40,15 @@ const generateUpdateString = (tableName, idName, idValue, data) => {
     queryString += ` ${key}=${value},`;
   }
   queryString = `${queryString.substring(0, queryString.length - 1)} WHERE ${idName}=${idValue}`;
+  return queryString;
+};
+
+const generateAddDescriptionsString = (productId, descriptions) => {
+  let queryString = 'INSERT INTO product_descriptions (product_id, descriptions) VALUES ';
+  descriptions.forEach((description, index, descriptions) => {
+    queryString += `(${productId}, '${description}')`;
+    queryString += index < descriptions.length - 1 ? ', ' : ' ';
+  });
   console.log(queryString);
   return queryString;
 };
@@ -65,8 +74,8 @@ const getProductInfoFromQueries = (
 
 module.exports = {
   handleResults,
-  // execMultiple,
   generateAddString,
   generateUpdateString,
+  generateAddDescriptionsString,
   getProductInfoFromQueries,
 };
