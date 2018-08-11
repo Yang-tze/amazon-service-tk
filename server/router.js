@@ -3,16 +3,17 @@ const metadataController = require('./controllers/metadataController.js');
 const descriptionController = require('./controllers/descriptionController.js');
 const relatedController = require('./controllers/relatedController.js');
 
-router.post('/products', metadataController.postProduct);
 router.get('/products/:id', metadataController.getProductById);
 router.get('/products/name/:name', metadataController.getProductByName);
-router.patch('/products/:id', metadataController.patchProduct);
 router.delete('/products/:id', metadataController.deleteProduct);
 
-router.post('products/:id/about', descriptionController.postAbout);
-router.put('products/:id/about', descriptionController.putAbout);
+router.post('/products/metadata', metadataController.postProductMetadata);
+router.patch('/products/:id/metadata', metadataController.patchProductMetadata);
 
-router.post('products/:id/related/:id', relatedController.postRelated);
-router.delete('products/:id/related/:id', relatedController.deleteRelated);
+router.post('/products/:id/descriptions', descriptionController.postDescriptions);
+router.put('/products/:id/descriptions', descriptionController.putDescriptions);
+
+router.post('/products/:id/related', relatedController.postRelated);
+router.delete('/products/:id/related', relatedController.deleteRelated);
 
 module.exports = router;

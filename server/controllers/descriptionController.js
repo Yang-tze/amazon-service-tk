@@ -1,21 +1,27 @@
 const model = require('../model');
 
-const postAbout = (req, res) => {
-  // if (req.body) {
-  //   model.addProduct(req.body, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+const postDescriptions = (req, res) => {
+  const { body } = req;
+  if (Object.keys(body).length) {
+    model.addProductDescriptions(body, results => res.send(results));
+  } else {
+    res.end();
+  }
 };
-const putAbout = (req, res) => {
-  // if (parseInt(req.params.id, 10)) {
-  //   model.getAll(req.params.id, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+
+const putDescriptions = (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const { body } = req;
+  if (Object.keys(body).length) {
+    model.updateProductDescriptions(id, body, results => res.send(results));
+  } else {
+    res.end();
+  }
 };
 
 module.exports = {
-  postAbout,
-  putAbout,
+  postDescriptions,
+  putDescriptions,
 };

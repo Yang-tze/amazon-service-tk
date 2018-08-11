@@ -6,14 +6,6 @@ const {
   generateUpdateString,
 } = require('./utils.js');
 
-const addProduct = (data, callback) => {
-  const startTime = new Date();
-  const queryString = generateAddString('products', data);
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
-  });
-};
-
 const getProductById = (productId, callback) => {
   const selectMetadata = `SELECT * FROM product_metadata WHERE id=${productId}`;
   const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE product_id=${productId}`;
@@ -50,12 +42,53 @@ const deleteProduct = (productId, callback) => {
   });
 };
 
+const addProduct = (data, callback) => {
+  const startTime = new Date();
+  const queryString = generateAddString('product_metadata', data);
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback, startTime);
+  });
+};
+
 const updateProduct = (productId, data, callback) => {
   const startTime = new Date();
   const queryString = generateUpdateString('product_metadata', 'id', productId, data);
   connection.query(queryString, (err, results) => {
     handleResults(err, results, callback, startTime);
   });
+};
+
+const addProductDescriptions = (productId, data, callback) => {
+  const startTime = new Date();
+  const queryString = 'INSERT INTO product_descriptions ';
+};
+
+const updateProductDescriptions = (productId, data, callback) => {};
+
+const addRelatedProduct = (productId, relatedId, callback) => {
+  const startTime = new Date();
+  const queryString = `INSERT INTO related_products (product_id, related_id) VALUES (${productId}, ${relatedId})`;
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback, startTime);
+  });
+};
+
+const deleteRelatedProducts = (productId, callback) => {
+  const startTime = new Date();
+  const queryString = `DELETE FROM related_products WHERE product_id=${productId}`;
+  connection.query(queryString, (err, results) => {
+    handleResults(err, results, callback, startTime);
+  });
+};
+
+module.exports = {
+  getProductById,
+  getProductByName,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  addRelatedProduct,
+  deleteRelatedProducts,
 };
 
 // const getRelated = function getRelatedProducts(productName, productId, callback) {
@@ -79,15 +112,6 @@ const updateProduct = (productId, data, callback) => {
 //     });
 //   });
 // };
-
-module.exports = {
-  getProductById,
-  getProductByName,
-  // getAll,
-  addProduct,
-  updateProduct,
-  deleteProduct,
-};
 
 // const color = ['green', 'white', 'blue', 'black', 'silver', 'purple'];
 

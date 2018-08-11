@@ -1,19 +1,26 @@
 const model = require('../model');
 
 const postRelated = (req, res) => {
-  // if (req.body) {
-  //   model.addProduct(req.body, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+  const {
+    params: { id },
+    body: { relatedId },
+  } = req;
+  if (relatedId) {
+    model.addRelatedProduct(id, relatedId, results => res.send(results));
+  } else {
+    res.end();
+  }
 };
 
 const deleteRelated = (req, res) => {
-  // if (parseInt(req.params.id, 10)) {
-  //   model.getAll(req.params.id, results => res.send(results));
-  // } else {
-  //   res.end();
-  // }
+  const {
+    params: { id },
+  } = req;
+  if (parseInt(id, 10)) {
+    model.deleteRelatedProducts(id, results => res.send(results));
+  } else {
+    res.end();
+  }
 };
 
 module.exports = {
