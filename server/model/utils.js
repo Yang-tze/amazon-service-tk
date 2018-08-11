@@ -63,12 +63,58 @@ const getProductInfoFromQueries = (
   const relatedQuery = connection.query(selectRelated);
   Promise.all([metadataQuery, descriptionQuery, relatedQuery]).then(
     ([metadataResults, descriptionResults, relatedResults]) => {
-      const results = metadataResults.rows[0];
-      results.descriptions = descriptionResults.rows.map(entry => entry.descriptions);
-      results.related = relatedResults.rows;
-      handleResults(null, results, callback, startTime);
+      // const results = { data: metadataResults.rows[0] };
+      // results.descriptions = descriptionResults.rows.map(entry => entry.descriptions);
+      // results.related = relatedResults.rows;
+      // handleResults(null, results, callback, startTime);
+      translateResponseForClient(
+        [metadataResults.rows[0], descriptionResults.rows, relatedResults.rows],
+        callback,
+        startTime,
+      );
     },
   );
+};
+
+const translateResponseForClient = (
+  [metadataResults, descriptionResults, relatedResults],
+  callback,
+  startTime,
+) => {
+  const descriptions = descriptionResults.map(entry => entry.descriptions);
+  const related = relatedResults.map(related => ({
+    price: { msrp: related.product_price },
+    product_tier: related.product_tier,
+    thumbnail: related.thumbnail,
+  }));
+  const results = {
+    data: {
+      id: metadataResults.id,
+      about_product: descriptions,
+      brand: metadataResults.brand_name,
+      is_prime: metadataResults.is_prime,
+      name: metadataResults.product_name,
+      price: { msrp: metadataResults.product_price },
+      product_options: {
+        color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
+        size: ['S', 'M', 'L', 'XL'],
+      },
+      product_tier: metadataResults.product_tier,
+      questions: metadataResults.questions,
+      reviews: [
+        metadataResults.reviews_1_star,
+        metadataResults.reviews_2_star,
+        metadataResults.reviews_3_star,
+        metadataResults.reviews_4_star,
+        metadataResults.reviews_5_star,
+      ],
+      seller: metadataResults.seller_name,
+      stockCount: metadataResults.stock_count,
+      thumbnail: metadataResults.thumbnail,
+    },
+    related,
+  };
+  handleResults(null, results, callback, startTime);
 };
 
 module.exports = {
