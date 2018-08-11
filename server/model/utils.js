@@ -44,17 +44,12 @@ const generateUpdateString = (tableName, idName, idValue, data) => {
   return queryString;
 };
 
-const getProduct = (identifierName, identifierValue, connection, callback) => {
+const getProductInfoFromQueries = (
+  [selectMetadata, selectDescriptions, selectRelated],
+  connection,
+  callback,
+) => {
   const startTime = new Date();
-  let productIdSelection;
-  if (identifierName === 'id') {
-    productIdSelection = `product_id=${identifierValue}`;
-  } else if (identifierName === 'product_name') {
-    productIdSelection = `product_id IN (SELECT id FROM product_metadata WHERE product_name='${identifierValue}')`;
-  }
-  const selectMetadata = `SELECT * FROM product_metadata WHERE ${identifierName}='${identifierValue}'`;
-  const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE ${productIdSelection}`;
-  const selectRelated = `SELECT * FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE ${productIdSelection}`;
   const metadataQuery = connection.query(selectMetadata);
   const descriptionQuery = connection.query(selectDescriptions);
   const relatedQuery = connection.query(selectRelated);
@@ -73,5 +68,5 @@ module.exports = {
   // execMultiple,
   generateAddString,
   generateUpdateString,
-  getProduct,
+  getProductInfoFromQueries,
 };

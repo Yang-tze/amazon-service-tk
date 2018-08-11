@@ -1,7 +1,7 @@
 const connection = require('../../data/postgresConnection.js');
 const {
   handleResults,
-  getProduct,
+  getProductInfoFromQueries,
   generateAddString,
   generateUpdateString,
 } = require('./utils.js');
@@ -15,11 +15,25 @@ const addProduct = (data, callback) => {
 };
 
 const getProductById = (productId, callback) => {
-  getProduct('id', productId, connection, callback);
+  const selectMetadata = `SELECT * FROM product_metadata WHERE id=${productId}`;
+  const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE product_id=${productId}`;
+  const selectRelated = `SELECT * FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id=${productId}`;
+  getProductInfoFromQueries(
+    [selectMetadata, selectDescriptions, selectRelated],
+    connection,
+    callback,
+  );
 };
 
 const getProductByName = (productName, callback) => {
-  getProduct('product_name', productName, connection, callback);
+  const selectMetadata = `SELECT * FROM product_metadata WHERE product_name='${productName}'`;
+  const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE product_id IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
+  const selectRelated = `SELECT * FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id  IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
+  getProductInfoFromQueries(
+    [selectMetadata, selectDescriptions, selectRelated],
+    connection,
+    callback,
+  );
 };
 
 const deleteProduct = (productId, callback) => {
