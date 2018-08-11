@@ -28,12 +28,19 @@ CREATE TABLE products (
   stock_count INT,
   thumbnail VARCHAR,
 );
+
+CREATE TABLE product_count (
+  id INT PRIMARY KEY,
+  count INT
+);
 `;
 
 content += `CREATE MATERIALIZED VIEW products_by_name AS
 SELECT * FROM products
 WHERE product_name IS NOT NULL
 PRIMARY KEY (product_name, id);`;
+
+content += `INSERT INTO product_count (id, count) VALUES (1, ${productCount + 1});`;
 
 for (let i = 0; i < batchCount; i++) {
   content += `
