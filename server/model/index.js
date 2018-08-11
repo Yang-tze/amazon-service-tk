@@ -1,8 +1,8 @@
 const connection = require('../../data/postgresConnection.js');
 const {
   handleResults,
-  generateAddString,
-  generateUpdateString,
+  generateAddProductString,
+  generateUpdateMetadataString,
   generateAddDescriptionsString,
   getProductInfoFromQueries,
 } = require('./utils.js');
@@ -45,7 +45,7 @@ const deleteProduct = (productId, callback) => {
 
 const addProduct = (data, callback) => {
   const startTime = new Date();
-  const queryString = generateAddString('product_metadata', data);
+  const queryString = generateAddProductString(data);
   connection.query(queryString, (err, results) => {
     handleResults(err, results, callback, startTime);
   });
@@ -53,7 +53,7 @@ const addProduct = (data, callback) => {
 
 const updateProduct = (productId, data, callback) => {
   const startTime = new Date();
-  const queryString = generateUpdateString('product_metadata', 'id', productId, data);
+  const queryString = generateUpdateMetadataString(productId, data);
   connection.query(queryString, (err, results) => {
     handleResults(err, results, callback, startTime);
   });

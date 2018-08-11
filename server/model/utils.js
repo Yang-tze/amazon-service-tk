@@ -2,27 +2,14 @@ const handleResults = (err, results, callback, startTime) => {
   console.log('Query time:', new Date() - startTime);
   if (err) {
     console.error(err);
-    return;
+    callback(err);
+  } else {
+    callback(null, results);
   }
-  callback(results);
 };
 
-// const execMultiple = (queryStrings, callback) => {
-//   const next = () => {
-//     const queryString = queryStrings.pop();
-//     if (queryString) {
-//       connection.query(queryString, (err, results) => {
-//         handleResults(err, results, next);
-//       });
-//     } else {
-//       callback();
-//     }
-//   };
-//   next();
-// };
-
-const generateAddString = (tableName, data) => {
-  let queryString = `INSERT INTO ${tableName} `;
+const generateAddProductString = (data) => {
+  let queryString = 'INSERT INTO product_metadata ';
   queryString += `(${Object.keys(data).join(',')}) `;
   queryString += 'VALUES (';
   for (key in data) {
@@ -33,13 +20,13 @@ const generateAddString = (tableName, data) => {
   return queryString;
 };
 
-const generateUpdateString = (tableName, idName, idValue, data) => {
-  let queryString = `UPDATE ${tableName} SET`;
+const generateUpdateMetadataString = (productId, data) => {
+  let queryString = 'UPDATE product_metadata SET';
   for (key in data) {
     const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
     queryString += ` ${key}=${value},`;
   }
-  queryString = `${queryString.substring(0, queryString.length - 1)} WHERE ${idName}=${idValue}`;
+  queryString = `${queryString.substring(0, queryString.length - 1)} WHERE id=${productId}`;
   return queryString;
 };
 
@@ -63,10 +50,6 @@ const getProductInfoFromQueries = (
   const relatedQuery = connection.query(selectRelated);
   Promise.all([metadataQuery, descriptionQuery, relatedQuery]).then(
     ([metadataResults, descriptionResults, relatedResults]) => {
-      // const results = { data: metadataResults.rows[0] };
-      // results.descriptions = descriptionResults.rows.map(entry => entry.descriptions);
-      // results.related = relatedResults.rows;
-      // handleResults(null, results, callback, startTime);
       translateResponseForClient(
         [metadataResults.rows[0], descriptionResults.rows, relatedResults.rows],
         callback,
@@ -119,8 +102,22 @@ const translateResponseForClient = (
 
 module.exports = {
   handleResults,
-  generateAddString,
-  generateUpdateString,
+  generateAddProductString,
+  generateUpdateMetadataString,
   generateAddDescriptionsString,
   getProductInfoFromQueries,
 };
+
+// const execMultiple = (queryStrings, callback) => {
+//   const next = () => {
+//     const queryString = queryStrings.pop();
+//     if (queryString) {
+//       connection.query(queryString, (err, results) => {
+//         handleResults(err, results, next);
+//       });
+//     } else {
+//       callback();
+//     }
+//   };
+//   next();
+// };
