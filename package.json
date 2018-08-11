@@ -12,7 +12,7 @@
     "generate-descriptions": "node --max-old-space-size=4096 data/generation/descriptionGenerator.js",
     "generate-metadata": "node --max-old-space-size=4096 data/generation/metadataGenerator.js",
     "generate-related": "node --max-old-space-size=4096 data/generation/relatedGenerator.js",
-    "postgres-init": "psql -f data/postgres-init.sql && node data/generation/postgresGenerator.js",
+    "postgres-init": "psql -f data/postgres-init.sql",
     "postgres-seed": "node data/generation/postgresGenerator.js && psql -f data/postgres-schema.sql product_db",
     "postgres-tune": "psql -f data/postgres-tune.sql product_db",
     "watch": "webpack --watch",

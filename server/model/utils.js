@@ -44,7 +44,7 @@ const generateUpdateString = (tableName, idName, idValue, data) => {
 };
 
 const generateAddDescriptionsString = (productId, descriptions) => {
-  let queryString = 'INSERT INTO product_descriptions (product_id, descriptions) VALUES ';
+  let queryString = 'INSERT INTO product_descriptions (product_id, description) VALUES ';
   descriptions.forEach((description, index, descriptions) => {
     queryString += `(${productId}, '${description}')`;
     queryString += index < descriptions.length - 1 ? ', ' : ' ';
@@ -85,7 +85,7 @@ const translateResponseForClient = (
   const related = relatedResults.map(related => ({
     price: { msrp: related.product_price },
     product_tier: related.product_tier,
-    thumbnail: related.thumbnail,
+    thumbnail: related.thumbnail_url,
   }));
   const results = {
     data: {
@@ -100,7 +100,7 @@ const translateResponseForClient = (
         size: ['S', 'M', 'L', 'XL'],
       },
       product_tier: metadataResults.product_tier,
-      questions: metadataResults.questions,
+      questions: metadataResults.num_questions,
       reviews: [
         metadataResults.reviews_1_star,
         metadataResults.reviews_2_star,
@@ -110,7 +110,7 @@ const translateResponseForClient = (
       ],
       seller: metadataResults.seller_name,
       stockCount: metadataResults.stock_count,
-      thumbnail: metadataResults.thumbnail,
+      thumbnail: metadataResults.thumbnail_url,
     },
     related,
   };

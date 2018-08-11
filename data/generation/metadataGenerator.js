@@ -10,7 +10,7 @@ const thumbnailEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
 const generatePrice = () => randomInt(10, 400) - 0.01;
 
-const generateThumbnail = id => `${thumbnailEndpoint}${id % thumbnailCount}.png`;
+const generateThumbnail = id => `${thumbnailEndpoint}/product_${id % thumbnailCount}.png`;
 
 const generateReviews = (rawScore) => {
   const reviews = [null, null, null, null, null].map((item, index) => {
@@ -27,22 +27,22 @@ const generateProduct = (id) => {
   const productName = tab(generateName(id - 1, 7));
   const productPrice = tab(generatePrice());
   const productTier = tab(faker.company.catchPhraseAdjective());
-  const questions = tab(randomInt(3, 50));
+  const numQuestions = tab(randomInt(3, 50));
   const reviewTotals = tab(generateReviews(Math.random()));
   const sellerName = tab(faker.name.firstName());
   const stockCount = tab(randomInt(10, 200));
-  const thumbnail = generateThumbnail(id);
+  const thumbnailUrl = generateThumbnail(id);
   return `${productId
     + brandName
     + isPrime
+    + numQuestions
     + productName
     + productPrice
     + productTier
-    + questions
     + reviewTotals
     + sellerName
     + stockCount
-    + thumbnail}\n`;
+    + thumbnailUrl}\n`;
 };
 
 const writeBatch = (start = 1, end, batchId = 1) => {

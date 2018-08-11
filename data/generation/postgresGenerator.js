@@ -10,10 +10,10 @@ CREATE TABLE product_metadata (
   id SERIAL,
   brand_name VARCHAR(100) NOT NULL,
   is_prime BOOLEAN NOT NULL,
+  num_questions INTEGER NOT NULL,
   product_name VARCHAR(200) NOT NULL,
   product_price DECIMAL NOT NULL,
   product_tier VARCHAR(50) NOT NULL,
-  questions INTEGER NOT NULL,
   reviews_1_star INTEGER DEFAULT 0,
   reviews_2_star INTEGER DEFAULT 0,
   reviews_3_star INTEGER DEFAULT 0,
@@ -21,12 +21,12 @@ CREATE TABLE product_metadata (
   reviews_5_star INTEGER DEFAULT 0,
   seller_name VARCHAR(50) NOT NULL,
   stock_count INTEGER NOT NULL,
-  thumbnail VARCHAR(100) NOT NULL
+  thumbnail_url VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE product_descriptions (
   id SERIAL NOT NULL,
-  descriptions TEXT NOT NULL,
+  description TEXT NOT NULL,
   product_id INTEGER NOT NULL
 );
 
