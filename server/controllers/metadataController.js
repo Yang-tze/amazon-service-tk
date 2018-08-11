@@ -1,11 +1,12 @@
 const model = require('../model');
+const { handleResponse } = require('./utils.js');
 
 const getProductById = (req, res) => {
   const {
     params: { id },
   } = req;
   if (parseInt(id, 10)) {
-    model.getProductById(id, results => res.send(results));
+    model.getProductById(id, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }
@@ -16,7 +17,7 @@ const getProductByName = (req, res) => {
     params: { name },
   } = req;
   if (name) {
-    model.getProductByName(name, results => res.send(results));
+    model.getProductByName(name, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }
@@ -25,7 +26,7 @@ const getProductByName = (req, res) => {
 const postProductMetadata = (req, res) => {
   const { body } = req;
   if (Object.keys(body).length) {
-    model.addProduct(body, results => res.send(results));
+    model.addProduct(body, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }
@@ -37,7 +38,7 @@ const patchProductMetadata = (req, res) => {
   } = req;
   const { body } = req;
   if (Object.keys(body).length) {
-    model.updateProduct(id, body, results => res.send(results));
+    model.updateProduct(id, body, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }
@@ -48,7 +49,7 @@ const deleteProduct = (req, res) => {
     params: { id },
   } = req;
   if (parseInt(id, 10)) {
-    model.deleteProduct(id, results => res.send(results));
+    model.deleteProduct(id, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }

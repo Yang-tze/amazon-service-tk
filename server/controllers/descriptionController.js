@@ -6,7 +6,7 @@ const postDescriptions = (req, res) => {
     body: { descriptions },
   } = req;
   if (descriptions) {
-    model.addProductDescriptions(id, descriptions, results => res.send(results));
+    model.addProductDescriptions(id, descriptions, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }
@@ -18,7 +18,7 @@ const putDescriptions = (req, res) => {
     body: { descriptions },
   } = req;
   if (descriptions) {
-    model.updateProductDescriptions(id, descriptions, results => res.send(results));
+    model.updateProductDescriptions(id, descriptions, (err, results) => handleResponse(err, results, res));
   } else {
     res.end();
   }
