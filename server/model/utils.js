@@ -81,9 +81,10 @@ const translateResponseForClient = (
   callback,
   startTime,
 ) => {
-  const descriptions = descriptionResults.map(entry => entry.descriptions);
+  console.log(descriptionResults);
+  const descriptions = descriptionResults.map(entry => entry.description);
   const related = relatedResults.map(related => ({
-    price: { msrp: related.product_price },
+    price: { sale: related.product_price },
     product_tier: related.product_tier,
     thumbnail: related.thumbnail_url,
   }));
@@ -94,7 +95,7 @@ const translateResponseForClient = (
       brand: metadataResults.brand_name,
       is_prime: metadataResults.is_prime,
       name: metadataResults.product_name,
-      price: { msrp: metadataResults.product_price },
+      price: { sale: metadataResults.product_price },
       product_options: {
         color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
         size: ['S', 'M', 'L', 'XL'],
