@@ -22,27 +22,27 @@ const generateReviews = (rawScore) => {
 
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
-  const name = tab(generateName(id - 1, 7));
   const brand = tab(faker.name.lastName());
+  const isPrime = tab(faker.random.boolean());
   const price = tab(generatePrice());
-  const tier = tab(faker.company.catchPhraseAdjective());
-  const prime = tab(faker.random.boolean());
-  const stock = tab(randomInt(10, 200));
+  const productName = tab(generateName(id - 1, 7));
+  const productTier = tab(faker.company.catchPhraseAdjective());
   const questions = tab(randomInt(3, 50));
+  const reviews = tab(generateReviews(Math.random()));
   const seller = tab(faker.name.firstName());
-  const thumbnail = tab(generateThumbnail());
-  const reviews = generateReviews(Math.random());
+  const stockCount = tab(randomInt(10, 200));
+  const thumbnail = generateThumbnail(id);
   return `${productId
-    + name
     + brand
+    + isPrime
     + price
-    + tier
-    + prime
-    + stock
+    + productName
+    + productTier
     + questions
+    + reviews
     + seller
-    + thumbnail
-    + reviews}\n`;
+    + stockCount
+    + thumbnail}\n`;
 };
 
 const writeBatch = (start = 1, end, batchId = 1) => {

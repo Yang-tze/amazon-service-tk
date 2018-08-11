@@ -4,33 +4,34 @@ const { batchCount } = require('./utils.js');
 
 let content = `DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS about_product;
-DROP TABLE IF EXISTS product_reviews;
 DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
-  id SERIAL PRIMARY KEY,
-  product_name VARCHAR(200) NOT NULL,
+  id SERIAL,
   brand VARCHAR(100) NOT NULL,
-  price DECIMAL NOT NULL,
-  product_tier VARCHAR(50) NOT NULL,
   is_prime BOOLEAN NOT NULL,
-  stock_count INTEGER NOT NULL,
+  price DECIMAL NOT NULL,
+  product_name VARCHAR(200) NOT NULL,
+  product_tier VARCHAR(50) NOT NULL,
   questions INTEGER NOT NULL,
+  review_1 INTEGER DEFAULT 0,
+  review_2 INTEGER DEFAULT 0,
+  review_3 INTEGER DEFAULT 0,
+  review_4 INTEGER DEFAULT 0,
+  review_5 INTEGER DEFAULT 0,
   seller VARCHAR(50) NOT NULL,
-  thumbnail TEXT NOT NULL,
-  one_star_reviews INTEGER DEFAULT 0,
-  two_star_reviews INTEGER DEFAULT 0,
-  three_star_reviews INTEGER DEFAULT 0,
-  four_star_reviews INTEGER DEFAULT 0,
-  five_star_reviews INTEGER DEFAULT 0
+  stock_count INTEGER NOT NULL,
+  thumbnail VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE about_product (
-  product_id INTEGER NOT NULL,
-  info VARCHAR(150) NOT NULL
+  id SERIAL NOT NULL,
+  info TEXT NOT NULL,
+  product_id INTEGER NOT NULL
 );
 
 CREATE TABLE related_products (
+  id SERIAL NOT NULL,
   product_id INTEGER NOT NULL,
   related_id INTEGER NOT NULL
 );
@@ -43,6 +44,8 @@ for (let i = 0; i < batchCount; i++) {
     COPY related_products FROM '/Users/benc/Desktop/ben-details/data/generation/sampleData/related_${i}.tsv' DELIMITER E'\\t';
     `;
 }
+
+content += 'SELECT setval(\'products_id_seq\', COALESCE((SELECT MAX(id)+1 FROM products), 1), false);';
 
 fs.writeFile(path.join(__dirname, '../postgres-schema.sql'), content, 'utf8', (err) => {
   if (err) {

@@ -4,6 +4,8 @@ const {
   productCount, batchCount, tab, randomInt,
 } = require('./utils.js');
 
+let id = 1;
+
 const generateRelated = (productId, productCount) => {
   let lines = '';
   const relatedCount = randomInt(0, 9);
@@ -12,7 +14,7 @@ const generateRelated = (productId, productCount) => {
     const start = intervalSize * i + 1;
     const end = intervalSize * (i + 1) + 1;
     const relatedId = randomInt(start, end);
-    lines += `${tab(productId)}${relatedId}\n`;
+    lines += `${tab(id++)}${tab(productId)}${relatedId}\n`;
   }
   return lines;
 };
