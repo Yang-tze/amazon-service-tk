@@ -1,4 +1,4 @@
-const model = require('../postgresModel.js');
+const model = require('../model');
 
 const postRelated = (req, res) => {
   // if (req.body) {
