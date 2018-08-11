@@ -51,7 +51,7 @@ const generateProduct = (id) => {
   const brand = tab(faker.name.lastName());
   const isPrime = tab(faker.random.boolean());
   const numQuestions = tab(randomInt(3, 50));
-  const price = tab(generatePrice());
+  const productPrice = tab(generatePrice());
   const productName = tab(generateName(id - 1, 7));
   const productTier = tab(faker.company.catchPhraseAdjective());
   const relatedProducts = tab(generateRelated());
@@ -60,12 +60,12 @@ const generateProduct = (id) => {
   const stockCount = tab(randomInt(10, 200));
   const thumbnail = generateThumbnail(id);
   return `${productId
-    + productName
     + about
     + brand
     + isPrime
     + numQuestions
-    + price
+    + productName
+    + productPrice
     + productTier
     + relatedProducts
     + reviewTotals

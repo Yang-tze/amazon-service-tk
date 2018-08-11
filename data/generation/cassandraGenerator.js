@@ -14,22 +14,26 @@ DROP TABLE IF EXISTS about_product;
 DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
-  id INT,
-  name VARCHAR,
+  id INT PRIMARY KEY,
   about list<TEXT>,
   brand VARCHAR,
   is_prime BOOLEAN,
   num_questions INT,
-  price DECIMAL,
+  product_name VARCHAR,
+  product_price DECIMAL,
   product_tier VARCHAR,
   related_products list<INT>,
   review_totals list<INT>,
   seller_name VARCHAR,
   stock_count INT,
   thumbnail VARCHAR,
-  PRIMARY KEY (id, name)
 );
 `;
+
+content += `CREATE MATERIALIZED VIEW products_by_name AS
+SELECT * FROM products
+WHERE product_name IS NOT NULL
+PRIMARY KEY (product_name, id);`;
 
 for (let i = 0; i < batchCount; i++) {
   content += `
