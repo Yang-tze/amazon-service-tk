@@ -21,7 +21,7 @@ const generateAbout = (productId, productCount) => {
 const writeBatch = (start = 1, end, batchId = 1, productCount) => {
   const startTime = new Date();
 
-  const stream = fs.createWriteStream(`${__dirname}/sampleData/about_${batchId}.tsv`);
+  const stream = fs.createWriteStream(`${__dirname}/sampleData/descriptions_${batchId}.tsv`);
   for (let i = start; i < end; i++) {
     stream.write(`${generateAbout(i, productCount)}`);
   }

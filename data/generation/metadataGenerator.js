@@ -22,25 +22,25 @@ const generateReviews = (rawScore) => {
 
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
-  const brand = tab(faker.name.lastName());
+  const brandName = tab(faker.name.lastName());
   const isPrime = tab(faker.random.boolean());
-  const price = tab(generatePrice());
   const productName = tab(generateName(id - 1, 7));
+  const productPrice = tab(generatePrice());
   const productTier = tab(faker.company.catchPhraseAdjective());
   const questions = tab(randomInt(3, 50));
-  const reviews = tab(generateReviews(Math.random()));
-  const seller = tab(faker.name.firstName());
+  const reviewTotals = tab(generateReviews(Math.random()));
+  const sellerName = tab(faker.name.firstName());
   const stockCount = tab(randomInt(10, 200));
   const thumbnail = generateThumbnail(id);
   return `${productId
-    + brand
+    + brandName
     + isPrime
-    + price
     + productName
+    + productPrice
     + productTier
     + questions
-    + reviews
-    + seller
+    + reviewTotals
+    + sellerName
     + stockCount
     + thumbnail}\n`;
 };

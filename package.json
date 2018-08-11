@@ -8,9 +8,9 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "generate-data": "npm run generate-about && npm run generate-products && npm run generate-related",
-    "generate-about": "node --max-old-space-size=4096 data/generation/aboutGenerator.js",
-    "generate-products": "node --max-old-space-size=4096 data/generation/productGenerator.js",
+    "generate-data": "npm run generate-descriptions && npm run generate-metadata && npm run generate-related",
+    "generate-descriptions": "node --max-old-space-size=4096 data/generation/descriptionGenerator.js",
+    "generate-metadata": "node --max-old-space-size=4096 data/generation/metadataGenerator.js",
     "generate-related": "node --max-old-space-size=4096 data/generation/relatedGenerator.js",
     "postgres-init": "psql -f data/postgres-init.sql && node data/generation/postgresGenerator.js",
     "postgres-seed": "node data/generation/postgresGenerator.js && psql -f data/postgres-schema.sql product_db",
