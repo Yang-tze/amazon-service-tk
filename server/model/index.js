@@ -39,12 +39,14 @@ const updateProduct = (productId, data, callback) => {
 };
 
 const deleteProduct = (productId, callback) => {
-  const queryStrings = [
-    `DELETE FROM related_products WHERE product_id='${productId}'`,
-    `DELETE FROM product_descriptions WHERE product_id='${productId}'`,
-    `DELETE FROM product_metadata WHERE id='${productId}'`,
-  ];
-  execMultiple(queryStrings, callback);
+  const deleteRelated = `DELETE FROM related_products WHERE product_id='${productId}'`;
+  const deleteDescriptions = `DELETE FROM product_descriptions WHERE product_id='${productId}'`;
+  const deleteMetadata = `DELETE FROM product_metadata WHERE id='${productId}'`;
+  const relatedQuery = connection.query(deleteRelated);
+  const descriptionsQuery = connection.query(deleteDescriptions);
+  Promise.all([relatedQuery, descriptionsQuery]).then(() => {
+    connection.query(deleteMetadata).then(callback);
+  });
 };
 
 // const getRelated = function getRelatedProducts(productName, productId, callback) {
