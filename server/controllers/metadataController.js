@@ -1,15 +1,6 @@
-const model = require('../postgresModel.js');
+const model = require('../model');
 
-postProduct = (req, res) => {
-  const { body } = req;
-  if (Object.keys(body).length) {
-    model.addProduct(body, results => res.send(results));
-  } else {
-    res.end();
-  }
-};
-
-getProductById = (req, res) => {
+const getProductById = (req, res) => {
   const {
     params: { id },
   } = req;
@@ -20,7 +11,7 @@ getProductById = (req, res) => {
   }
 };
 
-getProductByName = (req, res) => {
+const getProductByName = (req, res) => {
   const {
     params: { name },
   } = req;
@@ -31,7 +22,16 @@ getProductByName = (req, res) => {
   }
 };
 
-patchProduct = (req, res) => {
+const postProductMetadata = (req, res) => {
+  const { body } = req;
+  if (Object.keys(body).length) {
+    model.addProduct(body, results => res.send(results));
+  } else {
+    res.end();
+  }
+};
+
+const patchProductMetadata = (req, res) => {
   const {
     params: { id },
   } = req;
@@ -43,7 +43,7 @@ patchProduct = (req, res) => {
   }
 };
 
-deleteProduct = (req, res) => {
+const deleteProduct = (req, res) => {
   const {
     params: { id },
   } = req;
@@ -55,9 +55,9 @@ deleteProduct = (req, res) => {
 };
 
 module.exports = {
-  postProduct,
   getProductById,
   getProductByName,
-  patchProduct,
   deleteProduct,
+  postProductMetadata,
+  patchProductMetadata,
 };
