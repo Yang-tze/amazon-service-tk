@@ -49,7 +49,6 @@ const generateAddDescriptionsString = (productId, descriptions) => {
     queryString += `(${productId}, '${description}')`;
     queryString += index < descriptions.length - 1 ? ', ' : ' ';
   });
-  console.log(queryString);
   return queryString;
 };
 

@@ -10,7 +10,8 @@ const {
 const getProductById = (productId, callback) => {
   const selectMetadata = `SELECT * FROM product_metadata WHERE id=${productId}`;
   const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE product_id=${productId}`;
-  const selectRelated = `SELECT * FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id=${productId}`;
+  const selectRelated = `SELECT product_tier, product_price, stock_count, thumbnail FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id=${productId}`;
+  console.log(selectMetadata);
   getProductInfoFromQueries(
     [selectMetadata, selectDescriptions, selectRelated],
     connection,
@@ -21,7 +22,7 @@ const getProductById = (productId, callback) => {
 const getProductByName = (productName, callback) => {
   const selectMetadata = `SELECT * FROM product_metadata WHERE product_name='${productName}'`;
   const selectDescriptions = `SELECT descriptions FROM product_descriptions WHERE product_id IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
-  const selectRelated = `SELECT * FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id  IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
+  const selectRelated = `SELECT product_tier, product_price, stock_count, thumbnail FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id  IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
   getProductInfoFromQueries(
     [selectMetadata, selectDescriptions, selectRelated],
     connection,
