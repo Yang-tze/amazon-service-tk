@@ -30,34 +30,33 @@ const generateUpdateProductString = (productId, data) => {
   return queryString;
 };
 
-const translateDataForClient = (data, callback, startTime) => {
-  const related = data.variants.map(variant => ({
+const translateDataForClient = (results) => {
+  const related = results.variants.map(variant => ({
     price: { sale: variant.price },
-    product_tier: variant.productTier,
+    product_tier: variant.tier,
     thumbnail: variant.thumbnailUrl,
   }));
-  const results = {
+  return {
     related,
     data: {
-      id: data.id,
-      about_product: data.descriptions,
-      brand: data.brand,
-      is_prime: data.is_prime,
-      name: data.product_name,
-      price: { sale: data.product_price },
+      id: results.id,
+      about_product: results.descriptions,
+      brand: results.brand,
+      is_prime: results.is_prime,
+      name: results.product_name,
+      price: { sale: results.product_price },
       product_options: {
         color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
         size: ['S', 'M', 'L', 'XL'],
       },
-      product_tier: data.product_tier,
-      questions: data.num_questions,
-      reviews: data.review_totals,
-      seller: data.seller_name,
-      stockCount: data.stock_count,
-      thumbnail: data.thumbnail_url,
+      product_tier: results.product_tier,
+      questions: results.num_questions,
+      reviews: results.review_totals,
+      seller: results.seller_name,
+      stockCount: results.stock_count,
+      thumbnail: results.thumbnail_url,
     },
   };
-  handleResults(null, results, callback, startTime);
 };
 
 module.exports = {

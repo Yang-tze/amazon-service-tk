@@ -1,4 +1,4 @@
-// const connection = require('../../data/postgresConnection.js');
+// const client = require('../../data/postgresConnection.js');
 const client = require('../../data/cassandraConnection.js');
 const {
   handleResults,
@@ -30,6 +30,7 @@ const getProductByName = (productName, callback) => {
   const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
   const startTime = new Date();
   client.execute(queryString, [productName], { prepare: true }, (err, results) => {
+    console.log(results);
     const data = results && translateDataForClient(results.rows[0]);
     handleResults(err, data, callback, startTime);
   });
