@@ -1,8 +1,10 @@
 const cassandra = require('cassandra-driver');
 
-const client = new cassandra.Client({ contactPoints: ['host1'] });
+const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], keyspace: 'product_db' });
 client.connect((err) => {
   if (err) console.error(err);
 });
+
+console.log(client.execute);
 
 module.exports = client;
