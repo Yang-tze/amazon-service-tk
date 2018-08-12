@@ -30,11 +30,13 @@ const generateVariants = () => {
     const start = intervalSize * i + 1;
     const end = intervalSize * (i + 1) + 1;
     const variantThumbnail = generateThumbnail(randomInt(start, end));
-    const variantPrice = generatePrice();
+    const variantPrice = `${generatePrice()}`;
     const variantTier = faker.company.catchPhraseAdjective();
-    variants.push({ price: variantPrice, tier: variantTier, thumbnailUrl: variantThumbnail });
+    variants.push(
+      `{ price: ${variantPrice}, tier: ${variantTier}, thumbnailUrl: ${variantThumbnail} }`,
+    );
   }
-  return JSON.stringify(variants);
+  return `[${variants}]`;
 };
 
 const generateReviews = (rawScore) => {

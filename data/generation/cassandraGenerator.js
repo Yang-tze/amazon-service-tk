@@ -5,7 +5,7 @@ const { productCount, batchCount } = require('./utils.js');
 let content = `DROP KEYSPACE IF EXISTS product_db;
 
 CREATE KEYSPACE product_db
-  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
 
 USE product_db;
 
@@ -15,18 +15,18 @@ DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
   id INT PRIMARY KEY,
-  about list<TEXT>,
   brand VARCHAR,
+  descriptions LIST<TEXT>,
   is_prime BOOLEAN,
   num_questions INT,
   product_name VARCHAR,
   product_price DECIMAL,
   product_tier VARCHAR,
-  related_products list<INT>,
-  review_totals list<INT>,
+  review_totals LIST<INT>,
   seller_name VARCHAR,
   stock_count INT,
-  thumbnail VARCHAR,
+  thumbnail_url VARCHAR,
+  variants FROZEN<LIST <MAP<TEXT,TEXT>>>,
 );
 
 CREATE TABLE product_count (
