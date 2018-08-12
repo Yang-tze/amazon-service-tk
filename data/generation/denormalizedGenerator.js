@@ -25,15 +25,16 @@ const generatePrice = () => randomInt(10, 400) - 0.01;
 const generateVariants = () => {
   const variants = [];
   const relatedCount = randomInt(0, 9);
-  const intervalSize = Math.floor(thumbnailCount / relatedCount);
+  const intervalSize = Math.floor(productCount / relatedCount);
   for (let i = 0; i < relatedCount; i++) {
     const start = intervalSize * i + 1;
     const end = intervalSize * (i + 1) + 1;
-    const variantThumbnail = generateThumbnail(randomInt(start, end));
+    const variantId = randomInt(start, end);
     const variantPrice = `${generatePrice()}`;
+    const variantThumbnail = generateThumbnail(variantId);;
     const variantTier = faker.company.catchPhraseAdjective();
     variants.push(
-      `{ price: ${variantPrice}, tier: ${variantTier}, thumbnailUrl: ${variantThumbnail} }`,
+      `{ id: ${}, price: ${variantPrice}, thumbnailUrl: ${variantThumbnail}, tier: ${variantTier} }`,
     );
   }
   return `[${variants}]`;
