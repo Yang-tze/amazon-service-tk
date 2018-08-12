@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:3003"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+    - duration: 600
+      arrivalRate: 50
+  payload:
+    path: "test.ids.csv"
+    fields:
+      - "id"
+scenarios:
+  - name: "Retrieve records"
+    flow:
+      - get:
+          url: "/{{ id }}"
