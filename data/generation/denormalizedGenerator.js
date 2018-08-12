@@ -31,10 +31,10 @@ const generateVariants = () => {
     const end = intervalSize * (i + 1) + 1;
     const variantId = randomInt(start, end);
     const variantPrice = `${generatePrice()}`;
-    const variantThumbnail = generateThumbnail(variantId);;
+    const variantThumbnail = generateThumbnail(variantId);
     const variantTier = faker.company.catchPhraseAdjective();
     variants.push(
-      `{ id: ${}, price: ${variantPrice}, thumbnailUrl: ${variantThumbnail}, tier: ${variantTier} }`,
+      `{ id: ${variantId}, price: ${variantPrice}, thumbnailUrl: ${variantThumbnail}, tier: ${variantTier} }`,
     );
   }
   return `[${variants}]`;
