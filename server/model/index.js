@@ -16,13 +16,13 @@ const getProductById = (productId, callback) => {
   });
 };
 
-const updateProductCount = (count, callback) => {
+const updateProductCount = (count) => {
   client.execute(
     'UPDATE product_count SET count = ? WHERE id = ?',
     [count, 1],
     { prepare: true },
-    (err, results) => {
-      handleResults(err, results, callback);
+    (err) => {
+      if (err) console.error(err);
     },
   );
 };
