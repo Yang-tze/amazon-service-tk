@@ -16,6 +16,17 @@ const getProductById = (productId, callback) => {
   });
 };
 
+const updateProductCount = (count, callback) => {
+  client.execute(
+    'UPDATE product_count SET count = ? WHERE id = ?',
+    [count, 1],
+    { prepare: true },
+    (err, results) => {
+      handleResults(err, results, callback);
+    },
+  );
+};
+
 const getProductByName = (productName, callback) => {
   const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
   const startTime = new Date();
@@ -26,16 +37,27 @@ const getProductByName = (productName, callback) => {
 };
 
 const addProduct = (data, callback) => {
-  const queryString = generateAddProductString(data);
   const startTime = new Date();
-  client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
-    handleResults(err, data, callback, startTime);
-  });
+  client.execute(
+    'SELECT count from product_count WHERE id = ?',
+    [1],
+    { prepare: true },
+    (err, results) => {
+      if (err) callback(err);
+      else {
+        const id = results.rows[0].count + 1;
+        const queryString = generateAddProductString(data, id);
+        updateProductCount(id, callback);
+        client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+          handleResults(err, data, callback, startTime);
+        });
+      }
+    },
+  );
 };
 
 const updateProduct = (productId, data, callback) => {
   const queryString = generateUpdateProductString(productId, data);
-  console.log(queryString);
   const startTime = new Date();
   client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
     handleResults(err, data, callback, startTime);

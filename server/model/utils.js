@@ -8,14 +8,14 @@ const handleResults = (err, results, callback, startTime) => {
   }
 };
 
-const generateAddProductString = (data) => {
+const generateAddProductString = (data, id) => {
   const placeholders = [];
   for (key in data) {
     placeholders.push('?');
   }
   let queryString = 'INSERT INTO products ';
-  queryString += `(${Object.keys(data).join(',')}) `;
-  queryString += `VALUES (${placeholders.join(',')})`;
+  queryString += `(id,${Object.keys(data).join(',')}) `;
+  queryString += `VALUES (${id},${placeholders.join(',')})`;
   return queryString;
 };
 

@@ -40,7 +40,7 @@ SELECT * FROM products
 WHERE product_name IS NOT NULL
 PRIMARY KEY (product_name, id);`;
 
-content += `INSERT INTO product_count (id, count) VALUES (1, ${productCount + 1});`;
+content += `INSERT INTO product_count (id, count) VALUES (1, ${productCount});`;
 
 for (let i = 0; i < batchCount; i++) {
   content += `
