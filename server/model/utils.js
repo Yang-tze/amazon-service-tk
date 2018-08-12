@@ -9,24 +9,24 @@ const handleResults = (err, results, callback, startTime) => {
 };
 
 const generateAddProductString = (data) => {
-  let queryString = 'INSERT INTO product_metadata ';
-  queryString += `(${Object.keys(data).join(',')}) `;
-  queryString += 'VALUES (';
+  const placeholders = [];
   for (key in data) {
-    const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
-    queryString += `${value},`;
+    placeholders.push('?');
   }
-  queryString = `${queryString.substring(0, queryString.length - 1)})`;
+  let queryString = 'INSERT INTO products ';
+  queryString += `(${Object.keys(data).join(',')}) `;
+  queryString += `VALUES (${placeholders.join(',')})`;
   return queryString;
 };
 
-const generateUpdateMetadataString = (productId, data) => {
-  let queryString = 'UPDATE product_metadata SET';
+const generateUpdateProductString = (productId, data) => {
+  const assignments = [];
   for (key in data) {
-    const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
-    queryString += ` ${key}=${value},`;
+    assignments.push(`${key}=?`);
   }
-  queryString = `${queryString.substring(0, queryString.length - 1)} WHERE id=${productId}`;
+  let queryString = 'UPDATE products SET ';
+  queryString += assignments.join(',');
+  queryString = ` WHERE id=${productId}`;
   return queryString;
 };
 
@@ -63,7 +63,7 @@ const translateDataForClient = (data, callback, startTime) => {
 module.exports = {
   handleResults,
   generateAddProductString,
-  generateUpdateMetadataString,
+  generateUpdateProductString,
   translateDataForClient,
 };
 
