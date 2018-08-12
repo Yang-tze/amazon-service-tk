@@ -7,12 +7,12 @@ const {
   translateDataForClient,
 } = require('./utils.js');
 
-const updateDatabase = (queryString, callback) => {
-  const startTime = new Date();
-  client.execute(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
-  });
-};
+// const updateDatabase = (queryString, callback) => {
+//   const startTime = new Date();
+//   client.execute(queryString, (err, results) => {
+//     handleResults(err, results, callback, startTime);
+//   });
+// };
 
 // const query = 'SELECT id, name FROM users WHERE id = ?';
 // client.execute(query, [ id ], { prepare: true }, callback);
@@ -20,34 +20,45 @@ const updateDatabase = (queryString, callback) => {
 const getProductById = (productId, callback) => {
   const queryString = 'SELECT * FROM products WHERE id = ?';
   const startTime = new Date();
-  client.execute(queryString, [productId], { prepare: true }, (err, data) => {
-    const results = err || translateDataForClient(data.rows[0]);
-    handleResults(err, results, callback, startTime);
+  client.execute(queryString, [productId], { prepare: true }, (err, results) => {
+    const data = results && translateDataForClient(results.rows[0]);
+    handleResults(err, data, callback, startTime);
   });
 };
 
 const getProductByName = (productName, callback) => {
-  const queryString = 'SELECT * FROM products WHERE product_name = ?';
+  const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
   const startTime = new Date();
-  client.execute(queryString, [productId], { prepare: true }, (err, data) => {
-    const results = err || translateDataForClient(data.rows[0]);
-    handleResults(err, results, callback, startTime);
+  client.execute(queryString, [productName], { prepare: true }, (err, results) => {
+    const data = results && translateDataForClient(results.rows[0]);
+    handleResults(err, data, callback, startTime);
   });
 };
 
 const addProduct = (data, callback) => {
   const queryString = generateAddProductString(data);
-  updateDatabase(queryString, callback);
+  const startTime = new Date();
+  client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+    const data = results && translateDataForClient(results.rows[0]);
+    handleResults(err, data, callback, startTime);
+  });
 };
 
 const updateProduct = (productId, data, callback) => {
   const queryString = generateUpdateProductString(productId, data);
-  updateDatabase(queryString, callback);
+  const startTime = new Date();
+  client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+    const data = results && translateDataForClient(results.rows[0]);
+    handleResults(err, data, callback, startTime);
+  });
 };
 
 const deleteProduct = (productId, callback) => {
-  const queryString = `DELETE FROM products WHERE id = ${productId}`;
-  updateDatabase(queryString, callback);
+  const queryString = 'DELETE FROM products WHERE id = ?';
+  const startTime = new Date();
+  client.execute(queryString, [productId], { prepare: true }, (err, results) => {
+    handleResults(err, data, callback, startTime);
+  });
 };
 
 module.exports = {
