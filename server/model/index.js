@@ -1,4 +1,5 @@
-const connection = require('../../data/postgresConnection.js');
+// const connection = require('../../data/postgresConnection.js');
+const client = require('../../data/cassandraConnection.js');
 const {
   handleResults,
   generateAddProductString,
@@ -8,7 +9,7 @@ const {
 
 const updateDatabase = (queryString, callback) => {
   const startTime = new Date();
-  connection.query(queryString, (err, results) => {
+  client.execute(queryString, (err, results) => {
     handleResults(err, results, callback, startTime);
   });
 };
@@ -19,7 +20,7 @@ const updateDatabase = (queryString, callback) => {
 const getProductById = (productId, callback) => {
   const queryString = 'SELECT * FROM products WHERE id = ?';
   const startTime = new Date();
-  client.execute(queryString, [productId], (err, data) => {
+  client.execute(queryString, [productId], { prepare: true }, (err, data) => {
     const results = err || translateDataForClient(data.rows[0]);
     handleResults(err, results, callback, startTime);
   });
@@ -28,7 +29,7 @@ const getProductById = (productId, callback) => {
 const getProductByName = (productName, callback) => {
   const queryString = 'SELECT * FROM products WHERE product_name = ?';
   const startTime = new Date();
-  client.execute(queryString, [productId], (err, data) => {
+  client.execute(queryString, [productId], { prepare: true }, (err, data) => {
     const results = err || translateDataForClient(data.rows[0]);
     handleResults(err, results, callback, startTime);
   });
