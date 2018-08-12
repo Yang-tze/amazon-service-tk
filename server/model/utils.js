@@ -26,7 +26,7 @@ const generateUpdateProductString = (productId, data) => {
   }
   let queryString = 'UPDATE products SET ';
   queryString += assignments.join(',');
-  queryString = ` WHERE id=${productId}`;
+  queryString += ` WHERE id=${productId}`;
   return queryString;
 };
 

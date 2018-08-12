@@ -5,6 +5,4 @@ client.connect((err) => {
   if (err) console.error(err);
 });
 
-console.log(client.execute);
-
 module.exports = client;
