@@ -30,72 +30,32 @@ const generateUpdateMetadataString = (productId, data) => {
   return queryString;
 };
 
-const generateAddDescriptionsString = (productId, descriptions) => {
-  let queryString = 'INSERT INTO product_descriptions (product_id, description) VALUES ';
-  descriptions.forEach((description, index, descriptions) => {
-    queryString += `(${productId}, '${description}')`;
-    queryString += index < descriptions.length - 1 ? ', ' : ' ';
-  });
-  return queryString;
-};
-
-const getProductInfoFromQueries = (
-  [selectMetadata, selectDescriptions, selectRelated],
-  connection,
-  callback,
-) => {
-  const startTime = new Date();
-  const metadataQuery = connection.query(selectMetadata);
-  const descriptionQuery = connection.query(selectDescriptions);
-  const relatedQuery = connection.query(selectRelated);
-  Promise.all([metadataQuery, descriptionQuery, relatedQuery]).then(
-    ([metadataResults, descriptionResults, relatedResults]) => {
-      translateResponseForClient(
-        [metadataResults.rows[0], descriptionResults.rows, relatedResults.rows],
-        callback,
-        startTime,
-      );
-    },
-  );
-};
-
-const translateResponseForClient = (
-  [metadataResults, descriptionResults, relatedResults],
-  callback,
-  startTime,
-) => {
-  const descriptions = descriptionResults.map(entry => entry.description);
-  const related = relatedResults.map(related => ({
-    price: { sale: related.product_price },
-    product_tier: related.product_tier,
-    thumbnail: related.thumbnail_url,
+const translateDataForClient = (data, callback, startTime) => {
+  const related = data.variants.map(variant => ({
+    price: { sale: variant.price },
+    product_tier: variant.productTier,
+    thumbnail: variant.thumbnailUrl,
   }));
   const results = {
+    related,
     data: {
-      id: metadataResults.id,
-      about_product: descriptions,
-      brand: metadataResults.brand_name,
-      is_prime: metadataResults.is_prime,
-      name: metadataResults.product_name,
-      price: { sale: metadataResults.product_price },
+      id: data.id,
+      about_product: data.descriptions,
+      brand: data.brand,
+      is_prime: data.is_prime,
+      name: data.product_name,
+      price: { sale: data.product_price },
       product_options: {
         color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
         size: ['S', 'M', 'L', 'XL'],
       },
-      product_tier: metadataResults.product_tier,
-      questions: metadataResults.num_questions,
-      reviews: [
-        metadataResults.reviews_1_star,
-        metadataResults.reviews_2_star,
-        metadataResults.reviews_3_star,
-        metadataResults.reviews_4_star,
-        metadataResults.reviews_5_star,
-      ],
-      seller: metadataResults.seller_name,
-      stockCount: metadataResults.stock_count,
-      thumbnail: metadataResults.thumbnail_url,
+      product_tier: data.product_tier,
+      questions: data.num_questions,
+      reviews: data.review_totals,
+      seller: data.seller_name,
+      stockCount: data.stock_count,
+      thumbnail: data.thumbnail_url,
     },
-    related,
   };
   handleResults(null, results, callback, startTime);
 };
@@ -104,8 +64,7 @@ module.exports = {
   handleResults,
   generateAddProductString,
   generateUpdateMetadataString,
-  generateAddDescriptionsString,
-  getProductInfoFromQueries,
+  translateDataForClient,
 };
 
 // const execMultiple = (queryStrings, callback) => {
