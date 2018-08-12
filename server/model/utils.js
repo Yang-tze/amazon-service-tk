@@ -34,7 +34,7 @@ const translateDataForClient = (results) => {
   const related = results.variants.map(variant => ({
     price: { sale: variant.price },
     product_tier: variant.tier,
-    thumbnail: variant.thumbnailUrl,
+    thumbnail: `https://${variant.thumbnailUrl}`,
   }));
   return {
     related,
@@ -54,7 +54,7 @@ const translateDataForClient = (results) => {
       reviews: results.review_totals,
       seller: results.seller_name,
       stockCount: results.stock_count,
-      thumbnail: results.thumbnail_url,
+      thumbnail: `https://${results.thumbnail_url}`,
     },
   };
 };
