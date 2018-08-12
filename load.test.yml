@@ -4,10 +4,10 @@ config:
   phases:
     - duration: 10
       arrivalRate: 5
-    - duration: 20
+    - duration: 60
       arrivalRate: 5
       rampTo: 1000
-    - duration: 20
+    - duration: 120
       arrivalRate: 1000
   payload:
     path: "load.test.data.csv"
@@ -18,4 +18,4 @@ scenarios:
     flow:
       # - function: getRandomId
       - get:
-          url: "/{{ id }}"
+          url: "/products/{{ id }}"
