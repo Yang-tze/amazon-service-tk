@@ -7,7 +7,7 @@ const options = {
   keyspace: 'product_db',
   pooling: {
     coreConnectionsPerHost: {
-      [distance.local]: 4,
+      [distance.local]: 10,
     },
   },
 };
