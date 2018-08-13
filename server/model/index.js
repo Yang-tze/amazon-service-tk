@@ -1,5 +1,5 @@
-// const client = require('../../data/postgresConnection.js');
-const client = require('../../data/cassandraConnection.js');
+const cassandra = require('../../data/cassandraConnection.js');
+const redis = require('../../data/redisConnection.js');
 const {
   handleResults,
   generateAddProductString,
@@ -8,16 +8,39 @@ const {
 } = require('./utils.js');
 
 const getProductById = (productId, callback) => {
-  const queryString = 'SELECT * FROM products WHERE id = ?';
   const startTime = new Date();
-  client.execute(queryString, [productId], { prepare: true }, (err, results) => {
-    const data = results && translateDataForClient(results.rows[0]);
-    handleResults(err, data, callback, startTime);
+  redis.get(productId, (err, reply) => {
+    if (reply) {
+      handleResults(null, JSON.parse(reply), callback, startTime);
+    } else {
+      const queryString = 'SELECT * FROM products WHERE id = ?';
+      cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
+        const data = results && translateDataForClient(results.rows[0]);
+        handleResults(err, data, callback, startTime);
+        redis.set(productId, JSON.stringify(data), redis.print);
+      });
+    }
+  });
+};
+
+const getProductByName = (productName, callback) => {
+  const startTime = new Date();
+  redis.get(productId, (err, reply) => {
+    if (reply) {
+      handleResults(null, JSON.parse(reply), callback, startTime);
+    } else {
+      const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
+      cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
+        const data = results && translateDataForClient(results.rows[0]);
+        handleResults(err, data, callback, startTime);
+        redis.set(productName, JSON.stringify(data), redis.print);
+      });
+    }
   });
 };
 
 const updateProductCount = (count) => {
-  client.execute(
+  cassandra.execute(
     'UPDATE product_count SET count = ? WHERE id = ?',
     [count, 1],
     { prepare: true },
@@ -27,18 +50,9 @@ const updateProductCount = (count) => {
   );
 };
 
-const getProductByName = (productName, callback) => {
-  const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
-  const startTime = new Date();
-  client.execute(queryString, [productName], { prepare: true }, (err, results) => {
-    const data = results && translateDataForClient(results.rows[0]);
-    handleResults(err, data, callback, startTime);
-  });
-};
-
 const addProduct = (data, callback) => {
   const startTime = new Date();
-  client.execute(
+  cassandra.execute(
     'SELECT count from product_count WHERE id = ?',
     [1],
     { prepare: true },
@@ -48,7 +62,7 @@ const addProduct = (data, callback) => {
         const id = results.rows[0].count + 1;
         const queryString = generateAddProductString(data, id);
         updateProductCount(id, callback);
-        client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+        cassandra.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
           handleResults(err, data, callback, startTime);
         });
       }
@@ -57,17 +71,19 @@ const addProduct = (data, callback) => {
 };
 
 const updateProduct = (productId, data, callback) => {
+  redis.del('productId');
   const queryString = generateUpdateProductString(productId, data);
   const startTime = new Date();
-  client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+  cassandra.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
     handleResults(err, data, callback, startTime);
   });
 };
 
 const deleteProduct = (productId, callback) => {
+  redis.del(productId);
   const queryString = 'DELETE FROM products WHERE id = ?';
   const startTime = new Date();
-  client.execute(queryString, [productId], { prepare: true }, (err, results) => {
+  cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
     handleResults(err, data, callback, startTime);
   });
 };
