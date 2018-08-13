@@ -5,7 +5,7 @@ const { productCount, batchCount } = require('./utils.js');
 let content = `DROP KEYSPACE IF EXISTS product_db;
 
 CREATE KEYSPACE product_db
-  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 
 USE product_db;
 
