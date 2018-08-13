@@ -16,10 +16,19 @@ const generateName = (index, length) => {
   return result;
 };
 
+const generatePrice = () => randomInt(10, 400) - 0.01;
+
+const thumbnailCount = 1000;
+const thumbnailEndpoint = 's3.amazonaws.com/sdc-yangtze-details';
+
+const generateThumbnail = id => `${thumbnailEndpoint}/product_${id % thumbnailCount}.png`;
+
 module.exports = {
   productCount,
   batchCount,
   tab,
   randomInt,
   generateName,
+  generatePrice,
+  generateThumbnail,
 };

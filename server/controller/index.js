@@ -1,5 +1,10 @@
 const model = require('../model');
-const { handleResponse } = require('./utils.js');
+
+const handleResponse = (err, results, res) => {
+  if (err) console.error(err);
+  res.statusCode = err ? 400 : 200;
+  res.send(err || results);
+};
 
 const getProductById = (req, res) => {
   const {
@@ -23,7 +28,7 @@ const getProductByName = (req, res) => {
   }
 };
 
-const postProductMetadata = (req, res) => {
+const postProduct = (req, res) => {
   const { body } = req;
   if (Object.keys(body).length) {
     model.addProduct(body, (err, results) => handleResponse(err, results, res));
@@ -32,7 +37,7 @@ const postProductMetadata = (req, res) => {
   }
 };
 
-const patchProductMetadata = (req, res) => {
+const patchProduct = (req, res) => {
   const {
     params: { id },
   } = req;
@@ -58,7 +63,7 @@ const deleteProduct = (req, res) => {
 module.exports = {
   getProductById,
   getProductByName,
+  postProduct,
+  patchProduct,
   deleteProduct,
-  postProductMetadata,
-  patchProductMetadata,
 };

@@ -1,5 +1,5 @@
 const handleResults = (err, results, callback, startTime) => {
-  console.log('Query time:', new Date() - startTime);
+  // console.log('Query time:', new Date() - startTime);
   if (err) {
     console.error(err);
     callback(err);
@@ -8,104 +8,62 @@ const handleResults = (err, results, callback, startTime) => {
   }
 };
 
-const generateAddProductString = (data) => {
-  let queryString = 'INSERT INTO product_metadata ';
-  queryString += `(${Object.keys(data).join(',')}) `;
-  queryString += 'VALUES (';
+const generateAddProductString = (data, id) => {
+  const placeholders = [];
   for (key in data) {
-    const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
-    queryString += `${value},`;
+    placeholders.push('?');
   }
-  queryString = `${queryString.substring(0, queryString.length - 1)})`;
+  let queryString = 'INSERT INTO products ';
+  queryString += `(id,${Object.keys(data).join(',')}) `;
+  queryString += `VALUES (${id},${placeholders.join(',')})`;
   return queryString;
 };
 
-const generateUpdateMetadataString = (productId, data) => {
-  let queryString = 'UPDATE product_metadata SET';
+const generateUpdateProductString = (productId, data) => {
+  const assignments = [];
   for (key in data) {
-    const value = parseFloat(data[key]) ? data[key] : `'${data[key]}'`;
-    queryString += ` ${key}=${value},`;
+    assignments.push(`${key}=?`);
   }
-  queryString = `${queryString.substring(0, queryString.length - 1)} WHERE id=${productId}`;
+  let queryString = 'UPDATE products SET ';
+  queryString += assignments.join(',');
+  queryString += ` WHERE id=${productId}`;
   return queryString;
 };
 
-const generateAddDescriptionsString = (productId, descriptions) => {
-  let queryString = 'INSERT INTO product_descriptions (product_id, description) VALUES ';
-  descriptions.forEach((description, index, descriptions) => {
-    queryString += `(${productId}, '${description}')`;
-    queryString += index < descriptions.length - 1 ? ', ' : ' ';
-  });
-  return queryString;
-};
-
-const getProductInfoFromQueries = (
-  [selectMetadata, selectDescriptions, selectRelated],
-  connection,
-  callback,
-) => {
-  const startTime = new Date();
-  const metadataQuery = connection.query(selectMetadata);
-  const descriptionQuery = connection.query(selectDescriptions);
-  const relatedQuery = connection.query(selectRelated);
-  Promise.all([metadataQuery, descriptionQuery, relatedQuery]).then(
-    ([metadataResults, descriptionResults, relatedResults]) => {
-      translateResponseForClient(
-        [metadataResults.rows[0], descriptionResults.rows, relatedResults.rows],
-        callback,
-        startTime,
-      );
-    },
-  );
-};
-
-const translateResponseForClient = (
-  [metadataResults, descriptionResults, relatedResults],
-  callback,
-  startTime,
-) => {
-  const descriptions = descriptionResults.map(entry => entry.description);
-  const related = relatedResults.map(related => ({
-    price: { sale: related.product_price },
-    product_tier: related.product_tier,
-    thumbnail: related.thumbnail_url,
+const translateDataForClient = (results) => {
+  const related = results.variants.map(variant => ({
+    price: { sale: variant.price },
+    product_tier: variant.tier,
+    thumbnail: `https://${variant.thumbnailUrl}`,
   }));
-  const results = {
+  return {
+    related,
     data: {
-      id: metadataResults.id,
-      about_product: descriptions,
-      brand: metadataResults.brand_name,
-      is_prime: metadataResults.is_prime,
-      name: metadataResults.product_name,
-      price: { sale: metadataResults.product_price },
+      id: results.id,
+      about_product: results.descriptions,
+      brand: results.brand,
+      is_prime: results.is_prime,
+      name: results.product_name,
+      price: { sale: results.product_price },
       product_options: {
         color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
         size: ['S', 'M', 'L', 'XL'],
       },
-      product_tier: metadataResults.product_tier,
-      questions: metadataResults.num_questions,
-      reviews: [
-        metadataResults.reviews_1_star,
-        metadataResults.reviews_2_star,
-        metadataResults.reviews_3_star,
-        metadataResults.reviews_4_star,
-        metadataResults.reviews_5_star,
-      ],
-      seller: metadataResults.seller_name,
-      stockCount: metadataResults.stock_count,
-      thumbnail: metadataResults.thumbnail_url,
+      product_tier: results.product_tier,
+      questions: results.num_questions,
+      reviews: results.review_totals,
+      seller: results.seller_name,
+      stockCount: results.stock_count,
+      thumbnail: `https://${results.thumbnail_url}`,
     },
-    related,
   };
-  handleResults(null, results, callback, startTime);
 };
 
 module.exports = {
   handleResults,
   generateAddProductString,
-  generateUpdateMetadataString,
-  generateAddDescriptionsString,
-  getProductInfoFromQueries,
+  generateUpdateProductString,
+  translateDataForClient,
 };
 
 // const execMultiple = (queryStrings, callback) => {

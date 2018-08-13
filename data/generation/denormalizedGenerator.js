@@ -2,37 +2,43 @@ const faker = require('faker');
 const fs = require('fs');
 
 const {
-  productCount, batchCount, tab, randomInt, generateName,
+  productCount,
+  batchCount,
+  tab,
+  randomInt,
+  generateName,
+  generatePrice,
+  generateThumbnail,
 } = require('./utils.js');
-
-const thumbnailCount = 1000;
-const thumbnailEndpoint = 'https://s3.amazonaws.com/sdc-yangtze-details';
 
 const text = 'Lorem ipsum dolor amet aliqua 8-bit cillum lumbersexual la croix, squid austin cliche deserunt master cleanse +1. Sustainable sed in, blue bottle edison bulb sartorial crucifix cred neutra marfa. Mixtape godard messenger bag vegan, echo park gochujang next level unicorn polaroid. Raw denim hammock shoreditch do. Fixie cred gochujang, schlitz eiusmod tumblr meggings celiac XOXO messenger bag fingerstache tbh. Four dollar toast velit anim, ex cronut quis brooklyn hot chicken. Ramps dolore cornhole aliquip next level, shaman fingerstache. Lorem copper mug shaman 3 wolf moon. Photo booth butcher ipsum, cronut aliqua health goth exercitation. Unicorn nostrud scenester jean shorts. Distillery pinterest butcher farm-to-table, iceland synth brunch la croix. Blog sartorial DIY, eu qui migas lomo poutine. Marfa selvage artisan nulla gastropub, wayfarers readymade photo booth jean shorts air plant glossier. Vegan flexitarian next level twee quis officia chillwave, small batch franzen banh mi. Adipisicing shabby chic velit authentic, asymmetrical aesthetic prism. 90s in echo park, laborum air plant succulents listicle swag vinyl esse kickstarter aliquip. Dolore trust fund +1 nulla 3 wolf moon heirloom pop-up master cleanse asymmetrical poutine. Af humblebrag whatever tilde raclette, sint vaporware veniam four dollar toast. Cloud bread keffiyeh DIY, pug intelligentsia cold-pressed adaptogen disrupt direct trade est yr tumeric eiusmod poke. Adipisicing listicle chillwave, plaid ea dolore palo santo artisan taxidermy iPhone. Pickled pug consequat, bushwick sustainable shabby chic shaman nulla umami street art four dollar toast humblebrag biodiesel. Actually banh mi intelligentsia wolf whatever knausgaard tumeric ex, umami eiusmod poutine cupidatat iPhone art party glossier. Artisan occaecat small batch pariatur nostrud. Umami coloring book enim, post-ironic aliquip taxidermy neutra adipisicing mixtape cupidatat glossier. Aesthetic meh pour-over dolore enamel pin pickled.';
 const sentences = text.split('.');
 
-const generateAbout = () => {
-  const aboutSentences = [];
+const generateDescriptions = () => {
+  const descriptions = [];
   for (let i = 0; i < 3; i++) {
-    const sentence = sentences[randomInt(0, sentences.length - 1)].trim();
-    aboutSentences.push(`'${sentence}'`);
+    const description = sentences[randomInt(0, sentences.length - 1)].trim();
+    descriptions.push(`'${description}'`);
   }
-  return `[${aboutSentences}]`;
+  return `[${descriptions}]`;
 };
 
-const generatePrice = () => randomInt(10, 400) - 0.01;
-
-const generateRelated = () => {
-  const relatedIds = [];
+const generateVariants = () => {
+  const variants = [];
   const relatedCount = randomInt(0, 9);
   const intervalSize = Math.floor(productCount / relatedCount);
   for (let i = 0; i < relatedCount; i++) {
     const start = intervalSize * i + 1;
     const end = intervalSize * (i + 1) + 1;
-    const relatedId = randomInt(start, end);
-    relatedIds.push(relatedId);
+    const variantId = randomInt(start, end);
+    const variantPrice = `${generatePrice()}`;
+    const variantThumbnail = generateThumbnail(variantId);
+    const variantTier = faker.company.catchPhraseAdjective();
+    variants.push(
+      `{ id: ${variantId}, price: ${variantPrice}, thumbnailUrl: ${variantThumbnail}, tier: ${variantTier} }`,
+    );
   }
-  return `[${relatedIds}]`;
+  return `[${variants}]`;
 };
 
 const generateReviews = (rawScore) => {
@@ -43,35 +49,33 @@ const generateReviews = (rawScore) => {
   return `[${reviews}]`;
 };
 
-const generateThumbnail = id => `${thumbnailEndpoint}${id % thumbnailCount}.png`;
-
 const generateProduct = (id) => {
   const productId = tab(`${id}`);
-  const about = tab(generateAbout());
   const brand = tab(faker.name.lastName());
+  const descriptions = tab(generateDescriptions());
   const isPrime = tab(faker.random.boolean());
   const numQuestions = tab(randomInt(3, 50));
   const productPrice = tab(generatePrice());
   const productName = tab(generateName(id - 1, 7));
   const productTier = tab(faker.company.catchPhraseAdjective());
-  const relatedProducts = tab(generateRelated());
   const reviewTotals = tab(generateReviews(Math.random()));
   const sellerName = tab(faker.name.firstName());
   const stockCount = tab(randomInt(10, 200));
-  const thumbnail = generateThumbnail(id);
+  const thumbnailUrl = tab(generateThumbnail(id));
+  const variants = generateVariants();
   return `${productId
-    + about
     + brand
+    + descriptions
     + isPrime
     + numQuestions
     + productName
     + productPrice
     + productTier
-    + relatedProducts
     + reviewTotals
     + sellerName
     + stockCount
-    + thumbnail}\n`;
+    + thumbnailUrl
+    + variants}\n`;
 };
 
 const writeBatch = (start = 1, end, batchId = 1) => {

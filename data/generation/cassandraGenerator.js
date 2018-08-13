@@ -15,18 +15,18 @@ DROP TABLE IF EXISTS related_products;
 
 CREATE TABLE products (
   id INT PRIMARY KEY,
-  about list<TEXT>,
   brand VARCHAR,
+  descriptions LIST<TEXT>,
   is_prime BOOLEAN,
   num_questions INT,
   product_name VARCHAR,
   product_price DECIMAL,
   product_tier VARCHAR,
-  related_products list<INT>,
-  review_totals list<INT>,
+  review_totals LIST<INT>,
   seller_name VARCHAR,
   stock_count INT,
-  thumbnail VARCHAR,
+  thumbnail_url VARCHAR,
+  variants FROZEN<LIST <MAP<TEXT,TEXT>>>,
 );
 
 CREATE TABLE product_count (
@@ -40,7 +40,7 @@ SELECT * FROM products
 WHERE product_name IS NOT NULL
 PRIMARY KEY (product_name, id);`;
 
-content += `INSERT INTO product_count (id, count) VALUES (1, ${productCount + 1});`;
+content += `INSERT INTO product_count (id, count) VALUES (1, ${productCount});`;
 
 for (let i = 0; i < batchCount; i++) {
   content += `

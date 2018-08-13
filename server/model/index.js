@@ -1,96 +1,74 @@
-const connection = require('../../data/postgresConnection.js');
+// const client = require('../../data/postgresConnection.js');
+const client = require('../../data/cassandraConnection.js');
 const {
   handleResults,
   generateAddProductString,
-  generateUpdateMetadataString,
-  generateAddDescriptionsString,
-  getProductInfoFromQueries,
+  generateUpdateProductString,
+  translateDataForClient,
 } = require('./utils.js');
 
 const getProductById = (productId, callback) => {
-  const selectMetadata = `SELECT * FROM product_metadata WHERE id=${productId}`;
-  const selectDescriptions = `SELECT description FROM product_descriptions WHERE product_id=${productId}`;
-  const selectRelated = `SELECT product_tier, product_price, stock_count, thumbnail_url FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id=${productId}`;
-  getProductInfoFromQueries(
-    [selectMetadata, selectDescriptions, selectRelated],
-    connection,
-    callback,
+  const queryString = 'SELECT * FROM products WHERE id = ?';
+  const startTime = new Date();
+  client.execute(queryString, [productId], { prepare: true }, (err, results) => {
+    const data = results && translateDataForClient(results.rows[0]);
+    handleResults(err, data, callback, startTime);
+  });
+};
+
+const updateProductCount = (count) => {
+  client.execute(
+    'UPDATE product_count SET count = ? WHERE id = ?',
+    [count, 1],
+    { prepare: true },
+    (err) => {
+      if (err) console.error(err);
+    },
   );
 };
 
 const getProductByName = (productName, callback) => {
-  const selectMetadata = `SELECT * FROM product_metadata WHERE product_name='${productName}'`;
-  const selectDescriptions = `SELECT description FROM product_descriptions WHERE product_id IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
-  const selectRelated = `SELECT product_tier, product_price, stock_count, thumbnail_url FROM product_metadata pm INNER JOIN related_products rp ON pm.id = rp.related_id WHERE rp.product_id IN (SELECT id FROM product_metadata WHERE product_name='${productName}')`;
-  getProductInfoFromQueries(
-    [selectMetadata, selectDescriptions, selectRelated],
-    connection,
-    callback,
-  );
-};
-
-const deleteProduct = (productId, callback) => {
+  const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
   const startTime = new Date();
-  const deleteRelated = `DELETE FROM related_products WHERE product_id='${productId}'`;
-  const deleteDescriptions = `DELETE FROM product_descriptions WHERE product_id='${productId}'`;
-  const deleteMetadata = `DELETE FROM product_metadata WHERE id='${productId}'`;
-  const relatedQuery = connection.query(deleteRelated);
-  const descriptionQuery = connection.query(deleteDescriptions);
-  Promise.all([relatedQuery, descriptionQuery]).then(() => {
-    connection.query(deleteMetadata, (err, results) => {
-      handleResults(err, results, callback, startTime);
-    });
+  client.execute(queryString, [productName], { prepare: true }, (err, results) => {
+    const data = results && translateDataForClient(results.rows[0]);
+    handleResults(err, data, callback, startTime);
   });
 };
 
 const addProduct = (data, callback) => {
   const startTime = new Date();
-  const queryString = generateAddProductString(data);
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
-  });
+  client.execute(
+    'SELECT count from product_count WHERE id = ?',
+    [1],
+    { prepare: true },
+    (err, results) => {
+      if (err) callback(err);
+      else {
+        const id = results.rows[0].count + 1;
+        const queryString = generateAddProductString(data, id);
+        updateProductCount(id, callback);
+        client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+          handleResults(err, data, callback, startTime);
+        });
+      }
+    },
+  );
 };
 
 const updateProduct = (productId, data, callback) => {
+  const queryString = generateUpdateProductString(productId, data);
   const startTime = new Date();
-  const queryString = generateUpdateMetadataString(productId, data);
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
+  client.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
+    handleResults(err, data, callback, startTime);
   });
 };
 
-const addProductDescriptions = (productId, descriptions, callback) => {
+const deleteProduct = (productId, callback) => {
+  const queryString = 'DELETE FROM products WHERE id = ?';
   const startTime = new Date();
-  const queryString = generateAddDescriptionsString(productId, descriptions);
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
-  });
-};
-
-const updateProductDescriptions = (productId, descriptions, callback) => {
-  const startTime = new Date();
-  const deleteDescriptions = `DELETE FROM product_descriptions WHERE product_id=${product_id}`;
-  const insertDescriptions = generateAddDescriptionsString(productId, descriptions);
-  connection.query(deleteDescriptions).then(() => {
-    connection.query(insertDescriptions, (err, results) => {
-      handleResults(err, results, callback, startTime);
-    });
-  });
-};
-
-const addRelatedProduct = (productId, relatedId, callback) => {
-  const startTime = new Date();
-  const queryString = `INSERT INTO related_products (product_id, related_id) VALUES (${productId}, ${relatedId})`;
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
-  });
-};
-
-const deleteRelatedProducts = (productId, callback) => {
-  const startTime = new Date();
-  const queryString = `DELETE FROM related_products WHERE product_id=${productId}`;
-  connection.query(queryString, (err, results) => {
-    handleResults(err, results, callback, startTime);
+  client.execute(queryString, [productId], { prepare: true }, (err, results) => {
+    handleResults(err, data, callback, startTime);
   });
 };
 
@@ -100,34 +78,4 @@ module.exports = {
   addProduct,
   updateProduct,
   deleteProduct,
-  addProductDescriptions,
-  updateProductDescriptions,
-  addRelatedProduct,
-  deleteRelatedProducts,
 };
-
-// const getRelated = function getRelatedProducts(productName, productId, callback) {
-//   connection.query(
-//     `select id, product_tier, price, stock_count, thumbnail from products where name='${productName}' and id <> ${productId}`,
-//     (err, results) => {
-//       if (err) console.error(err);
-//       callback(results);
-//     },
-//   );
-// };
-
-// const getAll = function getProductAndRelatedProducts(productId, callback) {
-//   const storage = {};
-//   getProduct(productId, (results) => {
-//     storage.data = parseData(results[0]);
-//     const productName = results[0].name;
-//     getRelated(productName, productId, (relatedResults) => {
-//       storage.related = relatedResults.map(object => parseData(object));
-//       callback(storage);
-//     });
-//   });
-// };
-
-// const color = ['green', 'white', 'blue', 'black', 'silver', 'purple'];
-
-// const size = ['S', 'M', 'L', 'XL'];
