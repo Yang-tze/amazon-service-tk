@@ -1,5 +1,6 @@
 config:
   target: "http://localhost:3003"
+  processor: "./loadTestData.js"
   http:
     pool: 2
   phases:
@@ -13,12 +14,13 @@ config:
     - duration: 120
       arrivalRate: 1000
       rampTo: 5
-  payload:
-    path: "load.test.data.csv"
-    fields:
-      - "id"
+  # payload:
+  #   path: "load.test.data.csv"
+  #   fields:
+  #     - "id"
 scenarios:
   - name: "Get records"
     flow:
+      - function: "generateWeightedId"
       - get:
-          url: "/products/{{$randomNumber(1, 10000000)}}"
+          url: "/products/{{ id }}"
