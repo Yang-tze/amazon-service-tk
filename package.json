@@ -8,16 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "generate-data": "npm run generate-descriptions && npm run generate-metadata && npm run generate-related",
-    "generate-descriptions": "node --max-old-space-size=4096 data/generation/descriptionGenerator.js",
-    "generate-metadata": "node --max-old-space-size=4096 data/generation/metadataGenerator.js",
-    "generate-related": "node --max-old-space-size=4096 data/generation/relatedGenerator.js",
-    "postgres-init": "psql -f data/postgres-init.sql",
-    "postgres-seed": "node data/generation/postgresGenerator.js && psql -f data/postgres-schema.sql product_db",
-    "postgres-tune": "psql -f data/postgres-tune.sql product_db",
     "generate-denormalized": "node --max-old-space-size=4096 data/generation/denormalizedGenerator.js",
-    "generate-products": "node --max-old-space-size=4096 data/generation/productGenerator.js",
-    "generate-variants": "node --max-old-space-size=4096 data/generation/variantGenerator.js",
     "cassandra-seed": "node data/generation/cassandraGenerator.js && cqlsh < data/cassandra-schema.cql",
     "watch": "webpack --watch",
     "start": "nodemon server/index.js",
