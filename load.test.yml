@@ -14,10 +14,6 @@ config:
     - duration: 120
       arrivalRate: 20
       rampTo: 5
-  # payload:
-  #   path: "load.test.data.csv"
-  #   fields:
-  #     - "id"
 scenarios:
   - name: "Get records"
     flow:
