@@ -16,6 +16,8 @@
     "postgres-seed": "node data/generation/postgresGenerator.js && psql -f data/postgres-schema.sql product_db",
     "postgres-tune": "psql -f data/postgres-tune.sql product_db",
     "generate-denormalized": "node --max-old-space-size=4096 data/generation/denormalizedGenerator.js",
+    "generate-products": "node --max-old-space-size=4096 data/generation/productGenerator.js",
+    "generate-variants": "node --max-old-space-size=4096 data/generation/variantGenerator.js",
     "cassandra-seed": "node data/generation/cassandraGenerator.js && cqlsh < data/cassandra-schema.cql",
     "watch": "webpack --watch",
     "start": "nodemon server/index.js",

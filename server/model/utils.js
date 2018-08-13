@@ -1,5 +1,5 @@
 const handleResults = (err, results, callback, startTime) => {
-  console.log('Query time:', new Date() - startTime);
+  // console.log('Query time:', new Date() - startTime);
   if (err) {
     console.error(err);
     callback(err);

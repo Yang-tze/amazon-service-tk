@@ -6,15 +6,15 @@ config:
       arrivalRate: 5
     - duration: 60
       arrivalRate: 5
-      rampTo: 1000
+      rampTo: 500
     - duration: 120
-      arrivalRate: 1000
+      arrivalRate: 500
   payload:
     path: "load.test.data.csv"
     fields:
       - "id"
 scenarios:
-  - name: "Retrieve records"
+  - name: "Get records"
     flow:
       # - function: getRandomId
       - get:
