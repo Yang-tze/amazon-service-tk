@@ -29,7 +29,8 @@
     "path": "^0.12.7",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "siege": "^0.2.0"
   },
   "devDependencies": {
     "aws-sdk": "^2.288.0",
