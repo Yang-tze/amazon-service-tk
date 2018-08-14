@@ -6,32 +6,32 @@ config:
   phases:
     - duration: 60
       arrivalRate: 5
-      rampTo: 1000
+      rampTo: 10
     - duration: 240
-      arrivalRate: 1000
+      arrivalRate: 10
     - duration: 120
-      arrivalRate: 1000
+      arrivalRate: 10
       rampTo: 5
 scenarios:
   - name: "Get records"
     flow:
-      - function: "generateWeightedId"
-      - get:
-          url: "/products/{{ id }}"
+      # - function: "generateWeightedId"
+      # - get:
+      #     url: "/products/{{ id }}"
       # - function: "generateWeightedName"
       # - get:
       #     url: "/products/name/{{ name }}"
-      # - function: "generateProductInfo"
-      # - patch:
-      #     url: "/products{{ id }}"
-      #     json:
-      #       brand: "{{ brand }}"
-      #       is_prime: "{{ is_prime }}"
-      #       num_questions: "{{ num_questions }}"
-      #       product_name: "{{ product_name }}"
-      #       product_price: "{{ product_price }}"
-      #       product_tier: "{{ product_tier }}"
-      #       review_totals: "{{ review_totals }}"
-      #       seller_name: "{{ seller_name }}"
-      #       stock_count: "{{ stock_count }}"
-      #       thumbnail_url: "{{ thumbnail_url }}"
+      - function: "generateProductInfo"
+      - patch:
+          url: "/products/{{ id }}"
+          json:
+            brand: "{{ brand }}"
+            is_prime: "{{ is_prime }}"
+            num_questions: "{{ num_questions }}"
+            product_name: "{{ product_name }}"
+            product_price: "{{ product_price }}"
+            product_tier: "{{ product_tier }}"
+            review_totals: "{{ review_totals }}"
+            seller_name: "{{ seller_name }}"
+            stock_count: "{{ stock_count }}"
+            thumbnail_url: "{{ thumbnail_url }}"

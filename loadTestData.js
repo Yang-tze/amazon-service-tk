@@ -33,7 +33,7 @@ const generateProductInfo = (context, events, done) => {
   context.vars.brand = 'brand';
   context.vars.is_prime = 1;
   context.vars.num_questions = 50;
-  context.vars.product_name = generateName(id, 4);
+  context.vars.product_name = generateName(context.vars.id, 4);
   context.vars.product_price = 0.99;
   context.vars.product_tier = 'first';
   context.vars.review_totals = [5, 5, 5, 5, 5];

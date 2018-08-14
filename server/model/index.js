@@ -63,7 +63,7 @@ const addProduct = (data, callback) => {
         const queryString = generateAddProductString(data, id);
         updateProductCount(id, callback);
         cassandra.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
-          handleResults(err, data, callback, startTime);
+          handleResults(err, results, callback, startTime);
         });
       }
     },
@@ -75,7 +75,7 @@ const updateProduct = (productId, data, callback) => {
   const queryString = generateUpdateProductString(productId, data);
   const startTime = new Date();
   cassandra.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
-    handleResults(err, data, callback, startTime);
+    handleResults(err, results, callback, startTime);
   });
 };
 
@@ -84,7 +84,7 @@ const deleteProduct = (productId, callback) => {
   const queryString = 'DELETE FROM products WHERE id = ?';
   const startTime = new Date();
   cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
-    handleResults(err, data, callback, startTime);
+    handleResults(err, results, callback, startTime);
   });
 };
 
