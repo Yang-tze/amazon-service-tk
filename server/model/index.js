@@ -11,7 +11,7 @@ const getProductById = (productId, callback) => {
   const startTime = new Date();
   redis.get(productId, (err, reply) => {
     if (reply) {
-      handleResults(null, JSON.parse(reply), callback, startTime);
+      handleResults(null, reply, callback, startTime);
     } else {
       const queryString = 'SELECT * FROM products WHERE id = ?';
       cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
@@ -27,7 +27,7 @@ const getProductByName = (productName, callback) => {
   const startTime = new Date();
   redis.get(productName, (err, reply) => {
     if (reply) {
-      handleResults(null, JSON.parse(reply), callback, startTime);
+      handleResults(null, reply, callback, startTime);
     } else {
       const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
       cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
