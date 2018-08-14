@@ -10,6 +10,7 @@
   "scripts": {
     "generate-data": "node --max-old-space-size=4096 data/generation/dataGenerator.js",
     "cassandra-seed": "node data/generation/cassandraGenerator.js && cqlsh < data/cassandra-schema.cql",
+    "load-test": "node loadTester.js",
     "watch": "webpack --watch",
     "start": "nodemon server/index.js",
     "test": "jest --coverage",

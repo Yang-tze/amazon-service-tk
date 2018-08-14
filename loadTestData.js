@@ -17,19 +17,19 @@ const generateName = (index, length) => {
   return result;
 };
 
-const generateWeightedId = (context, events, done) => getRandomNumberWeightedTowardMax(10000000);
+const generateWeightedId = () => getRandomNumberWeightedTowardMax(10000000);
 
-const generateWeightedName = (context, events, done) => {
+const generateWeightedName = () => {
   const id = getRandomNumberWeightedTowardMax(10000000);
   return generateName(id, 7);
 };
 
-const generateProductInfo = (context, events, done) => {
+const generateProductInfo = () => {
   const id = getRandomNumberWeightedTowardMax(10000000);
   const brand = 'brand';
   const is_prime = 1;
   const num_questions = 50;
-  const product_name = generateName(context.vars.id, 4);
+  const product_name = generateName(id, 4);
   const product_price = 0.99;
   const product_tier = 'first';
   const review_totals = [5, 5, 5, 5, 5];
