@@ -1,4 +1,4 @@
-// const faker = require('faker');
+const faker = require('faker');
 
 const getRandomNumberWeightedTowardMax = (max) => {
   if (Math.random() < 0.1) {
@@ -37,7 +37,7 @@ const generateProductInfo = (context, events, done) => {
   context.vars.product_price = 0.99;
   context.vars.product_tier = 'first';
   context.vars.review_totals = [5, 5, 5, 5, 5];
-  context.vars.seller_name = 'ben';
+  context.vars.seller_name = faker.name.firstName();
   context.vars.stock_count = 1;
   context.vars.thumbnail_url = 'url';
   return done();
