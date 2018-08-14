@@ -17,7 +17,7 @@ const getProductById = (productId, callback) => {
       cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
         const data = results && translateDataForClient(results.rows[0]);
         handleResults(err, data, callback, startTime);
-        redis.set(productId, JSON.stringify(data), redis.print);
+        redis.setex(productId, 300, JSON.stringify(data), redis.print);
       });
     }
   });
@@ -25,7 +25,7 @@ const getProductById = (productId, callback) => {
 
 const getProductByName = (productName, callback) => {
   const startTime = new Date();
-  redis.get(productId, (err, reply) => {
+  redis.get(productName, (err, reply) => {
     if (reply) {
       handleResults(null, JSON.parse(reply), callback, startTime);
     } else {
@@ -33,7 +33,7 @@ const getProductByName = (productName, callback) => {
       cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
         const data = results && translateDataForClient(results.rows[0]);
         handleResults(err, data, callback, startTime);
-        redis.set(productName, JSON.stringify(data), redis.print);
+        redis.setex(productName, 300, JSON.stringify(data), redis.print);
       });
     }
   });
