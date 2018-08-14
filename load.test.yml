@@ -1,8 +1,8 @@
 config:
-  target: "http://localhost:3003"
+  target: "http://0.0.0.0:3003"
   processor: "./loadTestData.js"
   http:
-    pool: 2
+    pool: 3
   phases:
     - duration: 10
       arrivalRate: 5
@@ -24,6 +24,19 @@ scenarios:
       # - function: "generateProductInfo"
       # - patch:
       #     url: "/products/{{ id }}"
+      #     json:
+      #       brand: "{{ brand }}"
+      #       is_prime: "{{ is_prime }}"
+      #       num_questions: "{{ num_questions }}"
+      #       product_name: "{{ product_name }}"
+      #       product_price: "{{ product_price }}"
+      #       product_tier: "{{ product_tier }}"
+      #       review_totals: "{{ review_totals }}"
+      #       seller_name: "{{ seller_name }}"
+      #       stock_count: "{{ stock_count }}"
+      #       thumbnail_url: "{{ thumbnail_url }}"
+      # - post:
+      #     url: "/products"
       #     json:
       #       brand: "{{ brand }}"
       #       is_prime: "{{ is_prime }}"
