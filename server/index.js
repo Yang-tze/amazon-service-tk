@@ -26,7 +26,7 @@ const childProcess = () => {
 
   app.use('/:id', express.static(path.join(__dirname, '../public')));
 
-  app.listen(port, () => console.log('Listening on port 3003'));
+  app.listen(port, () => console.log(`Listening on port ${port}`));
 };
 
 if (cluster.isMaster) {
