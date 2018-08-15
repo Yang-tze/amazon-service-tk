@@ -17,40 +17,27 @@ const generateName = (index, length) => {
   return result;
 };
 
+// For use with siege, which is better suited for GET requests
 const generateWeightedId = () => getRandomNumberWeightedTowardMax(10000000);
-
 const generateWeightedName = () => {
   const id = getRandomNumberWeightedTowardMax(10000000);
   return generateName(id, 7);
 };
 
-const generateProductInfo = () => {
-  const id = getRandomNumberWeightedTowardMax(10000000);
-  const brand = 'brand';
-  const is_prime = 1;
-  const num_questions = 50;
-  const product_name = generateName(id, 4);
-  const product_price = 0.99;
-  const product_tier = 'first';
-  const review_totals = [5, 5, 5, 5, 5];
-  const seller_name = faker.name.firstName();
-  const stock_count = 1;
-  const thumbnail_url = 'url';
-  return {
-    id,
-    body: {
-      brand,
-      is_prime,
-      num_questions,
-      product_name,
-      product_price,
-      product_tier,
-      review_totals,
-      seller_name,
-      stock_count,
-      thumbnail_url,
-    },
-  };
+// For use with artillery, which is better suited for PATCH/POST requests
+const generateProductInfo = (context, events, done) => {
+  context.vars.id = getRandomNumberWeightedTowardMax(10000000);
+  context.vars.product_name = 'brand';
+  context.vars.is_prime = 1;
+  context.vars.num_questions = 50;
+  context.vars.product_name = generateName(context.vars.id, 4);
+  context.vars.product_price = 0.99;
+  context.vars.product_tier = 'first';
+  context.vars.review_totals = [5, 5, 5, 5, 5];
+  context.vars.seller_name = 'ben';
+  context.vars.stock_count = 1;
+  context.vars.thumbnail_url = 'url';
+  return done();
 };
 
 module.exports = {
