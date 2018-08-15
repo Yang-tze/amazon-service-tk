@@ -12,7 +12,7 @@
     "cassandra-seed": "node data/generation/cassandraGenerator.js && cqlsh < data/cassandra-schema.cql",
     "load-test-get": "node ./loadTests/getTests.js",
     "load-test-patch-post": "artillery run ./loadTests/patch-post-tests.yml",
-    "watch": "webpack --watch",
+    "build": "webpack --watch",
     "start": "nodemon server/index.js",
     "test": "jest --coverage",
     "lint": "eslint ./client/index.jsx ./client/components/** ./server/**"
