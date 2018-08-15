@@ -18,6 +18,9 @@ const getProductById = (productId, callback) => {
         const data = results && translateDataForClient(results.rows[0]);
         handleResults(err, data, callback, startTime);
         redis.setex(productId, 300, JSON.stringify(data), redis.print);
+        if (data) {
+          redis.setex(productName, 300, JSON.stringify(data), redis.print);
+        }
       });
     }
   });
@@ -33,7 +36,9 @@ const getProductByName = (productName, callback) => {
       cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
         const data = results && translateDataForClient(results.rows[0]);
         handleResults(err, data, callback, startTime);
-        redis.setex(productName, 300, JSON.stringify(data), redis.print);
+        if (data) {
+          redis.setex(productName, 300, JSON.stringify(data), redis.print);
+        }
       });
     }
   });
