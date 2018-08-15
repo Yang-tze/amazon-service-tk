@@ -4,7 +4,6 @@ const {
   handleResults,
   generateAddProductString,
   generateUpdateProductString,
-  translateDataForClient,
 } = require('./utils.js');
 
 const getProductById = (productId, callback) => {
@@ -15,7 +14,7 @@ const getProductById = (productId, callback) => {
     } else {
       const queryString = 'SELECT * FROM products WHERE id = ?';
       cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
-        const data = results && translateDataForClient(results.rows[0]);
+        const data = results && results.rows[0];
         handleResults(err, data, callback, startTime);
         redis.setex(productId, 300, JSON.stringify(data), redis.print);
         if (data) {
@@ -34,7 +33,7 @@ const getProductByName = (productName, callback) => {
     } else {
       const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
       cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
-        const data = results && translateDataForClient(results.rows[0]);
+        const data = results && results.rows[0];
         handleResults(err, data, callback, startTime);
         if (data) {
           redis.setex(productName, 300, JSON.stringify(data), redis.print);
