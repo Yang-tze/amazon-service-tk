@@ -13,14 +13,25 @@ const getProductById = (productId, callback) => {
       handleResults(null, reply, callback, startTime);
     } else {
       const queryString = 'SELECT * FROM products WHERE id = ?';
-      cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
-        const data = results && results.rows[0];
-        handleResults(err, data, callback, startTime);
-        redis.setex(productId, 300, JSON.stringify(data), redis.print);
-        if (data) {
-          redis.setex(productName, 300, JSON.stringify(data), redis.print);
-        }
-      });
+      cassandra
+        .stream(queryString, [productId], { prepare: true })
+        .on('readable', function () {
+          // 'readable' is emitted as soon a row is received and parsed
+          const row = this.read();
+          if (row) {
+            handleResults(null, row, callback, startTime);
+            redis.setex(productId, 300, JSON.stringify(row), redis.print);
+          } else {
+            handleResults(new Error(`No record found with id ${productId}`), null, callback, startTime);
+          }
+        })
+      // cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
+      //   const data = results && results.rows[0];
+      //   handleResults(err, data, callback, startTime);
+      //   if (data) {
+      //     redis.setex(productId, 300, JSON.stringify(data), redis.print);
+      //   }
+      // });
     }
   });
 };
@@ -32,13 +43,25 @@ const getProductByName = (productName, callback) => {
       handleResults(null, reply, callback, startTime);
     } else {
       const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
-      cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
-        const data = results && results.rows[0];
-        handleResults(err, data, callback, startTime);
-        if (data) {
-          redis.setex(productName, 300, JSON.stringify(data), redis.print);
-        }
-      });
+      cassandra
+        .stream(queryString, [productName], { prepare: true })
+        .on('readable', function () {
+          // 'readable' is emitted as soon a row is received and parsed
+          const row = this.read();
+          if (row) {
+            handleResults(null, row, callback, startTime);
+            redis.setex(productName, 300, JSON.stringify(row), redis.print);
+          } else {
+            handleResults(new Error(`No record found with name ${productName}`), null, callback, startTime);
+          }
+        })
+      // cassandra.execute(queryString, [productName], { prepare: true }, (err, results) => {
+      //   const data = results && results.rows[0];
+      //   handleResults(err, data, callback, startTime);
+      //   if (data) {
+      //     redis.setex(productName, 300, JSON.stringify(data), redis.print);
+      //   }
+      // });
     }
   });
 };
