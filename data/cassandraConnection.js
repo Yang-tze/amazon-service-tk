@@ -1,9 +1,7 @@
 const cassandra = require('cassandra-driver');
 
-const distance = cassandra.types.distance;
-
 const options = {
-  contactPoints: ['127.0.0.1'],
+  contactPoints: ['127.0.0.1'] || process.env.CASSANDRA_ENDPOINT,
   keyspace: 'product_db',
 };
 
