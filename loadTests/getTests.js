@@ -1,14 +1,10 @@
 const siege = require('siege');
-const {
-  generateWeightedId,
-  generateWeightedName,
-  generateProductInfo,
-} = require('./loadTestData.js');
+const { generateWeightedId, generateWeightedName } = require('./testData.js');
 
 let sieger = siege().on(3003);
 
 // GET product by id
-for (let i = 0; i < 10000000; i++) {
+for (let i = 0; i < 100000; i++) {
   sieger = sieger.for(1).times.get(`/products/${generateWeightedId()}`);
 }
 

@@ -1,5 +1,3 @@
-const faker = require('faker');
-
 const getRandomNumberWeightedTowardMax = (max) => {
   if (Math.random() < 0.1) {
     return Math.ceil(Math.random() * 0.9 * max);
