@@ -19,7 +19,6 @@ class ProductInfo extends React.Component {
       sizingModalVisibility: false,
       reviewsModalVisibility: false,
       product: productData.data,
-      relatedProducts: productData.related,
       productTier: 'Elite',
     };
     this.get();
@@ -90,31 +89,41 @@ class ProductInfo extends React.Component {
   get() {
     const { productId } = this.state;
     fetch(`/products${productId}`)
-      .then(response => response.json())
-      .then((obj) => {
-        const { data, related } = obj;
+      .then(response => {
+        debugger;
+        return response.json();
+      })
+      .then((data) => {
         this.setState({
           product: data,
-          relatedProducts: related,
-          productTier: data.product_tier,
+          productTier: data.product_tier
         });
       })
       .catch(err => console.error(err));
   }
 
   render() {
-    const {
-      product, relatedProducts, sizingModalVisibility, reviewsModalVisibility,
-    } = this.state;
+    const { product, sizingModalVisibility, reviewsModalVisibility } = this.state;
 
-    const { productTier } = this.state;
-    const currentTier = product.product_tier;
+    const currentTier = this.state.productTier;
+    const { brand } = product;
+    const aboutProduct = product.descriptions;
     const isPrime = product.is_prime;
-    const productOptions = product.product_options;
-    const aboutProduct = product.about_product;
+    const name = product.product_name;
+    const price = { sale: product.product_price };
+    const questions = product.num_questions;
+    const reviews = product.review_totals;
+    const thumbnail = `https://${product.thumbnail_url}`;
+    const relatedProducts = product.variants ? product.variants.map(variant => ({
+      price: { sale: variant.price },
+      productTier: variant.tier,
+      thumbnail: `https://${variant.thumbnailUrl}`,
+    })) : [];
+    const productOptions = {
+      color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
+      size: ['S', 'M', 'L', 'XL'],
+    };
 
-    const { brand, name, thumbnail } = product;
-    const { reviews, questions, price } = product;
     const { onMouseEnterStars, onMouseLeaveStars, onClickSizeChart } = this;
     const { onMouseEnterImageOption, onMouseLeaveImageOption, onProductTierClick } = this;
 
@@ -124,23 +133,26 @@ class ProductInfo extends React.Component {
           title={{ brand, name, currentTier }}
           reviewInfo={{ reviews, questions }}
           onMouseEnter={onMouseEnterStars.bind(this)}
-          onMouseLeave={onMouseLeaveStars.bind(this)} />
+          onMouseLeave={onMouseLeaveStars.bind(this)}
+        />
         <ItemPricing
           price={price}
           isPrime={isPrime}
           reviews={reviews}
           onMouseEnter={onMouseEnterStars.bind(this)}
           onMouseLeave={onMouseLeaveStars.bind(this)}
-          visibility={reviewsModalVisibility} />
+          visibility={reviewsModalVisibility}
+        />
         <ItemOptions
           options={productOptions}
-          tier={productTier}
+          tier={currentTier}
           thumbnail={thumbnail}
           related={relatedProducts}
           onClick={onClickSizeChart.bind(this)}
           onMouseEnter={onMouseEnterImageOption.bind(this)}
           onMouseLeave={onMouseLeaveImageOption.bind(this)}
-          onSelect={onProductTierClick.bind(this)} />
+          onSelect={onProductTierClick.bind(this)}
+        />
         <ItemDescription description={aboutProduct} />
         <SizingTable visibility={sizingModalVisibility} onClick={onClickSizeChart.bind(this)} />
       </div>
