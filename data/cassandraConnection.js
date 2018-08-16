@@ -1,7 +1,7 @@
 const cassandra = require('cassandra-driver');
 
 const options = {
-  contactPoints: ['127.0.0.1'] || [process.env.CASSANDRA_HOST],
+  contactPoints: [process.env.CASSANDRA_HOST] || ['127.0.0.1'],
   keyspace: 'product_db',
 };
 
