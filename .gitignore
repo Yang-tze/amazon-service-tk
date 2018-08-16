@@ -36,3 +36,4 @@ data/cassandra-schema.cql
 
 # Environmnet variables
 .env
+.aws.json
