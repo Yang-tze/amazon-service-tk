@@ -1,12 +1,6 @@
 const path = require('path');
 
-module.exports = {
-  entry: './client/client.jsx',
-  mode: 'development',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'),
-  },
+const common = {
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -41,3 +35,20 @@ module.exports = {
     port: 3003,
   },
 };
+
+module.exports = [
+  Object.assign({}, common, {
+    entry: './client/client.jsx',
+    output: {
+      filename: 'app.js',
+      path: path.resolve(__dirname, 'public'),
+    },
+  }),
+  Object.assign({}, common, {
+    entry: './client/server.jsx',
+    output: {
+      filename: 'app-server.js',
+      path: path.resolve(__dirname, 'public'),
+    },
+  }),
+];
