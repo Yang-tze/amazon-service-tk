@@ -14,7 +14,7 @@ module.exports = function (grunt) {
       },
       build: {
         cwd: 'public',
-        src: '*.js',
+        src: '**',
       },
     },
   });

@@ -8,11 +8,7 @@ module.exports = {
       color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
       size: ['S', 'M', 'L', 'XL'],
     },
-    product_price: {
-      msrp: 110.98,
-      list: 99.88,
-      sale: 99.88,
-    },
+    product_price: 99.88,
     descriptions: [
       'Four dollar toast velit anim, ex cronut quis brooklyn hot chicken',
       'Umami coloring book enim, post-ironic aliquip taxidermy neutra adipisicing mixtape cupidatat glossier',

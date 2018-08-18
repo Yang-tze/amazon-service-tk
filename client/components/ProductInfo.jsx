@@ -1,27 +1,38 @@
 import React from 'react';
-import productData from './mockData';
 import ItemOverview from './productInfoComponents/ItemOverview';
 import ItemPricing from './productInfoComponents/ItemPricing';
 import ItemOptions from './productInfoComponents/ItemOptions';
 import ItemDescription from './productInfoComponents/ItemDescription';
 import SizingTable from './productInfoComponents/SizingTable';
+import mockData from './mockData';
 import styles from '../style/ProductInfo.css';
 
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
-
-    // variable tracking whether mouse is over star meter or reviews modal
     this.reviewsModalVisibility = false;
-
     this.state = {
-      productId: window.location.pathname,
       sizingModalVisibility: false,
       reviewsModalVisibility: false,
-      product: productData.data,
-      productTier: 'Elite',
+      product: props.productData || mockData.data,
+      productTier:
+        (props.productData && props.productData.product_tier) || mockData.data.product_tier,
     };
-    this.get();
+  }
+
+  componentDidMount() {
+    if (!this.props.productData && window) {
+      const productId = parseInt(window.location.pathname.split('/')[1]) || 1;
+      fetch(`/products/${productId}`)
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({
+            product: data,
+            productTier: data.product_tier,
+          });
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   onClickSizeChart(e) {
@@ -53,20 +64,17 @@ class ProductInfo extends React.Component {
       this.setState({
         productId: id,
       });
-      window.location.assign(`http://${window.location.host}${id}`);
     }
   }
 
-  onMouseEnterImageOption(e) {
-    e.preventDefault();
-    const tier = e.target.getAttribute('data-tier');
+  onMouseEnterImageOption(tier) {
+    console.log(tier);
     this.setState({
       productTier: tier,
     });
   }
 
-  onMouseLeaveImageOption(e) {
-    e.preventDefault();
+  onMouseLeaveImageOption() {
     const { product } = this.state;
     this.setState({
       productTier: product.product_tier,
@@ -86,21 +94,7 @@ class ProductInfo extends React.Component {
     }
   }
 
-  get() {
-    const { productId } = this.state;
-    fetch(`/products${productId}`)
-      .then(response => {
-        debugger;
-        return response.json();
-      })
-      .then((data) => {
-        this.setState({
-          product: data,
-          productTier: data.product_tier
-        });
-      })
-      .catch(err => console.error(err));
-  }
+  get() {}
 
   render() {
     const { product, sizingModalVisibility, reviewsModalVisibility } = this.state;
@@ -114,11 +108,13 @@ class ProductInfo extends React.Component {
     const questions = product.num_questions;
     const reviews = product.review_totals;
     const thumbnail = `https://${product.thumbnail_url}`;
-    const relatedProducts = product.variants ? product.variants.map(variant => ({
-      price: { sale: variant.price },
-      productTier: variant.tier,
-      thumbnail: `https://${variant.thumbnailUrl}`,
-    })) : [];
+    const relatedProducts = product.variants
+      ? product.variants.map(variant => ({
+        price: { sale: variant.price },
+        productTier: variant.tier,
+        thumbnail: `https://${variant.thumbnailUrl}`,
+      }))
+      : [];
     const productOptions = {
       color: ['green', 'white', 'blue', 'black', 'silver', 'purple'],
       size: ['S', 'M', 'L', 'XL'],

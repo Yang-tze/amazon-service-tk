@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const common = {
   devtool: 'inline-source-map',
@@ -16,14 +17,8 @@ const common = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            query: {
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-            },
-          },
+          MiniCssExtractPlugin.loader,
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
         ],
       },
     ],
@@ -34,6 +29,11 @@ const common = {
     compress: true,
     port: 3003,
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'app.css',
+    }),
+  ],
 };
 
 module.exports = [
@@ -46,9 +46,11 @@ module.exports = [
   }),
   Object.assign({}, common, {
     entry: './client/server.jsx',
+    target: 'node',
     output: {
       filename: 'app-server.js',
       path: path.resolve(__dirname, 'public'),
+      libraryTarget: 'commonjs-module',
     },
   }),
 ];

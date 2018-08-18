@@ -5,20 +5,20 @@ import ReviewsModal from './ReviewsModal';
 const ItemPricing = (props) => {
   const { onMouseEnter, onMouseLeave, visibility } = props;
   const { price, isPrime, reviews } = props;
-
   return (
     <div className={styles.container}>
       <ReviewsModal
         reviews={reviews}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        visibility={visibility} />
+        visibility={visibility}
+      />
       <table>
         <tbody>
           <tr>
             <td className={styles.leftColumn}>
               <span>
-                Price:
+Price:
               </span>
             </td>
             <td>
@@ -26,8 +26,12 @@ const ItemPricing = (props) => {
                 {`$${price.sale}`}
               </span>
               <span className={styles.prime}>
-                { isPrime ? <span className={styles.check}>&#x2713;</span> : '' }
-                { isPrime ? 'prime' : '' }
+                {isPrime ? (
+                  <span className={styles.check}>
+&#x2713;
+                  </span>
+                ) : ''}
+                {isPrime ? 'prime' : ''}
               </span>
               <div>
                 <a href="" className={styles.returns}>

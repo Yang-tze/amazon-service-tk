@@ -4,15 +4,14 @@ import styles from '../../style/productInfoComponents/ItemColors.css';
 const ListItemOne = (props) => {
   const { tier, thumbnail, handlers } = props;
   const { onMouseEnter, onMouseLeave, onSelect } = handlers;
-
+  console.log(tier);
   return (
     <li>
       <div
-        onMouseEnter={onMouseEnter}
+        onMouseEnter={() => onMouseEnter(tier)}
         onMouseLeave={onMouseLeave}
         onClick={onSelect}
         data-id={null}
-        data-tier={tier}
       >
         <img src={thumbnail} alt={tier} />
       </div>
@@ -23,15 +22,12 @@ const ListItemOne = (props) => {
 const ListItems = (props) => {
   const { object, handlers } = props;
   const { onMouseEnter, onMouseLeave, onSelect } = handlers;
-
   return (
     <li key={object.id}>
       <div
-        onMouseEnter={onMouseEnter}
+        onMouseEnter={() => onMouseEnter(object.productTier)}
         onMouseLeave={onMouseLeave}
         onClick={onSelect}
-        data-id={`/${object.id}/`}
-        data-tier={object.product_tier}
       >
         <img src={object.thumbnail} alt={object.thumbnail} />
       </div>
