@@ -1,5 +1,10 @@
 const router = require('express').Router();
+const path = require('path');
 const controller = require('./controller');
+
+router.get('/loaderio-77b904abb58f625f7e8bea556520dc33', (req, res) => {
+  res.sendFile(path.join(__dirname, '../loaderio-77b904abb58f625f7e8bea556520dc33.txt'));
+});
 
 router.get('/products/:id', controller.getProductById);
 router.get('/products/name/:name', controller.getProductByName);
