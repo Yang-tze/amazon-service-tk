@@ -26,6 +26,10 @@ const childProcess = () => {
   app.use(compression());
 
   app.use('/:id', express.static(path.join(__dirname, '../public')));
+  app.use(
+    '/loaderio-77b904abb58f625f7e8bea556520dc33',
+    express.static(path.join(__dirname, '../')),
+  );
 
   app.listen(port, () => console.log(`Listening on port ${port}`));
 };
