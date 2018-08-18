@@ -6,52 +6,50 @@ const {
   generateUpdateProductString,
 } = require('./utils.js');
 
+const cacheExpiration = 3600;
+
 const getProductById = (productId, callback) => {
-  const startTime = new Date();
   redis.get(productId, (err, reply) => {
     if (reply) {
-      handleResults(null, reply, callback, startTime);
+      handleResults(null, reply, callback);
     } else {
-      const queryString = 'SELECT * FROM products WHERE id = ?';
-      cassandra.stream(queryString, [productId], { prepare: true }).on('readable', function () {
-        const row = this.read();
-        if (row) {
-          handleResults(null, row, callback, startTime);
-          redis.setex(productId, 300, JSON.stringify(row), redis.print);
-        } else {
-          handleResults(
-            new Error(`No record found with id ${productId}`),
-            null,
-            callback,
-            startTime,
-          );
-        }
-      });
+      queryDbById(productId, callback);
+    }
+  });
+};
+
+const queryDbById = (productId, callback) => {
+  const queryString = 'SELECT * FROM products WHERE id = ?';
+  cassandra.stream(queryString, [productId], { prepare: true }).on('readable', function () {
+    const row = this.read();
+    if (row) {
+      handleResults(null, row, callback);
+      redis.setex(productId, cacheExpiration, JSON.stringify(row), redis.print);
+    } else {
+      handleResults(new Error(`No record found with id ${productId}`), null, callback);
     }
   });
 };
 
 const getProductByName = (productName, callback) => {
-  const startTime = new Date();
   redis.get(productName, (err, reply) => {
     if (reply) {
-      handleResults(null, reply, callback, startTime);
+      handleResults(null, reply, callback);
     } else {
-      const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
-      cassandra.stream(queryString, [productName], { prepare: true }).on('readable', function () {
-        const row = this.read();
-        if (row) {
-          handleResults(null, row, callback, startTime);
-          redis.setex(productName, 300, JSON.stringify(row), redis.print);
-        } else {
-          handleResults(
-            new Error(`No record found with name ${productName}`),
-            null,
-            callback,
-            startTime,
-          );
-        }
-      });
+      queryDbByName(productName, callback);
+    }
+  });
+};
+
+const queryDbByName = (productName, callback) => {
+  const queryString = 'SELECT * FROM products_by_name WHERE product_name = ?';
+  cassandra.stream(queryString, [productName], { prepare: true }).on('readable', function () {
+    const row = this.read();
+    if (row) {
+      handleResults(null, row, callback);
+      redis.setex(productName, cacheExpiration, JSON.stringify(row), redis.print);
+    } else {
+      handleResults(new Error(`No record found with name ${productName}`), null, callback);
     }
   });
 };
@@ -68,7 +66,6 @@ const updateProductCount = (count) => {
 };
 
 const addProduct = (data, callback) => {
-  const startTime = new Date();
   cassandra.execute(
     'SELECT count from product_count WHERE id = ?',
     [1],
@@ -80,7 +77,7 @@ const addProduct = (data, callback) => {
         const queryString = generateAddProductString(data, id);
         updateProductCount(id, callback);
         cassandra.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
-          handleResults(err, results, callback, startTime);
+          handleResults(err, results, callback);
         });
       }
     },
@@ -90,18 +87,16 @@ const addProduct = (data, callback) => {
 const updateProduct = (productId, data, callback) => {
   redis.del('productId');
   const queryString = generateUpdateProductString(productId, data);
-  const startTime = new Date();
   cassandra.execute(queryString, Object.values(data), { prepare: true }, (err, results) => {
-    handleResults(err, results, callback, startTime);
+    handleResults(err, results, callback);
   });
 };
 
 const deleteProduct = (productId, callback) => {
   redis.del(productId);
   const queryString = 'DELETE FROM products WHERE id = ?';
-  const startTime = new Date();
   cassandra.execute(queryString, [productId], { prepare: true }, (err, results) => {
-    handleResults(err, results, callback, startTime);
+    handleResults(err, results, callback);
   });
 };
 

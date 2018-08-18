@@ -1,4 +1,4 @@
-const handleResults = (err, results, callback, startTime) => {
+const handleResults = (err, results, callback, startTime = new Date()) => {
   // console.log('Query time:', new Date() - startTime);
   if (err) {
     console.error(err);
