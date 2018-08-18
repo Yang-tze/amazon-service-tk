@@ -14,6 +14,7 @@
     "load-test-patch-post": "artillery run ./loadTests/patch-post-tests.yml",
     "build:dev": "webpack --mode development --watch",
     "build:prod": "webpack --mode production && grunt s3",
+    "start:redis": "redis-server daemonize yes",
     "start": "nodemon server/index.js",
     "test": "jest --coverage",
     "lint": "eslint ./client/index.jsx ./client/components/** ./server/**"
