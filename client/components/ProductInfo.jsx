@@ -68,7 +68,6 @@ class ProductInfo extends React.Component {
   }
 
   onMouseEnterImageOption(tier) {
-    console.log(tier);
     this.setState({
       productTier: tier,
     });
