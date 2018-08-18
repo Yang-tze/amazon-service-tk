@@ -7,12 +7,7 @@ const ListItemOne = (props) => {
   console.log(tier);
   return (
     <li>
-      <div
-        onMouseEnter={() => onMouseEnter(tier)}
-        onMouseLeave={onMouseLeave}
-        onClick={onSelect}
-        data-id={null}
-      >
+      <div onMouseEnter={() => onMouseEnter(tier)} onMouseLeave={onMouseLeave} onClick={onSelect}>
         <img src={thumbnail} alt={tier} />
       </div>
     </li>
