@@ -2,8 +2,8 @@ const router = require('express').Router();
 const path = require('path');
 const controller = require('./controller');
 
-router.get('/loaderio-ccad00e780ad3f7028e6b63c5f8261b5', (req, res) => {
-  res.sendFile(path.join(__dirname, '../loaderio-ccad00e780ad3f7028e6b63c5f8261b5.txt'));
+router.get('/loaderio-5281ea463c61db90880da22f631e2f0e', (req, res) => {
+  res.sendFile(path.join(__dirname, '../loaderio-5281ea463c61db90880da22f631e2f0e.txt'));
 });
 
 router.get('/products/:id', controller.getProductById);
