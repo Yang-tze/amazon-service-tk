@@ -6,8 +6,6 @@ const {
   generateUpdateProductString,
 } = require('./utils.js');
 
-const cacheExpiration = 3600;
-
 const getProductById = (productId, callback) => {
   redis.get(productId, (err, reply) => {
     if (reply) {
@@ -24,7 +22,7 @@ const queryDbById = (productId, callback) => {
     const row = this.read();
     if (row) {
       handleResults(null, row, callback);
-      redis.setex(productId, cacheExpiration, JSON.stringify(row), redis.print);
+      redis.setnx(productId, JSON.stringify(row), redis.print);
     } else {
       handleResults(new Error(`No record found with id ${productId}`), null, callback);
     }
@@ -47,7 +45,7 @@ const queryDbByName = (productName, callback) => {
     const row = this.read();
     if (row) {
       handleResults(null, row, callback);
-      redis.setex(productName, cacheExpiration, JSON.stringify(row), redis.print);
+      redis.setnx(productName, JSON.stringify(row), redis.print);
     } else {
       handleResults(new Error(`No record found with name ${productName}`), null, callback);
     }
