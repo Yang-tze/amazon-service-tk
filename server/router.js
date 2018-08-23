@@ -3,7 +3,10 @@ const path = require('path');
 const controller = require('./controller');
 
 router.get('/loaderio-5281ea463c61db90880da22f631e2f0e', (req, res) => {
-  res.sendFile(path.join(__dirname, '../loaderio-5281ea463c61db90880da22f631e2f0e.txt'));
+  res.sendFile(path.join(__dirname, '../.loaderio-5281ea463c61db90880da22f631e2f0e.txt'));
+});
+router.get('/loaderio-6b0f90b6fe2e84bec57e9541df63e578', (req, res) => {
+  res.sendFile(path.join(__dirname, '../.loaderio-6b0f90b6fe2e84bec57e9541df63e578.txt'));
 });
 
 router.get('/products/:id', controller.getProductById);
