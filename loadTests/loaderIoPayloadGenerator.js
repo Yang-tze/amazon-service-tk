@@ -5,9 +5,9 @@ const { generateWeightedId } = require('./testData.js');
 
 const productIds = [];
 for (let i = 0; i < 300000; i++) {
-  productIds.push(generateWeightedId());
+  productIds.push([generateWeightedId()]);
 }
-const data = { version: 1, variables: [{ names: ['productId'], values: productIds }] };
+const data = { keys: ['productId'], values: productIds };
 
 fs.writeFile(
   path.resolve(__dirname, '../public/loaderIoPayload.json'),
