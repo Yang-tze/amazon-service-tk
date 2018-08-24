@@ -4,7 +4,7 @@ const path = require('path');
 const { generateWeightedId } = require('./testData.js');
 
 const productIds = [];
-for (let i = 0; i < 800000; i++) {
+for (let i = 0; i < 300000; i++) {
   productIds.push(generateWeightedId());
 }
 const data = { version: 1, variables: [{ names: ['productId'], values: productIds }] };

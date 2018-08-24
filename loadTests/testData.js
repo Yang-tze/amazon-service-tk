@@ -1,8 +1,8 @@
 const getRandomNumberWeightedTowardMax = (max) => {
   if (Math.random() < 0.1) {
-    return Math.ceil(Math.random() * 0.95 * max);
+    return Math.ceil(Math.random() * 0.99 * max);
   }
-  return 0.95 * max + Math.ceil(Math.random() * 0.05 * max);
+  return 0.99 * max + Math.ceil(Math.random() * 0.01 * max);
 };
 
 const ltrs = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
