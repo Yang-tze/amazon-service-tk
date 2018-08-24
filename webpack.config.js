@@ -18,7 +18,7 @@ const common = {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'css-loader?modules&&minify=1&&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
         ],
       },
     ],
