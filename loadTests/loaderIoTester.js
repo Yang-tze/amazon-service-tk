@@ -42,7 +42,7 @@ const stopTest = (index) => {
       console.log(`stopTest error for test ${index}:`, err);
     } else {
       console.log(`stopped test${index} at ${new Date()}`);
-      setTimeout(() => startTest(index), 3000);
+      setTimeout(() => startTest(index), 5000);
     }
   });
 };
