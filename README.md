@@ -1,85 +1,125 @@
-# Amazon Product Details 
+# Product Info
 
-> An app meant to mimic a typical Amazon product page
+A full-stack React module that recreates the product info section of an product listing page, including:
 
-## Related Projects
+- Name
+- Brand
+- Price
+- Description
+- Variations
+- Thumbnails
 
-  - https://github.com/Viamis/Amazon-Service-TK
-  - https://github.com/Viamis/Amazon-Service-CN
-  - https://github.com/Viamis/Amazon-Service-ML
-  - https://github.com/Viamis/Amazon-Service-HL
+Each of these components is populated with mock data for 10,000,000 products. A sample of the structure of the mock data can be found here: https://gist.github.com/bcronin2/bc22fac67d988a5578650ec225a61801.
 
-## Table of Contents
+## CRUD API
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+This module is set up to handle the following CRUD operations. Note that the default URL is **localhost:3003**.
 
-## Usage
+Add new product:
+```sh
+POST /products
+````
+> Payload data should match the format of the mock data linked to above, with the exception that **the product_options field should be omitted**.
 
-> Some usage instructions
+Get product by id:
+```sh
+GET /products/:id
+```
+> Once the database has been seeded and connected, this will return a product object for ids 1-10,000,000.
 
-## Requirements
+Get product by name:
+```sh
+GET /products/name/:name
+```
+> Once the database has been seeded and connected, this will return a product object for product names 'aaaaaaa'-'jjjjjjj' (any 7-letter permutation of the letters a-j).
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+Update product info:
+```sh
+PATCH /products/:id
+```
+> Payload data should contain one or more key-value pairs from the mock data linked to above, with the exception that **the product_options field should be omitted**.
 
-- Node 6.13.0
-- etc
+Delete product by id:
+```sh
+DELETE /products/:id
+```
+
+## Tech Used
+
+This module is built on a CERN (Cassandra, Express, React, Node) stack.
+
+### System Requirements
+
+- Node >=6.7.0 (runtime environment)
+- npm >=6.0 (dependency manager)
+- Redis >=4.0 (cache)
+- Cassandra >=3.0 (database)
+
+### Prod Dependencies (installed with npm)
+
+- body-parser (handling requests on server)
+- cassandra-driver (database connections)
+- cluster (Node clustering for multi-core server instances)
+- compression (compress data sent from server)
+- cors (handling cross-origin requests from proxy)
+- dotenv (handling environment variables)
+- express (server framework)
+- faker (data generation)
+- newrelic (performance monitoring)
+- nodemon (running/watching server)
+- os (detects number of CPUs for potential clustering)
+- path (filesystem management)
+- react (component library)
+- react-dom (rendering component)
+- redis (server-side caching)
+- siege (local load testing)
 
 ## Development
 
-### Installing Dependencies
+> NOTE: All scripts below are to be run within the root directory.
 
-From within the root directory:
+### Installing Dependencies
 
 ```sh
 npm install -g webpack
 npm install
 ```
 
-## CRUD API
+### Setting up database
 
-Add new product:
 ```sh
-POST /products
-````
-
-Get product by id:
-```sh
-GET /products/:id
+npm run generate-data
 ```
-
-Get product by name:
+> Creates a set of .tsv files containing mock data.
 ```sh
-GET /products/name/:name
+npm run cassandra-seed
 ```
+> Seeds Cassandra db with data from .tsv files (you must have a local instance of [Cassandra](http://cassandra.apache.org/download/) 3.0+ running).
 
-Update product info:
-```sh
-PATCH /products/:id
-```
+### Building client bundle 
 
-Delete product by id:
-```sh
-DELETE /products/:id/brand/:brand
-```
+#### Building Local Client Bundle
 
-Create about information:
 ```sh
-POST /products/:id/about
+npm run build:dev
 ```
+> NOTE: The files built in this way will only be served if you change the script tag used in public/index.html.
 
-Update about information:
-```sh
-PUT /products/:id/about
-```
+#### Building Client Bundle to S3
 
-Add related product:
 ```sh
-POST /products/:id/related/:id
+npm run build:prod
 ```
+> NOTE: To build to S3, you will need to set up your own bucket and include an .aws.json file in this repo with your credentials.
 
-Delete related product:
+#### Running Server
+
 ```sh
-DELETE /products/:id/related/:id
+npm run start
 ```
+> Starts redis server locally.
+
+```sh
+npm run start
+```
+> NOTE: This uses nodemon, so changes will update the server environment automatically.
