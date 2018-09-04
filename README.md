@@ -76,6 +76,10 @@ This module is built on a CERN (Cassandra, Express, React, Node) stack.
 
 ## Development
 
+This module is set up to run locally at **localhost:3003/[id from 1 to 10000000]**.
+
+**By default, the static js and CSS bundles are served from S3. To serve from localhost, change the appropriate commented-out lines in public/index.html.**
+
 > NOTE: All scripts below are to be run within the root directory.
 
 ### Installing Dependencies
